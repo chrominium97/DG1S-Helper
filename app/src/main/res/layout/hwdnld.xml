@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--
+        <LinearLayout
+            android:id="@+id/hwdnldtitlecontain2er"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/titleback2">
+
+            <RelativeLayout
+                android:id="@+id/hwdnldtitlecontainer"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#0099cc">
+
+                <LinearLayout
+                    android:id="@+id/hwdnldhomebtncontainer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/hwdnldhomebtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/backbtn" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/hwdnldtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_margin="8dp"
+                    android:layout_toRightOf="@id/hwdnldhomebtncontainer"
+                    android:gravity="center_vertical"
+                    android:text="@string/actionbar_homework"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#ffffff" />
+
+                <LinearLayout
+                    android:id="@+id/refreshbtncontainer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_toLeftOf="@+id/plusbtncontainer"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/refreshbtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/refreshicon" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/plusbtncontainer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/plusbtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/plusbtn" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    -->
+    <WebView
+        android:id="@+id/tpweb"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:id="@+id/no_network"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="#eeeeee"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_network" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/error_network"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#666666" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvs"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#eeeeee"
+        android:cacheColorHint="#00000000"
+        android:divider="#00000000"
+        android:dividerHeight="9dp"
+        android:padding="9dp"
+        android:scrollbars="none" />
+</RelativeLayout>

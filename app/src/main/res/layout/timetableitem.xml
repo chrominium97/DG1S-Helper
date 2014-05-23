@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/timetable_cell_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/subjects_korean" />
+
+    <TextView
+        android:id="@+id/timetable_cell_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/literature"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#444444" />
+
+    <TextView
+        android:id="@+id/timetable_cell_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/literature_teacher"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#666666" />
+</LinearLayout>

@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/maintitlecontain2er"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/titleback">
+
+            <RelativeLayout
+                android:id="@+id/maintitlecontainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#555555">
+
+                <LinearLayout
+                    android:id="@+id/logocontainer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/hwdnldhomebtn"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/maintitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_margin="8dp"
+                    android:layout_toRightOf="@id/logocontainer"
+                    android:gravity="center_vertical"
+                    android:text="@string/main_schoolname"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff" />
+
+                <LinearLayout
+                    android:id="@+id/settingbtncontainer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/settingbtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/settingbtn" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/main_updatebtncontainer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_toLeftOf="@id/settingbtncontainer"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/main_updatebtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/refreshicon" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/menubtncontainer"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_below="@id/maintitlecontain2er"
+            android:background="#eeeeee"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/menubtn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="4dp"
+                    android:background="@drawable/menubtna"
+                    android:padding="10dp"
+                    android:text="@string/main_btn1"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="#cccccc" />
+
+                <Button
+                    android:id="@+id/menubtn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:background="@drawable/menubtna"
+                    android:padding="10dp"
+                    android:text="@string/main_btn2"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="#cccccc" />
+                <!-- <Button
+                     android:id="@+id/menubtn3"
+                     android:text="@string/main_btn3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="42dp"
+                     android:padding="10dp"
+                     android:textAppearance="?android:attr/textAppearanceSmall"
+                     android:background="@drawable/menubtna" />
+                 <LinearLayout
+                     android:layout_width="1dp"
+                     android:layout_height="30dp"
+                     android:background="#cccccc"
+                     android:layout_gravity="center"
+                     android:layout_marginLeft="4dp"
+                     android:layout_marginRight="4dp" />-->
+                <Button
+                    android:id="@+id/menubtn4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:background="@drawable/menubtna"
+                    android:padding="10dp"
+                    android:text="@string/main_btn4"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:id="@+id/menubtnmargin"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/menubtncontainer"
+            android:background="#cccccc"
+            android:orientation="horizontal" />
+
+        <RelativeLayout
+            android:id="@+id/dayinfocontainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/menubtnmargin"
+            android:background="#e1f0ee">
+
+            <TextView
+                android:id="@+id/dayinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/monday"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#444444" />
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/dayinfo"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hwitemback"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
+
+                        <ImageView
+                            android:id="@+id/t1_icon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/weather_sunny" />
+
+                        <TextView
+                            android:id="@+id/t1_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:text="@string/sunny"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:gravity="left|center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/t1_temp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_temp"
+                                android:textColor="#ffa200"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/t1_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_time_6a"
+                                android:textColor="#444444"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hwitemback"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
+
+                        <ImageView
+                            android:id="@+id/t2_icon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/weather_sunny" />
+
+                        <TextView
+                            android:id="@+id/t2_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:text="@string/sunny"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:gravity="left|center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/t2_temp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_temp"
+                                android:textColor="#ffa200"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/t2_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_time_9a"
+                                android:textColor="#444444"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hwitemback"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
+
+                        <ImageView
+                            android:id="@+id/t3_icon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/weather_sunny" />
+
+                        <TextView
+                            android:id="@+id/t3_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:text="@string/sunny"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:gravity="left|center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/t3_temp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_temp"
+                                android:textColor="#ffa200"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/t3_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_time_12p"
+                                android:textColor="#444444"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hwitemback"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
+
+                        <ImageView
+                            android:id="@+id/t4_icon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/weather_sunny" />
+
+                        <TextView
+                            android:id="@+id/t4_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:text="@string/sunny"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:gravity="left|center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/t4_temp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_temp"
+                                android:textColor="#ffa200"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/t4_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_time_3p"
+                                android:textColor="#444444"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hwitemback"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
+
+                        <ImageView
+                            android:id="@+id/t5_icon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/weather_sunny" />
+
+                        <TextView
+                            android:id="@+id/t5_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:text="@string/sunny"
+                            android:textSize="24sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:gravity="left|center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/t5_temp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_temp"
+                                android:textColor="#ffa200"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/t5_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dummy_time_6p"
+                                android:textColor="#444444"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/menubtnmargin"
+            android:layout_toRightOf="@id/dayinfocontainer"
+            android:background="#eeeeee"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/timelineback"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="10dp">
+
+                    <RelativeLayout
+                        android:id="@+id/academiccontainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/hwitemback"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/academicicon"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/academic" />
+
+                        <TextView
+                            android:id="@+id/academictitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/academicicon"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/academicicon"
+                            android:gravity="center"
+                            android:text="@string/main_academic"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:id="@+id/academicdayinfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/academictitle"
+                            android:layout_below="@id/academictitle"
+                            android:gravity="center"
+                            android:text="@string/dummy_date_with_letter"
+                            android:textColor="#666666"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/academictv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/academictitle"
+                            android:layout_below="@id/academicdayinfo"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/error_no_schedule"
+                            android:textColor="#444444"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/breakfastcontainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/academiccontainer"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/hwitemback"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/breakfasticon"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/meal" />
+
+                        <TextView
+                            android:id="@+id/breakfasttitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/breakfasticon"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/breakfasticon"
+                            android:gravity="center"
+                            android:text="@string/breakfast"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:id="@+id/breakfasttime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/breakfasttitle"
+                            android:layout_below="@id/breakfasttitle"
+                            android:gravity="center"
+                            android:text="@string/time_breakfast"
+                            android:textColor="#666666"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/breakfasttv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/breakfasttitle"
+                            android:layout_below="@id/breakfasttime"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/error_no_meal"
+                            android:textColor="#444444"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/lunchcontainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/breakfastcontainer"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/hwitemback"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/sudagreen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:scaleType="fitEnd"
+                            android:src="@drawable/greendayback" />
+
+                        <ImageView
+                            android:id="@+id/lunchicon"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/meal" />
+
+                        <TextView
+                            android:id="@+id/lunchtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/lunchicon"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/lunchicon"
+                            android:gravity="center"
+                            android:text="@string/lunch"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:id="@+id/lunchtime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/lunchtitle"
+                            android:layout_below="@id/lunchtitle"
+                            android:gravity="center"
+                            android:text="@string/time_lunch"
+                            android:textColor="#666666"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/lunchtv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/lunchtitle"
+                            android:layout_below="@id/lunchtime"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/error_no_meal"
+                            android:textColor="#444444"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/dinnercontainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lunchcontainer"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/hwitemback"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/dinnericon"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/meal" />
+
+                        <TextView
+                            android:id="@+id/dinnertitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/dinnericon"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/dinnericon"
+                            android:gravity="center"
+                            android:text="@string/dinner"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:id="@+id/dinnertime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/dinnertitle"
+                            android:layout_below="@id/dinnertitle"
+                            android:gravity="center"
+                            android:text="@string/time_dinner"
+                            android:textColor="#666666"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/dinnertv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/dinnertitle"
+                            android:layout_below="@id/dinnertime"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/error_no_meal"
+                            android:textColor="#444444"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/gobustime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/dinnercontainer"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/dismissalNotice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/dismissal"
+                            android:textColor="#666666"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:id="@+id/busTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/dismissalNotice"
+                            android:layout_below="@id/dismissalNotice"
+                            android:gravity="center"
+                            android:text="@string/dismissal_time"
+                            android:textColor="#777777"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/busComment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@id/dismissalNotice"
+                            android:layout_below="@id/busTime"
+                            android:gravity="center"
+                            android:text="@string/dismissal_time"
+                            android:textColor="#777777"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/busicon" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+</merge>

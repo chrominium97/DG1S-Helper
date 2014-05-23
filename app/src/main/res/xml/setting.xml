@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/personal_information">
+        <ListPreference
+            android:entries="@array/selectGrade"
+            android:entryValues="@array/gradeList"
+            android:key="gradechk"
+            android:summary="@string/gradechk_sum"
+            android:title="@string/gradechk_title" />
+        <ListPreference
+            android:entries="@array/selectClass"
+            android:entryValues="@array/classList"
+            android:key="classchk"
+            android:summary="@string/classchk_sum"
+            android:title="@string/classchk_title" />
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

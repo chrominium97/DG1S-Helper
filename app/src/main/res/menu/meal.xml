@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="kr.kdev.dg1s.Activity_MealPlanner">
+
+    <item
+        android:id="@+id/action_calendar"
+        android:icon="@drawable/calendarbtn"
+        android:orderInCategory="1"
+        android:title="@string/action_calendar"
+        app:showAsAction="always" />
+
+</menu>

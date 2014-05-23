@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="false"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:id="@+id/widget_container">
+
+    <RelativeLayout
+        android:id="@+id/w_breakfastcontainer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/hwitemback"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/w_breakfasttitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/breakfast"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/w_breakfasttv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/w_breakfasttitle"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/dummy_meal"
+            android:textColor="#444444"
+            android:textSize="13sp" />
+    </RelativeLayout>
+    <!-- 아침 -->
+    <RelativeLayout
+        android:id="@+id/w_lunchcontainer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/hwitemback"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/w_lunchtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/lunch"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/w_lunchtv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/w_lunchtitle"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/dummy_meal"
+            android:textColor="#444444"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/w_dinnercontainer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/hwitemback"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/w_dinnertitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/dinner"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/w_dinnertv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/w_dinnertitle"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/dummy_meal"
+            android:textColor="#444444"
+            android:textSize="13sp" />
+    </RelativeLayout>
+</LinearLayout>

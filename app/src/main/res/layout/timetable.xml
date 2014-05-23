@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee">
+
+    <LinearLayout
+        android:id="@+id/timetabletitlecontain2er"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/titleback4">
+
+        <RelativeLayout
+            android:id="@+id/timetabletitlecontainer"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#32CD32">
+
+            <LinearLayout
+                android:id="@+id/timetablehomebtncontainer"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="#00000000"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <Button
+                    android:id="@+id/timetablehomebtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/backbtn" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/timetablettitle"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/timetablehomebtncontainer"
+                android:gravity="center_vertical"
+                android:text="@string/timetable_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff" />
+
+            <LinearLayout
+                android:id="@+id/timetable_plusbtncontainer"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:background="#00000000"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <Button
+                    android:id="@+id/timetable_plusbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editbtn" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timetable_header"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@id/timetabletitlecontain2er"
+        android:layout_centerHorizontal="true"
+        android:background="#eeeeee"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/mon"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tue"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/wed"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/thu"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/fri"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timetablemargin"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/timetable_header"
+        android:background="#cccccc"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/timetable_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timetablemargin"
+        android:layout_centerHorizontal="true">
+
+        <GridView
+            android:id="@+id/timetable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@drawable/gridview_selector"
+            android:numColumns="5"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+
+</RelativeLayout>

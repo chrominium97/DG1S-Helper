@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="welcome">Thank you for installing DG1S Helper. Press the menu button to access the settings window, and set your grade and class.</string>
+    <string name="app_name">DG1S Helper</string>
+
+    <string name="url_meal">http://www.dg1s.hs.kr/user/carte/list.do</string>
+    <string name="url_kma">http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=2714074500</string>
+
+    <!-- 상태알림 -->
+    <string name="error_network">Network error</string>
+    <string name="error_network_long">Unable to update information due to network error.</string>
+    <string name="error_no_description">No description.</string>
+    <string name="error_no_meal">The meal is not yet registered.</string>
+    <string name="error_no_schedule">There are no plans for today.</string>
+
+    <string name="confirm">Confirm</string>
+
+    <string name="update_info">Update information :</string>
+    <string name="update_description">1. Bug fixes\n2. Updated translations\n3. New transition effects\n4. Applied Android AppCompat v7</string>
+
+    <!-- 액션바 항목 -->
+    <string name="actionbar_academic">Academic Calendar</string>
+    <string name="actionbar_meal">Meal Plans</string>
+    <string name="actionbar_homework">Homework</string>
+    <string name="actionbar_homework_add">Add a New Homework</string>
+    <string name="actionbar_vending_machine">Vending Machine Refreshments</string>
+    <string name="actionbar_credits">Developer Information</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_academic">Pick date</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_calendar">Pick date</string>
+    <string name="action_credits">Credits</string>
+    <string name="action_homework_add">Add homework</string>
+    <string name="action_homework_add_confirm">Post homework</string>
+
+    <!-- 메인 화면 -->
+    <string name="main_schoolname">Daegu Il Science High School</string>
+    <string name="main_academic">Today\'s Schedule</string>
+    <string name="main_dayinfo">School weather: (Updated every 3 hours)</string>
+
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+
+    <string name="time_breakfast">6:50 AM - 7:40 AM</string>
+    <string name="time_lunch">12:30 PM - 1:20 PM</string>
+    <string name="time_dinner">6:10 PM - 7:00 PM</string>
+
+    <string name="dismissal">Dismissal</string>
+    <string name="dismissal_time">5:40 PM</string>
+    <string name="dismissal_comment">Be careful not to be late for bus.</string>
+
+    <string name="main_btn1">Meal Planner</string>
+    <string name="main_btn2">Homework</string>
+    <string name="main_btn3">Timetable</string>
+    <string name="main_btn4">Academic Calendar</string>
+
+    <!-- 숙제 기능 -->
+    <string name="hwupldtxt">Choose the class and grade. Default value is your grade/class.</string>
+    <string name="hwupld_due">When is the deadline?</string>
+    <string name="subject">&#160;&#160;&#160;Subject&#160;&#160;&#160;&#160;</string>
+    <string name="description">Description</string>
+    <string name="timetable_title">Timetable</string>
+
+    <string name="promptClass">Choose class</string>
+    <string name="promptGrade">Choose Grade</string>
+
+    <string-array name="selectGrade">
+        <item>Grade 1</item>
+        <item>Grade 2</item>
+        <item>Grade 3</item>
+    </string-array>
+
+    <string-array name="selectClass">
+        <item>Class 1</item>
+        <item>Class 2</item>
+        <item>Class 3</item>
+        <item>Class 4</item>
+    </string-array>
+
+    <!-- 위젯 -->
+    <string name="no_meal">No meal</string>
+
+    <!-- 과목 종류 -->
+    <string name="literature">Literature</string>
+    <string name="literature_teacher">김영식</string>
+    <string name="subject_others">Others</string>
+
+    <!-- 문장 요소 -->
+    <string name="phrase_until">Until</string>
+
+    <!-- 날짜 -->
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+
+    <string name="sunday_sentence">Today is Sunday,</string>
+    <string name="monday_sentence">Today is Monday,</string>
+    <string name="tuesday_sentence">Today is Tuesday,</string>
+    <string name="wednesday_sentence">Today is Wednesday.</string>
+    <string name="thursday_sentence">Today is Thursday.</string>
+    <string name="friday_sentence">Today is Friday,</string>
+    <string name="saturday_sentence">Today is Saturday.</string>
+
+    <!-- 요일 코멘트 -->
+    <string name="sunday_t">the last moments of this weekend.</string>
+    <string name="monday_t">the beginning of another exciting week.</string>
+    <string name="tuesday_t">and this week\'s school life has come in earnest.</string>
+    <string name="wednesday_t">Although studying is hard, cheer up!</string>
+    <string name="thursday_t">How about a nap when you\'re tired?</string>
+    <string name="friday_t">the last gateway to weekend.</string>
+    <string name="saturday_t">Have a nice weekend.</string>
+
+    <!-- 날씨 -->
+    <string name="sunny">Clear</string>
+    <string name="cloudy1">Cloudy</string>
+    <string name="cloudy2">Cloudy</string>
+    <string name="cloudy3">Cloudy</string>
+    <string name="rainy">Rain</string>
+    <string name="rainsnow">Sleet</string>
+    <string name="snowy">Snow</string>
+
+    <!-- Credits 창 -->
+    <string name="app_info_title">Application Information</string>
+    <string name="app_info_text">This application is developed by\nK-Developers™, a group of DG1S students.</string>
+    <string name="app_info_btn">Send mail to developer</string>
+
+    <!-- 설정 변수 -->
+    <string name="personal_information">Personal Information</string>
+
+    <string name="gradechk_title">Grade</string>
+    <string name="gradechk_sum">Set up your grade.</string>
+    <string name="classchk_title">Class</string>
+    <string name="classchk_sum">Set up your class.</string>
+
+    <string-array name="gradeList">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="classList">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <!-- 메뉴 리스트 -->
+    <string name="menu_dropdown_1">Preference</string>
+    <string name="menu_dropdown_2">Info</string>
+
+    <!-- 토스트용 메시지 -->
+    <string name="sikdan_updated">Today\'s menu has been updated.</string>
+
+    <!-- 더미 데이터 -->
+    <string name="dummy_date">Until 2014&#8211;01&#8211;01</string>
+    <string name="dummy_date_with_letter">2014&#8211;01&#8211;01</string>
+    <string name="dummy_time_6a">06:00AM</string>
+    <string name="dummy_time_9a">09:00AM</string>
+    <string name="dummy_time_12p">12:00PM</string>
+    <string name="dummy_time_3p">03:00PM</string>
+    <string name="dummy_time_6p">06:00PM</string>
+    <string name="dummy_temp">13ºC</string>
+    <string name="dummy_meal">Meal</string>
+    <string name="dummy_assignedTo">1st Grade, Class 1</string>
+
+</resources>
