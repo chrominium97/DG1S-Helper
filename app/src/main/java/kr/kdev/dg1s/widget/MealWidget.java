@@ -1,4 +1,4 @@
-package kr.kdev.dg1s;
+package kr.kdev.dg1s.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -9,13 +9,15 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import net.htmlparser.jericho.Source;
-
 import java.io.IOException;
 
-public class Widget_Meal extends AppWidgetProvider {
+import kr.kdev.dg1s.MainActivity;
+import kr.kdev.dg1s.R;
+import kr.kdev.dg1s.utils.Parsers;
 
-    Parser_Meal MealParser = new Parser_Meal();
+public class MealWidget extends AppWidgetProvider {
+
+    Parsers.MealParser MealParser = new Parsers.MealParser();
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -46,7 +48,7 @@ public class Widget_Meal extends AppWidgetProvider {
         if (prefs.getString("dinner", "") == "")
             remoteViews.setViewVisibility(R.id.w_dinnercontainer, View.GONE);
 
-        Intent intent = new Intent(context, Activity_Main.class);
+        Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pi = PendingIntent.getActivity(
                 context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

@@ -39,12 +39,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Activity_Main extends ActionBarActivity {
+import kr.kdev.dg1s.utils.Adapters;
+import kr.kdev.dg1s.utils.Parsers;
+
+public class MainActivity extends ActionBarActivity {
 
     SharedPreferences prefs;
-    private Source source;
-    Parser_Weather weatherParser;
+    Parsers.WeatherParser weatherParser;
     String breakfast, lunch, dinner;
+    private Source source;
     private boolean mFlag = false;
     private Handler emptyHandler = new Handler() {
         @Override
@@ -80,7 +83,7 @@ public class Activity_Main extends ActionBarActivity {
         Button menubtn1 = (Button) findViewById(R.id.menubtn1);
         menubtn1.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                Intent intent1 = new Intent(Activity_Main.this, Activity_MealPlanner.class);
+                Intent intent1 = new Intent(MainActivity.this, MealPlanner.class);
                 startActivity(intent1);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
             }
@@ -90,7 +93,7 @@ public class Activity_Main extends ActionBarActivity {
         Button menubtn2 = (Button) findViewById(R.id.menubtn2);
         menubtn2.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                Intent intent2 = new Intent(Activity_Main.this, Activity_PostView.class);
+                Intent intent2 = new Intent(MainActivity.this, PostView.class);
                 startActivity(intent2);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
             }
@@ -100,7 +103,7 @@ public class Activity_Main extends ActionBarActivity {
         Button menubtn4 = (Button) findViewById(R.id.menubtn4);
         menubtn4.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                Intent intent4 = new Intent(Activity_Main.this, Activity_AcademicCalendar.class);
+                Intent intent4 = new Intent(MainActivity.this, AcademicCalendar.class);
                 startActivity(intent4);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
             }
@@ -113,28 +116,28 @@ public class Activity_Main extends ActionBarActivity {
 
         breakfastbtn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_Main.this, Activity_MealPlanner.class);
+                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
             }
         });
         lunchbtn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_Main.this, Activity_MealPlanner.class);
+                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
             }
         });
         dinnerbtn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_Main.this, Activity_MealPlanner.class);
+                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
             }
         });
         academicbtn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_Main.this, Activity_AcademicCalendar.class);
+                Intent intent = new Intent(MainActivity.this, AcademicCalendar.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
             }
@@ -147,12 +150,12 @@ public class Activity_Main extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent i1 = new Intent(Activity_Main.this, Activity_Settings.class);
+                Intent i1 = new Intent(MainActivity.this, Settings.class);
                 startActivity(i1);
                 overridePendingTransition(R.anim.appear_decelerate_btt, R.anim.still);
                 break;
             case R.id.action_credits:
-                Intent i2 = new Intent(Activity_Main.this, Activity_Credits.class);
+                Intent i2 = new Intent(MainActivity.this, Credits.class);
                 startActivity(i2);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
                 break;
@@ -188,7 +191,7 @@ public class Activity_Main extends ActionBarActivity {
     }
 
     private void updateAll() {
-        weatherParser = new Parser_Weather();
+        weatherParser = new Parsers.WeatherParser();
         long now = System.currentTimeMillis();
         Date date = new Date(now);
 
@@ -210,7 +213,7 @@ public class Activity_Main extends ActionBarActivity {
                 prefs.edit().putString("updatedate", strNow).commit();//실행날짜 업데이트
             }
         } else {//네트워크가 통신가능하지 않다면
-            Toast.makeText(Activity_Main.this, getString(R.string.error_network_long), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.error_network_long), Toast.LENGTH_SHORT).show();
             Log.d("NetStat", "네트워크 상태 불량!");
         }
         setWeather();
@@ -246,10 +249,10 @@ public class Activity_Main extends ActionBarActivity {
             new WeatherAsync().execute(null, null, null);//날씨 업데이트
             UpdateThread thread = new UpdateThread();
             thread.start();//식단, 학사정보 업데이트
-            Toast.makeText(Activity_Main.this, getString(R.string.sikdan_updated), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.sikdan_updated), Toast.LENGTH_SHORT).show();
             Log.d("ManualUpdateAll", "강제 업데이트 성공.");
         } else {
-            Toast.makeText(Activity_Main.this, getString(R.string.error_network_long), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.error_network_long), Toast.LENGTH_SHORT).show();
             Log.d("ManualUpdateAll", "강제 업데이트 실패.");
         }
 
@@ -320,7 +323,7 @@ public class Activity_Main extends ActionBarActivity {
     private void chkFirstRun() {
         if (prefs.getBoolean("firstrun", true)) {
             //앱 최초 설치시에 호출
-            AlertDialog.Builder alert = new AlertDialog.Builder(Activity_Main.this);
+            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
             alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -340,7 +343,7 @@ public class Activity_Main extends ActionBarActivity {
             try {
                 if (prefs.getInt("updaterun", 0) != getPackageManager().getPackageInfo(getPackageName(), 0).versionCode) {
                     //업데이트 후 호출
-                    AlertDialog.Builder alert = new AlertDialog.Builder(Activity_Main.this);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                     alert.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -561,20 +564,20 @@ public class Activity_Main extends ActionBarActivity {
         }
     }
 
-    public class WeatherAsync extends AsyncTask<String, String, ArrayList<Adapter_Weather>> {
+    public class WeatherAsync extends AsyncTask<String, String, ArrayList<Adapters.WeatherAdapter>> {
 
         @Override
-        protected ArrayList<Adapter_Weather> doInBackground(String... params) {
+        protected ArrayList<Adapters.WeatherAdapter> doInBackground(String... params) {
             return weatherParser.parseWeather();
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Adapter_Weather> result) {
+        protected void onPostExecute(ArrayList<Adapters.WeatherAdapter> result) {
             for (int i = 0; i < result.size(); i++) {
-                Adapter_Weather wa = result.get(i);
-                prefs.edit().putString("weather" + i, wa.mWeather).commit();
-                prefs.edit().putString("time" + i, wa.mTime).commit();
-                prefs.edit().putString("temp" + i, wa.mTemp).commit();
+                Adapters.WeatherAdapter wa = result.get(i);
+                prefs.edit().putString("weather" + i, wa.weather).commit();
+                prefs.edit().putString("time" + i, wa.time).commit();
+                prefs.edit().putString("temp" + i, wa.temperature).commit();
                 setWeather();
             }
         }

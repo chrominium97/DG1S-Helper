@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-public class Activity_PostAdd extends ActionBarActivity {
+public class PostAdd extends ActionBarActivity {
 
     String sbjt, desc;
     int[] due = new int[3];
@@ -94,12 +94,12 @@ public class Activity_PostAdd extends ActionBarActivity {
                     due[1] = ((DatePicker) (findViewById(R.id.duedate))).getMonth() + 1;
                     due[2] = ((DatePicker) (findViewById(R.id.duedate))).getYear();
                     PostData();
-                    Intent i = new Intent(Activity_PostAdd.this, Activity_PostView.class);
+                    Intent i = new Intent(PostAdd.this, PostView.class);
                     startActivity(i);
                     finish();
                     overridePendingTransition(R.anim.appear_decelerate_ltr, R.anim.disappear_decelerate_ltr);
                 } else {
-                    Toast toast = Toast.makeText(Activity_PostAdd.this, "내용을 입력해주세요!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(PostAdd.this, "내용을 입력해주세요!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 return true;
@@ -111,7 +111,7 @@ public class Activity_PostAdd extends ActionBarActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                Intent i = new Intent(Activity_PostAdd.this, Activity_PostView.class);
+                Intent i = new Intent(PostAdd.this, PostView.class);
                 startActivity(i);
                 finish();
                 overridePendingTransition(R.anim.appear_decelerate_ltr, R.anim.disappear_decelerate_ltr);

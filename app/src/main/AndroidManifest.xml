@@ -13,27 +13,27 @@
         android:icon="@drawable/ic"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity_Main">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity_MealPlanner"></activity>
+        <activity android:name=".MealPlanner"/>
         <activity
-            android:name=".Activity_PostAdd"
-            android:parentActivityName=".Activity_PostView"/>
-        <activity android:name=".Activity_PostView"/>
+            android:name=".PostAdd"
+            android:parentActivityName=".PostView"/>
+        <activity android:name=".PostView"/>
         <activity
-            android:name=".Activity_Settings"
+            android:name=".Settings"
             android:theme="@android:style/Theme.Light.NoTitleBar"/>
         <activity android:name="Timetable"/>
-        <activity android:name=".Activity_AcademicCalendar"/>
+        <activity android:name=".AcademicCalendar"/>
         <activity
-            android:name=".Activity_Credits"
+            android:name=".Credits"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".Widget_Meal">
+        <receiver android:name=".widget.MealWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

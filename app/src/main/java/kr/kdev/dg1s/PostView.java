@@ -24,11 +24,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import kr.kdev.dg1s.utils.Adapters;
+import kr.kdev.dg1s.utils.Parsers;
 
-public class Activity_PostView extends ActionBarActivity {
 
-    Parser_Homework homeworkParser;
-    Adapter_Post adapter;
+public class PostView extends ActionBarActivity {
+
+    Parsers.HomeworkParser homeworkParser;
+    Adapters.PostAdapter adapter;
     ListView lv;
     private WebView wb;
 
@@ -48,7 +51,7 @@ public class Activity_PostView extends ActionBarActivity {
         lv = (ListView) findViewById(R.id.lvs);
         wb = (WebView) findViewById(R.id.tpweb);
 
-        homeworkParser = new Parser_Homework();
+        homeworkParser = new Parsers.HomeworkParser();
     }
 
     @Override
@@ -73,7 +76,7 @@ public class Activity_PostView extends ActionBarActivity {
                 }
                 return true;
             case R.id.action_homework_add:
-                Intent i = new Intent(getApplicationContext(), Activity_PostAdd.class);
+                Intent i = new Intent(getApplicationContext(), PostAdd.class);
                 startActivity(i);
                 finish();
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
@@ -119,16 +122,16 @@ public class Activity_PostView extends ActionBarActivity {
         }
     }
 
-    public class HWAsync extends AsyncTask<String, String, ArrayList<Adapter_PostList>> {
+    public class HWAsync extends AsyncTask<String, String, ArrayList<Adapters.PostListAdapter>> {
 
         @Override
-        protected ArrayList<Adapter_PostList> doInBackground(String... params) {
+        protected ArrayList<Adapters.PostListAdapter> doInBackground(String... params) {
             return homeworkParser.parsePost();//파싱 정보를 ArrayList로 가지고 옵니다.
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Adapter_PostList> result) {
-            adapter = new Adapter_Post(Activity_PostView.this, R.layout.postitem, result);
+        protected void onPostExecute(ArrayList<Adapters.PostListAdapter> result) {
+            adapter = new Adapters.PostAdapter(PostView.this, R.layout.postitem, result);
             lv.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             AnimationSet set = new AnimationSet(true);

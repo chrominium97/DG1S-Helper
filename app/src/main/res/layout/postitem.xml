@@ -23,7 +23,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/subjecticon"
+            android:id="@+id/subjectIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/subjects_etc" />
@@ -32,9 +32,9 @@
             android:id="@+id/subject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/subjecticon"
+            android:layout_alignBaseline="@id/subjectIcon"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/subjecticon"
+            android:layout_toRightOf="@id/subjectIcon"
             android:gravity="center"
             android:text="@string/subject_others"
             android:textColor="#444444"

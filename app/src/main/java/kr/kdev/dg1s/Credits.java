@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class Activity_Credits extends ActionBarActivity {
+public class Credits extends ActionBarActivity {
 
     private int i = 0;
     private boolean media_playing = false;
@@ -46,10 +46,10 @@ public class Activity_Credits extends ActionBarActivity {
                                 media_playing = true;
                                 i = 0;
                                 findViewById(R.id.creditback).setBackgroundColor(Color.rgb(255, 0, 0));
-                                Toast.makeText(Activity_Credits.this, "보라타운이 돌아왔습니다 ㅎㅎ", Toast.LENGTH_SHORT).show();
-                                Activity_Credits.this.getResources().openRawResource(R.raw.easter_egg);
+                                Toast.makeText(Credits.this, "보라타운이 돌아왔습니다 ㅎㅎ", Toast.LENGTH_SHORT).show();
+                                Credits.this.getResources().openRawResource(R.raw.easter_egg);
                                 MediaPlayer mp;
-                                mp = MediaPlayer.create(Activity_Credits.this, R.raw.easter_egg);
+                                mp = MediaPlayer.create(Credits.this, R.raw.easter_egg);
                                 mp.seekTo(0);
                                 mp.start();
                                 mp.setOnCompletionListener(new OnCompletionListener() {
