@@ -8,6 +8,11 @@ android {
         targetSdkVersion 19
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
     buildTypes {
         release {
             runProguard false
@@ -23,5 +28,5 @@ dependencies {
     compile('de.keyboardsurfer.android.widget:crouton:1.8.4') {
         exclude group: 'com.google.android', module: 'support-v4'
     }
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:0.7.1@aar'
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
 }

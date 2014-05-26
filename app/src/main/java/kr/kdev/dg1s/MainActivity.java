@@ -24,7 +24,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
@@ -39,22 +38,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import kr.kdev.dg1s.utils.Adapters;
 import kr.kdev.dg1s.utils.Parsers;
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements OnRefreshListener {
 
     SharedPreferences prefs;
     Parsers.WeatherParser weatherParser;
     String breakfast, lunch, dinner;
     private Source source;
-    private boolean mFlag = false;
-    private Handler emptyHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            mFlag = false;
-        }
-    };
+
     private TextView BreakfastTextView, LunchTextView, DinnerTextView;
     private Handler SikdanHandler = new Handler() {
         @Override
@@ -64,13 +62,23 @@ public class MainActivity extends ActionBarActivity {
                 setAcademic();
                 setTwaesa();
             }
+            Crouton.makeText(MainActivity.this, getString(R.string.sikdan_updated), Style.INFO).show();
+            pullToRefreshLayout.setRefreshComplete();
         }
     };
+
+    private PullToRefreshLayout pullToRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        pullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.infoScrollView);
+        ActionBarPullToRefresh.from(this)
+                .allChildrenArePullable()
+                .listener(this)
+                .setup(pullToRefreshLayout);
 
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff555555"));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
@@ -159,9 +167,6 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(i2);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
                 break;
-            case R.id.action_refresh:
-                ManualUpdateAll();
-                break;
         }
         return true;
     }
@@ -213,7 +218,7 @@ public class MainActivity extends ActionBarActivity {
                 prefs.edit().putString("updatedate", strNow).commit();//실행날짜 업데이트
             }
         } else {//네트워크가 통신가능하지 않다면
-            Toast.makeText(MainActivity.this, getString(R.string.error_network_long), Toast.LENGTH_SHORT).show();
+            Crouton.makeText(MainActivity.this, R.string.error_network_long, Style.ALERT).show();
             Log.d("NetStat", "네트워크 상태 불량!");
         }
         setWeather();
@@ -249,10 +254,10 @@ public class MainActivity extends ActionBarActivity {
             new WeatherAsync().execute(null, null, null);//날씨 업데이트
             UpdateThread thread = new UpdateThread();
             thread.start();//식단, 학사정보 업데이트
-            Toast.makeText(MainActivity.this, getString(R.string.sikdan_updated), Toast.LENGTH_SHORT).show();
             Log.d("ManualUpdateAll", "강제 업데이트 성공.");
         } else {
-            Toast.makeText(MainActivity.this, getString(R.string.error_network_long), Toast.LENGTH_SHORT).show();
+            pullToRefreshLayout.setRefreshComplete();
+            Crouton.makeText(MainActivity.this, getString(R.string.error_network_long), Style.ALERT).show();
             Log.d("ManualUpdateAll", "강제 업데이트 실패.");
         }
 
@@ -582,5 +587,35 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
+    }
+    @Override
+    public void onRefreshStarted(View view) {
+        ManualUpdateAll();
+
+        /**
+         * Simulate Refresh with 4 seconds sleep
+         */
+        /*
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                super.onPostExecute(result);
+
+                // Notify PullToRefreshLayout that the refresh has finished
+                pullToRefreshLayout.setRefreshComplete();
+            }
+        }.execute();
+        */
     }
 }

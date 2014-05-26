@@ -14,7 +14,7 @@
     <string name="confirm">確認</string>
 
     <string name="update_info">アップデート内訳：</string>
-    <string name="update_description">1. バグの修正\n2. 翻訳アップデート\n3. 新しい転換効果\n4. Android AppCompat v7適用</string>
+    <string name="update_description">UI 改善</string>
 
     <!-- 액션바 항목 -->
     <string name="actionbar_academic">学事日程</string>

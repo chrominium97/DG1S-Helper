@@ -17,7 +17,7 @@
     <string name="confirm">Confirm</string>
 
     <string name="update_info">Update information :</string>
-    <string name="update_description">1. Bug fixes\n2. Updated translations\n3. New transition effects\n4. Applied Android AppCompat v7</string>
+    <string name="update_description">UI refinements</string>
 
     <!-- 액션바 항목 -->
     <string name="actionbar_academic">Academic Calendar</string>
