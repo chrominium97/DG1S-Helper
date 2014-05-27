@@ -23,15 +23,15 @@ public class Parsers {
 
     public static class WeatherParser {
         private final String TAG = "WeatherParser";
-        ArrayList<Adapters.WeatherAdapter> parseWeather;
+        ArrayList<Adapters.WeatherAdapter> weatherAdapterArrayList;
 
         public WeatherParser() {
-            parseWeather = new ArrayList<Adapters.WeatherAdapter>();
+            weatherAdapterArrayList = new ArrayList<Adapters.WeatherAdapter>();
         }
 
         public ArrayList<Adapters.WeatherAdapter> parseWeather() {
             try {
-                parseWeather.clear();
+                weatherAdapterArrayList.clear();
                 InputStream inputStream = new URL("http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=2714074500").openStream();
 
                 //Parser
@@ -76,7 +76,7 @@ public class Parsers {
                             break;
                         case XmlPullParser.END_TAG:
                             if (TAG.equals("data")) {
-                                parseWeather.add(weatherAdapter);
+                                weatherAdapterArrayList.add(weatherAdapter);
                                 count++;
                                 Log.d(TAG, "-----");
                             }
@@ -95,7 +95,7 @@ public class Parsers {
                 e.printStackTrace();
                 Log.d("TAG", "NPE");
             }
-            return parseWeather;
+            return weatherAdapterArrayList;
         }
     }
 
@@ -159,13 +159,10 @@ public class Parsers {
                 }
 
             } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (XmlPullParserException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -180,8 +177,18 @@ public class Parsers {
 
         public ArrayList<Adapters.MealAdapter> parseMeal(Context context) {
             UpdateThread updateThread = new UpdateThread();
+            parseMeal = new ArrayList<Adapters.MealAdapter>();
             prefs = context.getSharedPreferences("kr.kdev.dg1s", Context.MODE_PRIVATE);
             updateThread.start();
+
+            synchronized (updateThread) {
+                try {
+                    updateThread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             return parseMeal;
         }
 
@@ -197,21 +204,21 @@ public class Parsers {
                 int cnt = table.getAllElements(HTMLElementName.IMG).size();
 
                 for (int i = 0; i < cnt; i++) {
-                    String panbyul = table.getAllElements(HTMLElementName.IMG).get(i).getAttributeValue("alt");
-                    Log.d("MealParser", panbyul);
-                    if (panbyul != null) {
-                        if (panbyul.equals("조식")) {
+                    String tag = table.getAllElements(HTMLElementName.IMG).get(i).getAttributeValue("alt");
+                    Log.d("MealParser", tag);
+                    if (tag != null) {
+                        if (tag.equals("조식")) {
                             Log.d("MealPrefs", table.getAllElements(HTMLElementName.IMG).get(i)
                                     .getParentElement().getContent().toString().replaceAll("[^>]*/> ", "")
                                     .replaceAll("[①-⑮]", ""));
                             prefs.edit().putString("breakfast", table.getAllElements(HTMLElementName.IMG).get(i)
                                     .getParentElement().getContent().toString().replaceAll("[^>]*/> ", "")
-                                    .replaceAll("[①-⑮]", "")).commit();
-                        } else if (panbyul.equals("중식")) {
+                                    .replaceAll("[①-⑮]", "").replaceAll("\t", "")).commit();
+                        } else if (tag.equals("중식")) {
                             prefs.edit().putString("lunch", table.getAllElements(HTMLElementName.IMG).get(i)
                                     .getParentElement().getContent().toString().replaceAll("[^>]*/> ", "")
                                     .replaceAll("[①-⑮]", "")).commit();
-                        } else if (panbyul.equals("석식")) {
+                        } else if (tag.equals("석식")) {
                             prefs.edit().putString("dinner", table.getAllElements(HTMLElementName.IMG).get(i)
                                     .getParentElement().getContent().toString().replaceAll("[^>]*/> ", "")
                                     .replaceAll("[①-⑮]", "")).commit();
@@ -220,10 +227,8 @@ public class Parsers {
                 }
                 inputStream.close();
             } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (NullPointerException e) {
                 e.printStackTrace();
@@ -238,6 +243,7 @@ public class Parsers {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                notify();
             }
         }
     }

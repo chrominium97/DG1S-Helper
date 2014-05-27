@@ -192,7 +192,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:gravity="left|center_vertical"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -239,7 +239,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:gravity="left|center_vertical"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -286,7 +286,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:gravity="left|center_vertical"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -333,7 +333,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:gravity="left|center_vertical"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -380,7 +380,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:gravity="left|center_vertical"
                         android:orientation="horizontal"
                         android:padding="4dp">
@@ -452,43 +452,43 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:padding="10dp">
 
                         <ImageView
-                            android:id="@+id/academicicon"
+                            android:id="@+id/academicIcon"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/academic" />
 
                         <TextView
-                            android:id="@+id/academictitle"
+                            android:id="@+id/academicTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBaseline="@id/academicicon"
+                            android:layout_alignBaseline="@id/academicIcon"
                             android:layout_marginLeft="20dp"
-                            android:layout_toRightOf="@id/academicicon"
+                            android:layout_toRightOf="@id/academicIcon"
                             android:gravity="center"
                             android:text="@string/main_academic"
                             android:textSize="30sp" />
 
                         <TextView
-                            android:id="@+id/academicdayinfo"
+                            android:id="@+id/academicDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/academictitle"
-                            android:layout_below="@id/academictitle"
+                            android:layout_alignLeft="@id/academicTitle"
+                            android:layout_below="@id/academicTitle"
                             android:gravity="center"
                             android:text="@string/dummy_date_with_letter"
                             android:textColor="#666666"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/academictv"
+                            android:id="@+id/academicInfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/academictitle"
-                            android:layout_below="@id/academicdayinfo"
+                            android:layout_alignLeft="@id/academicTitle"
+                            android:layout_below="@id/academicDate"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
                             android:text="@string/error_no_schedule"
@@ -502,43 +502,43 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/academiccontainer"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:padding="10dp">
 
                         <ImageView
-                            android:id="@+id/breakfasticon"
+                            android:id="@+id/mealIcon"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/meal" />
 
                         <TextView
-                            android:id="@+id/breakfasttitle"
+                            android:id="@+id/mealType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBaseline="@id/breakfasticon"
+                            android:layout_alignBaseline="@id/mealIcon"
                             android:layout_marginLeft="20dp"
-                            android:layout_toRightOf="@id/breakfasticon"
+                            android:layout_toRightOf="@id/mealIcon"
                             android:gravity="center"
                             android:text="@string/breakfast"
                             android:textSize="30sp" />
 
                         <TextView
-                            android:id="@+id/breakfasttime"
+                            android:id="@+id/mealTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/breakfasttitle"
-                            android:layout_below="@id/breakfasttitle"
+                            android:layout_alignLeft="@id/mealType"
+                            android:layout_below="@id/mealType"
                             android:gravity="center"
                             android:text="@string/time_breakfast"
                             android:textColor="#666666"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/breakfasttv"
+                            android:id="@+id/mealDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/breakfasttitle"
-                            android:layout_below="@id/breakfasttime"
+                            android:layout_alignLeft="@id/mealType"
+                            android:layout_below="@id/mealTime"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
                             android:text="@string/error_no_meal"
@@ -552,7 +552,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/breakfastcontainer"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:padding="10dp">
 
                         <ImageView
@@ -611,7 +611,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lunchcontainer"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/hwitemback"
+                        android:background="@drawable/card_background"
                         android:padding="10dp">
 
                         <ImageView

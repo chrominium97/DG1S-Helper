@@ -19,16 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MealPlanner"/>
+        <activity android:name=".MealPlanner" />
         <activity
             android:name=".PostAdd"
-            android:parentActivityName=".PostView"/>
-        <activity android:name=".PostView"/>
+            android:parentActivityName=".PostView" />
+        <activity android:name=".PostView" />
         <activity
             android:name=".Settings"
-            android:theme="@android:style/Theme.Light.NoTitleBar"/>
-        <activity android:name="Timetable"/>
-        <activity android:name=".AcademicCalendar"/>
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity android:name="Timetable" />
+        <activity android:name=".AcademicCalendar" />
         <activity
             android:name=".Credits"
             android:screenOrientation="portrait" />
@@ -39,17 +39,21 @@
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/sikdanwidget_provider"/>
+                android:resource="@xml/sikdanwidget_provider" />
             <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
         </receiver>
 
-        <service android:enabled="true" android:name=".utils.NotificationService">
+        <service
+            android:name=".utils.NotificationService"
+            android:enabled="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.intent.action.PACKAGE_INSTALL" />
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package"/>
+
+                <data android:scheme="package" />
             </intent-filter>
         </service>
     </application>

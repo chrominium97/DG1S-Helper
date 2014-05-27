@@ -30,7 +30,7 @@
         android:layout_below="@id/kdev_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/hwitemback"
+        android:background="@drawable/card_background"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp">

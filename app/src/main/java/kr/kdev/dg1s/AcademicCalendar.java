@@ -63,7 +63,7 @@ public class AcademicCalendar extends ActionBarActivity {
 
         });
 
-        mDateDisplay = (TextView) findViewById(R.id.academictitle);
+        mDateDisplay = (TextView) findViewById(R.id.academicTitle);
 
         final Calendar c = Calendar.getInstance();
 

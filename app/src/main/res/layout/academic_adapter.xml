@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/card_background"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/academicIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/academic" />
+
+    <TextView
+        android:id="@+id/academicTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/academicIcon"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/academicIcon"
+        android:gravity="center"
+        android:text="@string/main_academic"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/academicDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/academicTitle"
+        android:layout_below="@id/academicTitle"
+        android:gravity="center"
+        android:text="@string/dummy_date_with_letter"
+        android:textColor="#666666"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/academicInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/academicTitle"
+        android:layout_below="@id/academicDate"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/error_no_schedule"
+        android:textColor="#444444"
+        android:textSize="13sp" />
+
+</RelativeLayout>

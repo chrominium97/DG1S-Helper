@@ -20,7 +20,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,7 +46,7 @@ import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLa
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class MainActivity extends ActionBarActivity implements OnRefreshListener {
+public class MainActivity2 extends ActionBarActivity implements OnRefreshListener {
 
     Context context;
 
@@ -58,7 +57,6 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
 
     private PullToRefreshLayout pullToRefreshLayout;
 
-    private TextView BreakfastTextView, LunchTextView, DinnerTextView;
     private Handler SikdanHandler = new Handler() {
         @Override
         public void handleMessage(Message message) {
@@ -67,7 +65,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
                 setAcademic();
                 setTwaesa();
             }
-            Crouton.makeText(MainActivity.this, getString(R.string.sikdan_updated), Style.INFO).show();
+            Crouton.makeText(MainActivity2.this, getString(R.string.sikdan_updated), Style.INFO).show();
             pullToRefreshLayout.setRefreshComplete();
         }
     };
@@ -75,7 +73,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.home);
 
         context = getApplicationContext();
 
@@ -90,88 +88,21 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
 
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff555555"));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
-
-        BreakfastTextView = (TextView) findViewById(R.id.mealDetails);
-        LunchTextView = (TextView) findViewById(R.id.lunchtv);
-        DinnerTextView = (TextView) findViewById(R.id.dinnertv);
-
-        //식단표 보기 버튼
-        Button menubtn1 = (Button) findViewById(R.id.menubtn1);
-        menubtn1.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, MealPlanner.class);
-                startActivity(intent1);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-
-        //숙제 보기 버튼
-        Button menubtn2 = (Button) findViewById(R.id.menubtn2);
-        menubtn2.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent2 = new Intent(MainActivity.this, PostView.class);
-                startActivity(intent2);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-
-        //학사일정 버튼
-        Button menubtn4 = (Button) findViewById(R.id.menubtn4);
-        menubtn4.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent4 = new Intent(MainActivity.this, AcademicCalendar.class);
-                startActivity(intent4);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-
-        RelativeLayout breakfastbtn = (RelativeLayout) findViewById(R.id.breakfastcontainer);
-        RelativeLayout lunchbtn = (RelativeLayout) findViewById(R.id.lunchcontainer);
-        RelativeLayout dinnerbtn = (RelativeLayout) findViewById(R.id.dinnercontainer);
-        RelativeLayout academicbtn = (RelativeLayout) findViewById(R.id.academiccontainer);
-
-        breakfastbtn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-        lunchbtn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-        dinnerbtn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-        academicbtn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AcademicCalendar.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-
         prefs = getSharedPreferences("kr.kdev.dg1s", MODE_PRIVATE);
+
+        addLayouts();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent i1 = new Intent(MainActivity.this, Settings.class);
+                Intent i1 = new Intent(MainActivity2.this, Settings.class);
                 startActivity(i1);
                 overridePendingTransition(R.anim.appear_decelerate_btt, R.anim.still);
                 break;
             case R.id.action_credits:
-                Intent i2 = new Intent(MainActivity.this, Credits.class);
+                Intent i2 = new Intent(MainActivity2.this, Credits.class);
                 startActivity(i2);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
                 break;
@@ -199,8 +130,38 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
     @Override
     public void onResume() {
         super.onResume();
-        chkFirstRun();
+        isFirstRun();
         updateAll();
+    }
+
+    private void addLayouts() {
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        String strNow = new SimpleDateFormat("yyyy/MM/dd").format(date);
+
+        if (networkAvailiable()) {
+            Log.d("NetStat", "네트워크 상태 양호.");
+            if (now - prefs.getLong("updatehour", 0) >= 10800000 || prefs.getString("updateDate", "").length() <= 0) {//처음 실행했거나 이전 실행시에서 3시간이 경과했다면
+                new WeatherAsync().execute(null, null, null);//날씨 업데이트
+            }
+            if (!prefs.getString("updateDate", "").equals(strNow) || prefs.getString("updateDate", "").length() <= 0)//처음 실행했거나 이전 실행시에서 하루가 경과했다면
+            {
+                UpdateThread thread = new UpdateThread();
+                thread.start();//식단, 학사정보 업데이트
+            }
+        } else {//네트워크가 통신가능하지 않다면
+            Crouton.makeText(MainActivity2.this, R.string.error_network_long, Style.ALERT).show();
+            Log.d("NetStat", "네트워크 상태 불량!");
+        }
+
+        weatherParser = new Parsers.WeatherParser();
+
+        //setWeather();
+        //setMeal();
+        //setDayInfo();
+        //setAcademic();
+        //setTwaesa();
     }
 
     private void updateAll() {
@@ -211,7 +172,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd");
         String strNow = sdfNow.format(date);
 
-        if (chkNetStat()) {//네트워크가 통신가능한 상태라면
+        if (networkAvailiable()) {//네트워크가 통신가능한 상태라면
             Log.d("NetStat", "네트워크 상태 양호.");
 
             if (now - prefs.getLong("updatehour", 0) >= 10800000 || prefs.getString("updateDate", "").length() <= 0) {//처음 실행했거나 이전 실행시에서 3시간이 경과했다면
@@ -222,11 +183,9 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
             {
                 UpdateThread thread = new UpdateThread();
                 thread.start();//식단, 학사정보 업데이트
-
-                prefs.edit().putString("updateDate", strNow).commit();//실행날짜 업데이트
             }
         } else {//네트워크가 통신가능하지 않다면
-            Crouton.makeText(MainActivity.this, R.string.error_network_long, Style.ALERT).show();
+            Crouton.makeText(MainActivity2.this, R.string.error_network_long, Style.ALERT).show();
             Log.d("NetStat", "네트워크 상태 불량!");
         }
         setWeather();
@@ -258,14 +217,14 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
     }
 
     private void ManualUpdateAll() {
-        if (chkNetStat()) {
+        if (networkAvailiable()) {
             new WeatherAsync().execute(null, null, null);//날씨 업데이트
             UpdateThread thread = new UpdateThread();
             thread.start();//식단, 학사정보 업데이트
             Log.d("ManualUpdateAll", "강제 업데이트 성공.");
         } else {
             pullToRefreshLayout.setRefreshComplete();
-            Crouton.makeText(MainActivity.this, getString(R.string.error_network_long), Style.ALERT).show();
+            Crouton.makeText(MainActivity2.this, getString(R.string.error_network_long), Style.ALERT).show();
             Log.d("ManualUpdateAll", "강제 업데이트 실패.");
         }
 
@@ -333,10 +292,10 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         Log.d("SetDayInfo", "요일정보 업데이트 완료.");
     }
 
-    private void chkFirstRun() {
+    private void isFirstRun() {
         if (prefs.getBoolean("firstrun", true)) {
             //앱 최초 설치시에 호출
-            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity2.this);
             alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -356,7 +315,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
             try {
                 if (prefs.getInt("updaterun", 0) != getPackageManager().getPackageInfo(getPackageName(), 0).versionCode) {
                     //업데이트 후 호출
-                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity2.this);
                     alert.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -433,7 +392,9 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
     }
 
     private void setMeal() {
+
         ImageView sudagreen = (ImageView) findViewById(R.id.sudagreen);
+        sudagreen = new ImageView(context);
 
         if (prefs.getString("lunch", "").contains("<수다날>")) {
             String dump = prefs.getString("lunch", "");
@@ -455,10 +416,6 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         } else {
             sudagreen.setVisibility(View.GONE);
         }
-
-        BreakfastTextView.setText(prefs.getString("breakfast", ""));
-        LunchTextView.setText(prefs.getString("lunch", ""));
-        DinnerTextView.setText(prefs.getString("dinner", ""));
 
         findViewById(R.id.breakfastcontainer).setVisibility(View.VISIBLE);
         findViewById(R.id.lunchcontainer).setVisibility(View.VISIBLE);
@@ -548,7 +505,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         Log.d("SetWeather", "날씨 업데이트 완료.");
     }
 
-    private boolean chkNetStat() {
+    private boolean networkAvailiable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -570,15 +527,21 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
 
     class UpdateThread extends Thread {
         public void run() {
+            pullToRefreshLayout.setRefreshing(true);
             try {
-                updateSikdan();
+                Parsers.MealParser mealParser = new Parsers.MealParser();
+                mealParser.parseMeal(context);
                 updateAcademic();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Message msg = new Message();
-            msg.what = 0;
-            SikdanHandler.sendMessage(msg);
+            prefs.edit().putString("updateDate", new SimpleDateFormat("yyyy/MM/dd")
+                    .format(new Date(System.currentTimeMillis()))).commit();//실행날짜 업데이트
+            pullToRefreshLayout.setRefreshComplete();
+
+            Message message = new Message();
+            message.what = 0;
+            SikdanHandler.sendMessage(message);
         }
     }
 
@@ -586,6 +549,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
 
         @Override
         protected ArrayList<Adapters.WeatherAdapter> doInBackground(String... params) {
+            pullToRefreshLayout.setRefreshing(true);
             return weatherParser.parseWeather();
         }
 
@@ -596,6 +560,8 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
                 prefs.edit().putString("weather" + i, wa.weather).commit();
                 prefs.edit().putString("time" + i, wa.time).commit();
                 prefs.edit().putString("temp" + i, wa.temperature).commit();
+                prefs.edit().putLong("updatehour", System.currentTimeMillis()).commit();//실행시간 업데이트
+                pullToRefreshLayout.setRefreshComplete();
                 setWeather();
             }
         }
