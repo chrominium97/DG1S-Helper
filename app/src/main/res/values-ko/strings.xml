@@ -4,6 +4,8 @@
     <string name="welcome">대구일과학고등학교 어플리케이션을 설치해주셔서 감사합니다. 메뉴 버튼을 누르면 나오는 설정 창에서 자신의 학년과 반을 설정해주시기 바랍니다.</string>
     <string name="app_name">일과고 도우미</string>
 
+    <string name="settings_toast">식단 알림을 수신</string>
+
     <!-- 상태알림 -->
     <string name="error_network">네트워크 에러</string>
     <string name="error_network_long">네트워크 오류로 정보를 업데이트할 수 없습니다.</string>

@@ -48,17 +48,23 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class MainActivity extends ActionBarActivity implements OnRefreshListener {
 
+    Parsers parser = new Parsers();
+
+    Context context;
+
     SharedPreferences prefs;
     Parsers.WeatherParser weatherParser;
     String breakfast, lunch, dinner;
     private Source source;
 
+    private PullToRefreshLayout pullToRefreshLayout;
+
     private TextView BreakfastTextView, LunchTextView, DinnerTextView;
     private Handler SikdanHandler = new Handler() {
         @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 0) {
-                setSikdan();
+        public void handleMessage(Message message) {
+            if (message.what == 0) {
+                setMeal();
                 setAcademic();
                 setTwaesa();
             }
@@ -67,12 +73,16 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         }
     };
 
-    private PullToRefreshLayout pullToRefreshLayout;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        context = getApplicationContext();
+
+        //Intent intent = new Intent(context, NotificationService.class);
+        //intent.putExtra("init", "true");
+        //context.startService(intent);
 
         pullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.infoScrollView);
         ActionBarPullToRefresh.from(this)
@@ -222,7 +232,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
             Log.d("NetStat", "네트워크 상태 불량!");
         }
         setWeather();
-        setSikdan();
+        setMeal();
         setDayInfo();
         setAcademic();
         setTwaesa();
@@ -424,7 +434,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         html.close();
     }
 
-    private void setSikdan() {
+    private void setMeal() {
         ImageView sudagreen = (ImageView) findViewById(R.id.sudagreen);
 
         if (prefs.getString("lunch", "").contains("<수다날>")) {
@@ -555,6 +565,37 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
 
     }
 
+    @Override
+    public void onRefreshStarted(View view) {
+        ManualUpdateAll();
+
+        /**
+         * Simulate Refresh with 4 seconds sleep
+         */
+        /*
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                super.onPostExecute(result);
+
+                // Notify PullToRefreshLayout that the refresh has finished
+                pullToRefreshLayout.setRefreshComplete();
+            }
+        }.execute();
+        */
+    }
+
     class UpdateThread extends Thread {
         public void run() {
             try {
@@ -587,35 +628,5 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
             }
         }
 
-    }
-    @Override
-    public void onRefreshStarted(View view) {
-        ManualUpdateAll();
-
-        /**
-         * Simulate Refresh with 4 seconds sleep
-         */
-        /*
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                super.onPostExecute(result);
-
-                // Notify PullToRefreshLayout that the refresh has finished
-                pullToRefreshLayout.setRefreshComplete();
-            }
-        }.execute();
-        */
     }
 }

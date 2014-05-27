@@ -75,12 +75,12 @@
         <uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/infoScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/menubtnmargin">
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/menubtnmargin"
                 android:background="#eeeeee"
                 android:scrollbars="none">
 

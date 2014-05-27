@@ -21,10 +21,9 @@ import java.util.ArrayList;
 
 public class Parsers {
 
-
     public static class WeatherParser {
+        private final String TAG = "WeatherParser";
         ArrayList<Adapters.WeatherAdapter> parseWeather;
-        private String TAG = "WeatherParser";
 
         public WeatherParser() {
             parseWeather = new ArrayList<Adapters.WeatherAdapter>();
@@ -41,49 +40,43 @@ public class Parsers {
 
                 parser.setInput(inputStream, "UTF-8");
 
-                String tag;
-                Adapters.WeatherAdapter wa = null;
+                Adapters.WeatherAdapter weatherAdapter = null;
                 int parserEvent = parser.getEventType();
                 int count = 0;
-                boolean weather = false;
-                boolean time = false;
-                boolean temp = false;
+
+                boolean[] type = {false, false, false};
+
                 while (parserEvent != XmlPullParser.END_DOCUMENT && count <= 4) {
                     switch (parserEvent) {
                         case XmlPullParser.START_TAG:
-                            tag = parser.getName();
-
-                            if (tag.equals("data")) {
-                                wa = new Adapters.WeatherAdapter();
-                            } else if (tag.equals("wfKor")) {
-                                weather = true;
-                            } else if (tag.equals("hour")) {
-                                time = true;
-                            } else if (tag.equals("temp")) {
-                                temp = true;
+                            if (TAG.equals("data")) {
+                                weatherAdapter = new Adapters.WeatherAdapter();
+                            } else if (TAG.equals("wfKor")) {
+                                type[0] = true;
+                            } else if (TAG.equals("hour")) {
+                                type[1] = true;
+                            } else if (TAG.equals("temp")) {
+                                type[2] = true;
                             }
                             break;
                         case XmlPullParser.TEXT:
-                            tag = parser.getName();
-                            if (weather) {
-                                wa.weather = parser.getText().toString();
-                                weather = false;
-                                Log.d(TAG, "Weather: " + wa.weather);
-                            } else if (time) {
-                                wa.time = parser.getText().toString();
-                                time = false;
-                                Log.d(TAG, "Time: " + wa.time);
-                            } else if (temp) {
-                                wa.temperature = parser.getText().toString();
-                                temp = false;
-                                Log.d(TAG, "Temp: " + wa.temperature);
+                            if (type[0]) {
+                                weatherAdapter.weather = parser.getText();
+                                type[0] = false;
+                                Log.d(TAG, "Weather: " + weatherAdapter.weather);
+                            } else if (type[1]) {
+                                weatherAdapter.time = parser.getText();
+                                type[1] = false;
+                                Log.d(TAG, "Time: " + weatherAdapter.time);
+                            } else if (type[2]) {
+                                weatherAdapter.temperature = parser.getText();
+                                type[2] = false;
+                                Log.d(TAG, "Temp: " + weatherAdapter.temperature);
                             }
                             break;
                         case XmlPullParser.END_TAG:
-                            tag = parser.getName();
-
-                            if (tag.equals("data")) {
-                                parseWeather.add(wa);
+                            if (TAG.equals("data")) {
+                                parseWeather.add(weatherAdapter);
                                 count++;
                                 Log.d(TAG, "-----");
                             }
@@ -93,19 +86,15 @@ public class Parsers {
                 }
                 inputStream.close();
             } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (XmlPullParserException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 Log.d("TAG", "NPE");
             }
-
             return parseWeather;
         }
     }
@@ -186,9 +175,7 @@ public class Parsers {
 
     public static class MealParser {
         ArrayList<Adapters.MealAdapter> parseMeal;
-
         SharedPreferences prefs;
-
         private Source source;
 
         public ArrayList<Adapters.MealAdapter> parseMeal(Context context) {
@@ -198,7 +185,7 @@ public class Parsers {
             return parseMeal;
         }
 
-        private void updateMeal() throws IOException {
+        private void getMeal() throws IOException {
             try {
                 parseMeal.clear();
                 InputStream inputStream = new URL("http://www.dg1s.hs.kr/user/carte/list.do").openStream();
@@ -247,7 +234,7 @@ public class Parsers {
         class UpdateThread extends Thread {
             public void run() {
                 try {
-                    updateMeal();
+                    getMeal();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

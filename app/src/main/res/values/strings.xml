@@ -4,6 +4,8 @@
     <string name="welcome">Thank you for installing DG1S Helper. Press the menu button to access the settings window, and set your grade and class.</string>
     <string name="app_name">DG1S Helper</string>
 
+    <string name="settings_toast">Enable Toasts</string>
+
     <string name="url_meal">http://www.dg1s.hs.kr/user/carte/list.do</string>
     <string name="url_kma">http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=2714074500</string>
 

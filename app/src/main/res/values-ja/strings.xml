@@ -4,6 +4,8 @@
     <string name="welcome">一科学てだすけをインストールしていただき、ありがとうございます。メニューボタンを押すと出る設定ウィンドウで自分の学年とクラスを設定してください。</string>
     <string name="app_name">一科学てだすけ</string>
 
+    <string name="settings_toast">給食メニュー通知を受け取る</string>
+
     <!-- 상태알림 -->
     <string name="error_network">ネットワーク</string>
     <string name="error_network_long">ネットワークエラーで情報のアップデートはできません。</string>

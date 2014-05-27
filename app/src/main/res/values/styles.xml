@@ -7,6 +7,7 @@
 
     <style name="Widget.Custom.PtrHeader" parent="android:Widget">
         <item name="ptrHeaderBackground">@color/dark_gray</item>
+        <item name="ptrProgressBarColor">@color/light_gray</item>
     </style>
 
 </resources>
