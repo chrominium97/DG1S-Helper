@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -66,8 +65,10 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
                 setMeal();
                 setAcademic();
                 setTwaesa();
+                Crouton.makeText(MainActivity.this, getString(R.string.sikdan_updated), Style.INFO).show();
+            } else if (message.what == 1) {
+                Crouton.makeText(MainActivity.this, getString(R.string.error_network_long), Style.INFO).show();
             }
-            Crouton.makeText(MainActivity.this, getString(R.string.sikdan_updated), Style.INFO).show();
             pullToRefreshLayout.setRefreshComplete();
         }
     };
@@ -88,7 +89,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
                 .listener(this)
                 .setup(pullToRefreshLayout);
 
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff555555"));
+        ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.dark_gray));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         BreakfastTextView = (TextView) findViewById(R.id.mealDetails);
@@ -554,13 +555,8 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         NetworkInfo wimax = cm.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
 
-        if (wimax != null) {
-            return (mobile.isConnected() || wifi.isConnected() || wimax.isConnected());
-        } else {
-            return (mobile.isConnected() || wifi.isConnected());
-        }
-
-
+        return ((mobile != null && mobile.isConnected()) || (wifi != null && wifi.isConnected())
+                || (wimax != null && wimax.isConnected()));
     }
 
     @Override
@@ -570,14 +566,15 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
 
     class UpdateThread extends Thread {
         public void run() {
+            Message msg = new Message();
             try {
                 updateSikdan();
                 updateAcademic();
+                msg.what = 0;
             } catch (IOException e) {
                 e.printStackTrace();
+                msg.what = 1;
             }
-            Message msg = new Message();
-            msg.what = 0;
             SikdanHandler.sendMessage(msg);
         }
     }

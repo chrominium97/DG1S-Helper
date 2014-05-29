@@ -188,7 +188,6 @@ public class Parsers {
                     e.printStackTrace();
                 }
             }
-
             return parseMeal;
         }
 

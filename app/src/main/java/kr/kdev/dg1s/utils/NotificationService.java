@@ -23,7 +23,7 @@ import kr.kdev.dg1s.R;
 
 public class NotificationService extends Service {
 
-    final String TAG = "Notifications";
+    final static String TAG = "Notifications";
 
     Context context;
     Calendar calendar;
@@ -37,7 +37,7 @@ public class NotificationService extends Service {
     AlarmManager dinnerAlarm;
 
     SharedPreferences preferences;
-    NotificationManager manager;
+    NotificationManager notificationManager;
 
     Handler handler = new Handler() {
         @Override
@@ -55,9 +55,11 @@ public class NotificationService extends Service {
 
     @Override
     public void onCreate() {
+
         context = getApplicationContext();
+
         preferences = context.getSharedPreferences("kr.kdev.dg1s", MODE_PRIVATE);
-        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         //Create alarm manager
         breakfastAlarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -72,50 +74,64 @@ public class NotificationService extends Service {
         lunchIntent.putExtra("time", "lunch");
         dinnerIntent.putExtra("time", "dinner");
 
-        calendar = Calendar.getInstance();
+        refreshAlarm();
 
-        setAlarm(0, false);
-        setAlarm(1, false);
-        setAlarm(2, false);
         Log.d(TAG, "onCreate");
     }
 
-    void setAlarm(int code, boolean nextDay) {
-        switch (code) {
-            case 0:
-                calendar.set(Calendar.HOUR_OF_DAY, 6);
-                calendar.set(Calendar.MINUTE, 5);
-                calendar.set(Calendar.SECOND, 0);
-                setAlarmManager(breakfastAlarm, breakfastIntent, calendar, 260500, nextDay);
-                break;
-            case 1:
-                calendar.set(Calendar.HOUR_OF_DAY, 12);
-                calendar.set(Calendar.MINUTE, 27);
-                calendar.set(Calendar.SECOND, 0);
-                setAlarmManager(lunchAlarm, lunchIntent, calendar, 122700, nextDay);
-                break;
-            case 2:
-                calendar.set(Calendar.HOUR_OF_DAY, 18);
-                calendar.set(Calendar.MINUTE, 5);
-                calendar.set(Calendar.SECOND, 0);
-                setAlarmManager(dinnerAlarm, dinnerIntent, calendar, 180500, nextDay);
-        }
+    void refreshAlarm() {
+        calendar = Calendar.getInstance();
+
+        cancelAlarmManager(breakfastAlarm, breakfastIntent, R.id.breakfastAlarmId);
+        calendar.set(Calendar.HOUR_OF_DAY, 6);
+        calendar.set(Calendar.MINUTE, 5);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        setAlarmManager(breakfastAlarm, breakfastIntent, calendar, R.id.breakfastAlarmId,
+                (calendar.get(Calendar.HOUR_OF_DAY) < 6 ||
+                        (calendar.get(Calendar.HOUR_OF_DAY) == 6 && calendar.get(Calendar.MINUTE) < 5))
+        );
+
+        cancelAlarmManager(lunchAlarm, lunchIntent, R.id.lunchAlarmId);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 25);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        setAlarmManager(lunchAlarm, lunchIntent, calendar, R.id.breakfastAlarmId,
+                (calendar.get(Calendar.HOUR_OF_DAY) < 12 ||
+                        (calendar.get(Calendar.HOUR_OF_DAY) == 12 && calendar.get(Calendar.MINUTE) < 25))
+        );
+
+        cancelAlarmManager(dinnerAlarm, dinnerIntent, R.id.dinnerAlarmId);
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 5);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        setAlarmManager(dinnerAlarm, dinnerIntent, calendar, R.id.dinnerAlarmId,
+                (calendar.get(Calendar.HOUR_OF_DAY) < 18 ||
+                        (calendar.get(Calendar.HOUR_OF_DAY) == 18 && calendar.get(Calendar.MINUTE) < 5))
+        );
     }
 
-    void setAlarmManager(AlarmManager manager, Intent intent, Calendar calendar, int id, boolean nextDay) {
+    void cancelAlarmManager(AlarmManager manager, Intent intent, int id) {
+        PendingIntent pendingIntent = PendingIntent.getService(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        manager.cancel(pendingIntent);
+    }
+
+    void setAlarmManager(AlarmManager manager, Intent intent, Calendar calendar, int id, boolean isToday) {
         PendingIntent pendingIntent = PendingIntent.getService(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         long time = calendar.getTimeInMillis();
-        if (nextDay) {
+        if (!isToday) {
             time = time + 24 * 60 * 60 * 1000;
         }
-        if (Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             manager.setExact(AlarmManager.RTC, time, pendingIntent);
         } else {
-            manager.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pendingIntent);
+            manager.set(AlarmManager.RTC, time, pendingIntent);
         }
     }
 
-    void displayNotifications(String title, String menu) {
+    void displayNotification(String title, String menu) {
         if (menu != null && menu.length() < 15) {
             Notification notification = new NotificationCompat.Builder(getApplicationContext())
                     .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -125,46 +141,43 @@ public class NotificationService extends Service {
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(menu))
                     .build();
-            manager.notify(1, notification);
+            notificationManager.notify(1, notification);
         }
     }
 
     void pullAndDisplaySettings() {
-        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = new Date(System.currentTimeMillis());
-        String strNow = sdfNow.format(date);
+        Log.d("PDS", "start");
+        String strNow = new SimpleDateFormat("yyyy/MM/dd").format(new Date(System.currentTimeMillis()));
         if (!preferences.getString("updateDate", "").equals(strNow)) {
             UpdateThread thread = new UpdateThread();
-            thread.start();//식단, 학사정보 업데이트
+            thread.start();
             preferences.edit().putString("updateDate", strNow).commit();//실행날짜 업데이트
             Log.d("Update", "Updating meals...");
         } else {
-            if (calendar.get(Calendar.HOUR_OF_DAY) <= 7) {
-                displayNotifications(getString(R.string.breakfast), preferences.getString("breakfast", null));
-                setAlarm(0, true);
-            } else if (calendar.get(Calendar.HOUR_OF_DAY) <= 11 ||
-                    (calendar.get(Calendar.HOUR_OF_DAY) == 12 && calendar.get(Calendar.MINUTE) < 40)) {
-                displayNotifications(getString(R.string.lunch), preferences.getString("lunch", null));
-                setAlarm(1, true);
-            } else if (calendar.get(Calendar.HOUR_OF_DAY) < 23) {
-                displayNotifications(getString(R.string.dinner), preferences.getString("dinner", null));
-                setAlarm(2, true);
+            if (calendar.get(Calendar.HOUR_OF_DAY) == 6 && calendar.get(Calendar.MINUTE) <= 5) {
+                displayNotification(getString(R.string.breakfast), preferences.getString("breakfast", null));
+            } else if ((calendar.get(Calendar.HOUR_OF_DAY) == 12 && calendar.get(Calendar.MINUTE) < 40)) {
+                displayNotification(getString(R.string.lunch), preferences.getString("lunch", null));
+            } else if (calendar.get(Calendar.HOUR_OF_DAY) < 19) {
+                displayNotification(getString(R.string.dinner), preferences.getString("dinner", null));
             }
         }
+        refreshAlarm();
+        Log.d("PDS", "fin");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "Message received");
         if (intent.getStringExtra("time") != null) {
             pullAndDisplaySettings();
         }
-        // We want this service to continue running until it is explicitly
-        // stopped, so return sticky.
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
+        refreshAlarm();
         Intent intent = new Intent(context, NotificationService.class);
         context.startService(intent);
     }
@@ -173,7 +186,6 @@ public class NotificationService extends Service {
         public void run() {
             Parsers.MealParser mealParser = new Parsers.MealParser();
             mealParser.parseMeal(context);
-
             Message message = new Message();
             message.what = 0;
             handler.sendMessage(message);

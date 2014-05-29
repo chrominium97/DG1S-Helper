@@ -3,4 +3,8 @@
     <item name="breakfastContainer" type="id" />
     <item name="lunchContainer" type="id" />
     <item name="dinnerContainer" type="id" />
+
+    <item name="breakfastAlarmId" type="id" />
+    <item name="lunchAlarmId" type="id" />
+    <item name="dinnerAlarmId" type="id" />
 </resources>

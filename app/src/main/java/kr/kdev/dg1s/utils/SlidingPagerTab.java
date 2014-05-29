@@ -113,12 +113,12 @@ public class SlidingPagerTab extends HorizontalScrollView {
         dividerColor = a.getColor(R.styleable.SlidingPagerTab_dividerColor, dividerColor);
         indicatorHeight = a.getDimensionPixelSize(R.styleable.SlidingPagerTab_indicatorHeight, indicatorHeight);
         underlineHeight = a.getDimensionPixelSize(R.styleable.SlidingPagerTab_underlineHeight, underlineHeight);
-        dividerPadding = a.getDimensionPixelSize(R.styleable.SlidingPagerTab_dividerPadding, dividerPadding);
+        dividerPadding = a.getDimensionPixelSize(R.styleable.SlidingPagerTab_dividerPaddingSPT, dividerPadding);
         tabPadding = a.getDimensionPixelSize(R.styleable.SlidingPagerTab_tabPaddingLeftRight, tabPadding);
         tabBackgroundResId = a.getResourceId(R.styleable.SlidingPagerTab_tabBackground, tabBackgroundResId);
         shouldExpand = a.getBoolean(R.styleable.SlidingPagerTab_shouldExpand, shouldExpand);
         scrollOffset = a.getDimensionPixelSize(R.styleable.SlidingPagerTab_scrollOffset, scrollOffset);
-        textAllCaps = a.getBoolean(R.styleable.SlidingPagerTab_textAllCaps, textAllCaps);
+        textAllCaps = a.getBoolean(R.styleable.SlidingPagerTab_textAllCapsSPT, textAllCaps);
 
         a.recycle();
 
