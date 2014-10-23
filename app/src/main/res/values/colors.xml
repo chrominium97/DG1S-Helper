@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="dg1s_blue">#31a0db</color>
+    <color name="dg1s_blue_dark">#205fa2</color>
+    <color name="dg1s_cobalt">#162b78</color>
+    <color name="dg1s_cobalt_dark">#0f0964</color>
+    <color name="dg1s_gold">#f9bd00</color>
+    <color name="dg1s_gold_dark">#d38500</color>
+
+    <color name="black">#000000</color>
+    <color name="black_text">#df000000</color>
+    <color name="black_secondary">#8a000000</color>
+    <color name="black_hint">#43000000</color>
+    <color name="black_dividers">#1f000000</color>
+
     <color name="light_gray">#AAAAAA</color>
     <color name="homework">#0099cc</color>
     <color name="academic">#ff8a8a</color>

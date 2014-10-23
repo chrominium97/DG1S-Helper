@@ -6,161 +6,97 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import net.htmlparser.jericho.Element;
-import net.htmlparser.jericho.HTMLElementName;
 import net.htmlparser.jericho.Source;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+import kr.kdev.dg1s.card.CardViewStatusNotifier;
+import kr.kdev.dg1s.card.MealView;
+import kr.kdev.dg1s.card.provider.MealProvider;
 import kr.kdev.dg1s.utils.Adapters;
-import kr.kdev.dg1s.utils.NotificationService;
 import kr.kdev.dg1s.utils.Parsers;
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class MainActivity extends ActionBarActivity implements OnRefreshListener {
+public class MainActivity extends ActionBarActivity implements SwipeRefreshLayout.OnRefreshListener,
+        CardViewStatusNotifier {
+
+    public void notifyCompletion(int status) {
+
+    }
 
     Context context;
 
+    MealView manager;
     SharedPreferences prefs;
     Parsers.WeatherParser weatherParser;
-    String breakfast, lunch, dinner;
     private Source source;
-
-    private PullToRefreshLayout pullToRefreshLayout;
-
-    private TextView BreakfastTextView, LunchTextView, DinnerTextView;
-    private Handler SikdanHandler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            if (message.what == 0) {
-                setMeal();
-                setAcademic();
-                setTwaesa();
-                Crouton.makeText(MainActivity.this, getString(R.string.sikdan_updated), Style.INFO).show();
-            } else if (message.what == 1) {
-                Crouton.makeText(MainActivity.this, getString(R.string.error_network_long), Style.INFO).show();
-            }
-            pullToRefreshLayout.setRefreshComplete();
-        }
-    };
+    private SwipeRefreshLayout pullToRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+
+        prefs = getSharedPreferences("kr.kdev.dg1s", MODE_PRIVATE);
+
+        chkFirstRun();
 
         context = getApplicationContext();
 
-        Intent intent = new Intent(context, NotificationService.class);
-        context.startService(intent);
+        //Intent intent = new Intent(context, NotificationService.class);
+        //context.startService(intent);
 
-        pullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.infoScrollView);
-        ActionBarPullToRefresh.from(this)
-                .allChildrenArePullable()
-                .listener(this)
-                .setup(pullToRefreshLayout);
+        setLayouts();
 
-        ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.dark_gray));
-        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+        //ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.dark_gray));
+        //getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
-        BreakfastTextView = (TextView) findViewById(R.id.mealDetails);
-        LunchTextView = (TextView) findViewById(R.id.lunchtv);
-        DinnerTextView = (TextView) findViewById(R.id.dinnertv);
+    }
 
-        //식단표 보기 버튼
-        Button menubtn1 = (Button) findViewById(R.id.menubtn1);
-        menubtn1.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, MealPlanner.class);
-                startActivity(intent1);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
+    void setLayouts() {
+        setContentView(R.layout.main);
+
+        pullToRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.infoScrollView);
+        pullToRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                startManualUpdate();
             }
         });
 
-        //숙제 보기 버튼
-        Button menubtn2 = (Button) findViewById(R.id.menubtn2);
-        menubtn2.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent2 = new Intent(MainActivity.this, PostView.class);
-                startActivity(intent2);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
+        ViewGroup group = (ViewGroup) findViewById(R.id.container);
+        manager = new MealView(context, group, MainActivity.this);
 
-        //학사일정 버튼
-        Button menubtn4 = (Button) findViewById(R.id.menubtn4);
-        menubtn4.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent4 = new Intent(MainActivity.this, AcademicCalendar.class);
-                startActivity(intent4);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-
-        RelativeLayout breakfastbtn = (RelativeLayout) findViewById(R.id.breakfastcontainer);
-        RelativeLayout lunchbtn = (RelativeLayout) findViewById(R.id.lunchcontainer);
-        RelativeLayout dinnerbtn = (RelativeLayout) findViewById(R.id.dinnercontainer);
-        RelativeLayout academicbtn = (RelativeLayout) findViewById(R.id.academiccontainer);
-
-        breakfastbtn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-        lunchbtn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-        dinnerbtn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MealPlanner.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-        academicbtn.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AcademicCalendar.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-            }
-        });
-
-        prefs = getSharedPreferences("kr.kdev.dg1s", MODE_PRIVATE);
     }
 
     @Override
@@ -172,9 +108,41 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
                 overridePendingTransition(R.anim.appear_decelerate_btt, R.anim.still);
                 break;
             case R.id.action_credits:
+                /**
                 Intent i2 = new Intent(MainActivity.this, Credits.class);
                 startActivity(i2);
                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
+                 */
+                File externalDirectory = Environment.getExternalStorageDirectory();
+                File internalDirectory = Environment.getDataDirectory();
+                FileChannel source;
+                FileChannel destination;
+                String mealDBPath = "/data/" + "kr.kdev.dg1s" + "/databases/" + "meal.db";
+                String mealBackupDBPath = "meal.db";
+
+                String planDBPath = "/data/" + "kr.kdev.dg1s" + "/databases/" + "plans.db";
+                String planBackupDBPath = "plans.db";
+                File currentDB;
+                File backupDB;
+                try {
+                    currentDB = new File(internalDirectory, mealDBPath);
+                    backupDB = new File(externalDirectory, mealBackupDBPath);
+                    source = new FileInputStream(currentDB).getChannel();
+                    destination = new FileOutputStream(backupDB).getChannel();
+                    destination.transferFrom(source, 0, source.size());
+                    source.close();
+                    destination.close();
+
+                    currentDB = new File(internalDirectory, planDBPath);
+                    backupDB = new File(externalDirectory, planBackupDBPath);
+                    source = new FileInputStream(currentDB).getChannel();
+                    destination = new FileOutputStream(backupDB).getChannel();
+                    destination.transferFrom(source, 0, source.size());
+                    source.close();
+                    Toast.makeText(this, "DB Exported!", Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
         return true;
@@ -200,31 +168,19 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
     @Override
     public void onResume() {
         super.onResume();
-        chkFirstRun();
         updateAll();
     }
 
     private void updateAll() {
         weatherParser = new Parsers.WeatherParser();
         long now = System.currentTimeMillis();
-        Date date = new Date(now);
 
-        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd");
-        String strNow = sdfNow.format(date);
-
-        if (chkNetStat()) {//네트워크가 통신가능한 상태라면
+        if (hasInternetConnection()) {//네트워크가 통신가능한 상태라면
             Log.d("NetStat", "네트워크 상태 양호.");
 
             if (now - prefs.getLong("updatehour", 0) >= 10800000 || prefs.getString("updateDate", "").length() <= 0) {//처음 실행했거나 이전 실행시에서 3시간이 경과했다면
                 new WeatherAsync().execute(null, null, null);//날씨 업데이트
                 prefs.edit().putLong("updatehour", now).commit();//실행시간 업데이트
-            }
-            if (!prefs.getString("updateDate", "").equals(strNow) || prefs.getString("updateDate", "").length() <= 0)//처음 실행했거나 이전 실행시에서 하루가 경과했다면
-            {
-                UpdateThread thread = new UpdateThread();
-                thread.start();//식단, 학사정보 업데이트
-
-                prefs.edit().putString("updateDate", strNow).commit();//실행날짜 업데이트
             }
         } else {//네트워크가 통신가능하지 않다면
             Crouton.makeText(MainActivity.this, R.string.error_network_long, Style.ALERT).show();
@@ -233,7 +189,6 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         setWeather();
         setMeal();
         setDayInfo();
-        setAcademic();
         setTwaesa();
     }
 
@@ -258,38 +213,15 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         }
     }
 
-    private void ManualUpdateAll() {
-        if (chkNetStat()) {
+    private void startManualUpdate() {
+        if (hasInternetConnection()) {
             new WeatherAsync().execute(null, null, null);//날씨 업데이트
-            UpdateThread thread = new UpdateThread();
-            thread.start();//식단, 학사정보 업데이트
-            Log.d("ManualUpdateAll", "강제 업데이트 성공.");
+            manager.update(true);
+            Log.d("ManualUpdate", "강제 업데이트 성공.");
         } else {
-            pullToRefreshLayout.setRefreshComplete();
+            pullToRefreshLayout.setRefreshing(false);
             Crouton.makeText(MainActivity.this, getString(R.string.error_network_long), Style.ALERT).show();
-            Log.d("ManualUpdateAll", "강제 업데이트 실패.");
-        }
-
-    }
-
-    private void setAcademic() {
-        TextView academicinfo = (TextView) findViewById(R.id.academicInfo);
-        TextView academicdayinfo = (TextView) findViewById(R.id.academicDate);
-        RelativeLayout container = (RelativeLayout) findViewById(R.id.academiccontainer);
-
-        if (prefs.getString("academicinfo", "").length() >= 2) {
-            final Calendar c = Calendar.getInstance();
-
-            int mYear = c.get(Calendar.YEAR);
-            int mMonth = c.get(Calendar.MONTH) + 1;
-            int mDay = c.get(Calendar.DAY_OF_MONTH);
-
-            academicinfo.setText(prefs.getString("academicinfo", ""));
-            academicdayinfo.setText(mYear + "년 " + mMonth + "월 " + mDay + "일");
-
-            container.setVisibility(View.VISIBLE);
-        } else {
-            container.setVisibility(View.GONE);
+            Log.d("ManualUpdate", "강제 업데이트 실패.");
         }
 
     }
@@ -372,46 +304,6 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
             }
     }
 
-
-    private void updateSikdan() throws IOException {
-        breakfast = "등록된 식단이 없습니다.";
-        lunch = "등록된 식단이 없습니다.";
-        dinner = "등록된 식단이 없습니다.";
-
-        URL nURL = new URL("http://www.dg1s.hs.kr/user/carte/list.do");
-        InputStream html = nURL.openStream();
-        source = new Source(new InputStreamReader(html, "UTF-8"));
-        source.fullSequentialParse();
-
-        //테이블가져오기
-        Element table = source.getFirstElementByClass("meals_today_list");
-        int cnt = table.getAllElements(HTMLElementName.IMG).size();
-
-        for (int i = 0; i < cnt; i++) {
-            String panbyul = table.getAllElements(HTMLElementName.IMG).get(i).getAttributeValue("alt");
-            if (panbyul != null) {
-                if (panbyul.equals("조식")) {
-                    breakfast = table.getAllElements(HTMLElementName.IMG).get(i).getParentElement().getContent().toString();
-                    breakfast = breakfast.replaceAll("[^>]*/> ", "");
-                    breakfast = breakfast.replaceAll("[①-⑮]", "");
-                } else if (panbyul.equals("중식")) {
-                    lunch = table.getAllElements(HTMLElementName.IMG).get(i).getParentElement().getContent().toString();
-                    lunch = lunch.replaceAll("[^>]*/> ", "");
-                    lunch = lunch.replaceAll("[①-⑮]", "");
-                } else if (panbyul.equals("석식")) {
-                    dinner = table.getAllElements(HTMLElementName.IMG).get(i).getParentElement().getContent().toString();
-                    dinner = dinner.replaceAll("[^>]*/> ", "");
-                    dinner = dinner.replaceAll("[①-⑮]", "");
-                }
-            }
-        }
-        html.close();
-        prefs.edit().putString("breakfast", breakfast).commit();
-        prefs.edit().putString("lunch", lunch).commit();
-        prefs.edit().putString("lunch_original", lunch).commit();
-        prefs.edit().putString("dinner", dinner).commit();
-    }
-
     private void updateAcademic() throws IOException {
         String academicinfo;
         final Calendar c = Calendar.getInstance();
@@ -434,48 +326,6 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
     }
 
     private void setMeal() {
-        ImageView sudagreen = (ImageView) findViewById(R.id.sudagreen);
-
-        if (prefs.getString("lunch", "").contains("<수다날>")) {
-            String dump = prefs.getString("lunch", "");
-            dump = dump.replaceAll("<수다날>", "");
-            prefs.edit().putString("lunch", dump).commit();
-        } else if (prefs.getString("lunch", "").contains("<그린데이>")) {
-            String dump = prefs.getString("lunch", "");
-            dump = dump.replaceAll("<그린데이>", "");
-            prefs.edit().putString("lunch", dump).commit();
-        }
-
-
-        if (prefs.getString("lunch_original", "").contains("<수다날>")) {
-            sudagreen.setImageResource(R.drawable.sudanalback);
-            sudagreen.setVisibility(View.VISIBLE);
-        } else if (prefs.getString("lunch_original", "").contains("<그린데이>")) {
-            sudagreen.setImageResource(R.drawable.greendayback);
-            sudagreen.setVisibility(View.VISIBLE);
-        } else {
-            sudagreen.setVisibility(View.GONE);
-        }
-
-        BreakfastTextView.setText(prefs.getString("breakfast", ""));
-        LunchTextView.setText(prefs.getString("lunch", ""));
-        DinnerTextView.setText(prefs.getString("dinner", ""));
-
-        findViewById(R.id.breakfastcontainer).setVisibility(View.VISIBLE);
-        findViewById(R.id.lunchcontainer).setVisibility(View.VISIBLE);
-        findViewById(R.id.dinnercontainer).setVisibility(View.VISIBLE);
-
-        if (prefs.getString("breakfast", "").length() < 15) {
-            findViewById(R.id.breakfastcontainer).setVisibility(View.GONE);
-        }
-        if (prefs.getString("lunch", "").length() < 15) {
-            findViewById(R.id.lunchcontainer).setVisibility(View.GONE);
-        }
-        if (prefs.getString("dinner", "").length() < 15) {
-            findViewById(R.id.dinnercontainer).setVisibility(View.GONE);
-        }
-
-        Log.d("SetSikdan", "식단 업데이트 완료.");
     }
 
     private void setWeather() {
@@ -549,7 +399,7 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
         Log.d("SetWeather", "날씨 업데이트 완료.");
     }
 
-    private boolean chkNetStat() {
+    private boolean hasInternetConnection() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -559,24 +409,95 @@ public class MainActivity extends ActionBarActivity implements OnRefreshListener
                 || (wimax != null && wimax.isConnected()));
     }
 
-    @Override
-    public void onRefreshStarted(View view) {
-        ManualUpdateAll();
+    public void onRefresh() {
+
+        Log.d("HOME", "Layout pulled");
+        startManualUpdate();
     }
 
-    class UpdateThread extends Thread {
+    class ManualUpdateThread extends Thread {
+
         public void run() {
-            Message msg = new Message();
-            try {
-                updateSikdan();
-                updateAcademic();
-                msg.what = 0;
-            } catch (IOException e) {
-                e.printStackTrace();
-                msg.what = 1;
-            }
-            SikdanHandler.sendMessage(msg);
+            MealUpdateThread mealUpdateThread = new MealUpdateThread();
+            mealUpdateThread.start();
+            CalendarUpdateThread calendarUpdateThread = new CalendarUpdateThread();
+            calendarUpdateThread.start();
+            WeatherUpdateThread weatherUpdateThread = new WeatherUpdateThread();
+            weatherUpdateThread.start();
         }
+
+        public Handler UpdateStatusHandler = new Handler() {
+
+            int totalCallsCount = 3;
+            int receivedCallsCount = 0;
+
+            @Override
+            public void handleMessage(Message message) {
+                ArrayList<String> succeededThreads = new ArrayList<String>();
+
+                switch (message.what) {
+                    case -1:
+                        break;
+                    case 0:
+                        succeededThreads.add("식단");
+                        break;
+                    case 1:
+                        succeededThreads.add("학사일정");
+                        break;
+                    case 2:
+                        succeededThreads.add("날씨");
+                        break;
+                }
+
+                receivedCallsCount++;
+                if (receivedCallsCount == totalCallsCount) {
+                    if (succeededThreads.size() == 0) {
+                        Crouton.makeText(MainActivity.this, getString(R.string.error_network_long), Style.INFO).show();
+                    } else {
+                        Crouton.makeText(MainActivity.this, getString(R.string.sikdan_updated), Style.INFO).show();
+                    }
+                    pullToRefreshLayout.setRefreshing(false);
+                }
+            }
+        };
+
+        class MealUpdateThread extends Thread {
+            public void run() {
+                try {
+                    MealProvider provider = new MealProvider(MainActivity.this);
+                    provider.forceRefresh();
+                    UpdateStatusHandler.sendEmptyMessage(0);
+                } catch (IOException e) {
+                    UpdateStatusHandler.sendEmptyMessage(-1);
+                }
+            }
+        }
+
+        class CalendarUpdateThread extends Thread {
+            public void run() {
+                try {
+                    MealProvider provider = new MealProvider(MainActivity.this);
+                    provider.forceRefresh();
+                    UpdateStatusHandler.sendEmptyMessage(1);
+                } catch (IOException e) {
+                    UpdateStatusHandler.sendEmptyMessage(-1);
+                }
+            }
+        }
+
+        class WeatherUpdateThread extends Thread {
+            public void run() {
+                try {
+                    MealProvider provider = new MealProvider(MainActivity.this);
+                    provider.forceRefresh();
+                    UpdateStatusHandler.sendEmptyMessage(2);
+                } catch (IOException e) {
+                    UpdateStatusHandler.sendEmptyMessage(-1);
+                }
+            }
+        }
+
+
     }
 
     public class WeatherAsync extends AsyncTask<String, String, ArrayList<Adapters.WeatherAdapter>> {

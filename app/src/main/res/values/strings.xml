@@ -9,6 +9,9 @@
     <string name="url_meal">http://www.dg1s.hs.kr/user/carte/list.do</string>
     <string name="url_kma">http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=2714074500</string>
 
+    <!-- Meal cards -->
+    <string name="meal_icon">Meal icon</string>
+
     <!-- 상태알림 -->
     <string name="error_network">Network error</string>
     <string name="error_network_long">Unable to update information due to network error.</string>
@@ -23,7 +26,7 @@
 
     <!-- 액션바 항목 -->
     <string name="actionbar_academic">Academic Calendar</string>
-    <string name="actionbar_meal">Meal Plans</string>
+    <string name="actionbar_meal">School meals</string>
     <string name="actionbar_homework">Homework</string>
     <string name="actionbar_homework_add">Add a New Homework</string>
     <string name="actionbar_vending_machine">Vending Machine Refreshments</string>

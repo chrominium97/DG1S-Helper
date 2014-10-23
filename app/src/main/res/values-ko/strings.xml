@@ -20,7 +20,7 @@
 
     <!-- 액션바 항목 -->
     <string name="actionbar_academic">학사일정</string>
-    <string name="actionbar_meal">급식메뉴</string>
+    <string name="actionbar_meal">급식</string>
     <string name="actionbar_homework">숙제</string>
     <string name="actionbar_homework_add">숙제 추가</string>
     <string name="actionbar_vending_machine">자판기 음료수 목록</string>

@@ -1,0 +1,42 @@
+/ NEIS 급식조회 URL /
+
+http://hes.dge.go.kr/sts_sci_md00_001.do?schulCode=D100001936
+    &insttNm=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90
+    &schulCrseScCode=4&schulKndScCode=04&schYm=2014.11&searchButton=
+
+--- 요청 URL ---
+http://hes.dge.go.kr/sts_sci_md00_001.do
+
+
+--- 부가 데이터 ---
+
+    변수              | 설명           | 설정값
+    ----------------------------------------------------------------------------------------------------------------------
+    schulCode         | 학교 고유코드  | D100001936
+    insttNm           | 교명 UTF-8 %   | %EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&
+    schulCrseScCode   | 추가바람       | 4
+    schulKndScCode    | 추가바람       | 04
+    schYm             | 년/월          | (YYYY.MM 형식)
+    searchButton      | 추가바람       | (공백)
+
+
+/ NEIS 학사일정조회 URL /
+
+http://hes.dge.go.kr/sts_sci_sf01_001.do?schulCode=D100001936
+    &insttNm=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90
+    &schulCrseScCode=4&schulKndScCode=04&ay=2014&mm=11
+
+--- 요청 URL ---
+http://hes.dge.go.kr/sts_sci_sf01_001.do
+
+
+--- 부가 데이터 ---
+
+    변수              | 설명           | 설정값
+    ----------------------------------------------------------------------------------------------------------------------
+    schulCode         | 학교 고유코드  | D100001936
+    insttNm           | 교명 UTF-8 %   | %EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&
+    schulCrseScCode   | 추가바람       | 4
+    schulKndScCode    | 추가바람       | 04
+    ay                | 연도           | (YYYY 형식)
+    mm                | 월             | (MM 형식)

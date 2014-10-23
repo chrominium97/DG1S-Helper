@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/plans"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/title"
+    android:layout_toEndOf="@id/icon"
+    android:layout_toRightOf="@id/icon"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:paddingEnd="5dp"
+    android:paddingStart="5dp">
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@android:string/unknownName"
+        android:textColor="@color/black_text"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/breakfast_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/error_no_schedule"
+        android:textColor="@color/black_secondary"
+        android:textSize="16sp" />
+</LinearLayout>

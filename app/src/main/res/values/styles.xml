@@ -1,13 +1,13 @@
 <resources>
+    <!-- Material theme support -->
+    <style name="Theme.DG1S" parent="Theme.AppCompat.Light">
+        <!-- App branding color -->
+        <item name="colorPrimary">@color/dg1s_blue</item>
+        <!-- App branding color (darker) -->
+        <item name="colorPrimaryDark">@color/dg1s_blue_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/dg1s_cobalt</item>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
+        <!-- The rest of your attributes -->
     </style>
-
-    <style name="Widget.Custom.PtrHeader" parent="android:Widget">
-        <item name="ptrHeaderBackground">@color/dark_gray</item>
-        <item name="ptrProgressBarColor">@color/light_gray</item>
-    </style>
-
 </resources>

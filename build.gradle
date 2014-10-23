@@ -2,9 +2,12 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://github.com/futuresimple/android-floating-action-button"
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
     }
 }
 

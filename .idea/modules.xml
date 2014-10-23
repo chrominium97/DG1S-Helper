@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DG1S Helper.iml" filepath="$PROJECT_DIR$/DG1S Helper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DG1S-Helper.iml" filepath="$PROJECT_DIR$/DG1S-Helper.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
