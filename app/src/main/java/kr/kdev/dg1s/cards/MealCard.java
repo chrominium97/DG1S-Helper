@@ -1,9 +1,7 @@
-package kr.kdev.dg1s.card;
+package kr.kdev.dg1s.cards;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,33 +9,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.IOException;
-
 import kr.kdev.dg1s.R;
-import kr.kdev.dg1s.card.provider.MealProvider;
+import kr.kdev.dg1s.cards.provider.MealProvider;
+import kr.kdev.dg1s.cards.provider.datatypes.Meal;
 
-public class MealView {
+public class MealCard implements MealProvider.MealProviderInterface {
 
-    Handler refreshHandler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            switch (message.what) {
-                case 0:
-                    try {
-                        updateCards();
-                        viewAlert.notifyCompletion(CardViewStatusNotifier.SUCCESS);
-                    } catch (IOException e) {
-                        viewAlert.notifyCompletion(CardViewStatusNotifier.FAILURE);
-                    }
-                    mealCard.setVisibility(View.VISIBLE);
-            }
-        }
-    };
+    MealProvider provider;
 
     Context context;
 
     LinearLayout mealMenus;
-
     CardView mealCard;
     ViewGroup viewParent;
     ViewGroup cardContents;
@@ -45,20 +27,19 @@ public class MealView {
     LinearLayout breakfastMenu;
     LinearLayout lunchMenu;
     LinearLayout dinnerMenu;
-
     TextView breakfastText;
     TextView lunchText;
     TextView dinnerText;
 
-    private CardViewStatusNotifier viewAlert;
+    private CardViewStatusNotifier statusNotifier;
 
-    public MealView(Context arg0, ViewGroup parent, Activity activity) {
+    public MealCard(Context arg0, ViewGroup parent, Activity activity) {
 
         try { // Check if callback is implemented
-            viewAlert = (CardViewStatusNotifier) activity;
+            statusNotifier = (CardViewStatusNotifier) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() +
-                    "needs to implement ViewAlert");
+                    "needs to implement CardViewStatusNotifier");
         }
 
         context = arg0;
@@ -66,8 +47,8 @@ public class MealView {
         viewParent = parent;
 
         mealCard = (CardView) LayoutInflater.from(context).inflate(R.layout.card_meal, parent, true)
-                .findViewById(R.id.card);
-        mealCard.setVisibility(View.INVISIBLE);
+                .findViewById(R.id.card_meal);
+        mealCard.setVisibility(View.GONE);
 
         cardContents = (ViewGroup) mealCard.findViewById(R.id.card_contents);
 
@@ -81,38 +62,29 @@ public class MealView {
         lunchText = (TextView) lunchMenu.findViewById(R.id.lunch_menu);
         dinnerText = (TextView) dinnerMenu.findViewById(R.id.dinner_menu);
 
-        update(false);
+        provider = new MealProvider(context, this);
+        provider.requestMeal(false);
     }
 
-    class NetOps extends Thread {
-        public boolean forceUpdate;
-
-        public void run() {
-            try {
-                MealProvider provider = new MealProvider(context);
-                if (forceUpdate) {
-                    provider.forceRefresh();
-                }
-                refreshHandler.sendEmptyMessage(0);
-            } catch (IOException e) {
-                viewAlert.notifyCompletion(CardViewStatusNotifier.FAILURE);
-            }
+    public void onMealReceived(boolean succeeded, Meal meal) {
+        if (succeeded) {
+            statusNotifier.notifyCompletion(CardViewStatusNotifier.SUCCESS);
+            updateCards(meal);
+        } else {
+            statusNotifier.notifyCompletion(CardViewStatusNotifier.FAILURE);
         }
+        mealCard.setVisibility(View.VISIBLE);
     }
 
-    public void update(boolean forced) {
-        NetOps netOps = new NetOps();
-        netOps.forceUpdate = forced;
-        netOps.start();
+    public void forceUpdate() {
+        provider.requestMeal(true);
     }
 
-    void updateCards() throws IOException {
-        MealProvider provider = new MealProvider(context);
-        MealProvider.Meal meal = provider.getMeal();
+    void updateCards(Meal input) {
 
-        breakfastText.setText(meal.getBreakfast());
-        lunchText.setText(meal.getLunch());
-        dinnerText.setText(meal.getDinner());
+        breakfastText.setText(input.getBreakfast().toString().replace("[", "").replace("]", "").replaceAll(", ", "\n"));
+        lunchText.setText(input.getLunch().toString().replace("[", "").replace("]", "").replaceAll(", ", "\n"));
+        dinnerText.setText(input.getDinner().toString().replace("[", "").replace("]", "").replaceAll(", ", "\n"));
 
         if (breakfastText.getText().equals(context.getString(R.string.no_meal))) { // When there is no meal
             removeView(breakfastMenu, mealMenus);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/plans"
+    android:id="@+id/planList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/title"
@@ -21,10 +21,27 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/breakfast_menu"
+        android:id="@+id/plans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/error_no_schedule"
+        android:text="@string/error_no_schudules"
         android:textColor="@color/black_secondary"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/summaryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/monthly_statistics"
+        android:textColor="@color/black_hint"
+        android:textSize="14sp"
+        android:textAllCaps="true" />
+
+    <TextView
+        android:id="@+id/summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_hint"
+        android:textSize="14sp"
+        android:textAllCaps="true" />
 </LinearLayout>

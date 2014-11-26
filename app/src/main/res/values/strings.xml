@@ -9,15 +9,24 @@
     <string name="url_meal">http://www.dg1s.hs.kr/user/carte/list.do</string>
     <string name="url_kma">http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=2714074500</string>
 
-    <!-- Meal cards -->
+    <string name="update_finished_with_errors">Update finished with errors.</string>
+    <string name="update_finished_successfully">Update finished successfully.</string>
+
+    <!-- cards -->
     <string name="meal_icon">Meal icon</string>
+    <string name="set_grade">Please set your grade in the settings menu to view the summary.</string>
+
+    <string name="monthly_statistics">This month\'s summary</string>
+    <string name="day_total">Total № of days at school : </string>
+    <string name="day_events">№ of days with events : </string>
+    <string name="day_studying">№ of days without events : </string>
 
     <!-- 상태알림 -->
     <string name="error_network">Network error</string>
     <string name="error_network_long">Unable to update information due to network error.</string>
     <string name="error_no_description">No description.</string>
     <string name="error_no_meal">The meal is not yet registered.</string>
-    <string name="error_no_schedule">There are no plans for today.</string>
+    <string name="error_no_schudules">There are no plans for today.</string>
 
     <string name="confirm">Confirm</string>
 
@@ -25,8 +34,8 @@
     <string name="update_description">UI refinements</string>
 
     <!-- 액션바 항목 -->
-    <string name="actionbar_academic">Academic Calendar</string>
-    <string name="actionbar_meal">School meals</string>
+    <string name="actionbar_schedule">Schedule</string>
+    <string name="actionbar_meal">Meals</string>
     <string name="actionbar_homework">Homework</string>
     <string name="actionbar_homework_add">Add a New Homework</string>
     <string name="actionbar_vending_machine">Vending Machine Refreshments</string>
@@ -85,7 +94,6 @@
         <item>Class 4</item>
     </string-array>
 
-    <!-- 위젯 -->
     <string name="no_meal">No meal</string>
 
     <!-- 과목 종류 -->
@@ -150,11 +158,11 @@
     <string name="classchk_title">Class</string>
     <string name="classchk_sum">Set up your class.</string>
 
-    <string-array name="gradeList">
+    <integer-array name="gradeList">
         <item>1</item>
         <item>2</item>
         <item>3</item>
-    </string-array>
+    </integer-array>
 
     <string-array name="classList">
         <item>1</item>

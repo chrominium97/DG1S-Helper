@@ -95,7 +95,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/monday_sentence"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#444444" />
+                android:textColor="@color/black_text" />
 
             <TextView
                 android:id="@+id/dayinfotext"
@@ -105,8 +105,9 @@
                 android:layout_alignStart="@id/dayinfo"
                 android:layout_below="@id/dayinfo"
                 android:text="@string/monday_t"
-                android:textColor="#666666" />
+                android:textColor="@color/black_secondary" />
 
+            <!--
             <TextView
                 android:id="@+id/weatherinfotext"
                 android:layout_width="wrap_content"
@@ -320,7 +321,9 @@
                         android:textColor="#444444"
                         android:textSize="12sp" />
                 </LinearLayout>
+
             </LinearLayout>
+            -->
         </RelativeLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -330,6 +333,7 @@
             android:layout_below="@id/dayinfocontainer">
 
             <ScrollView
+                android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#eeeeee"
@@ -342,107 +346,7 @@
                     android:orientation="vertical"
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
-
-                    <RelativeLayout
-                        android:id="@+id/academiccontainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/card_background"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:id="@+id/academicIcon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/academic" />
-
-                        <TextView
-                            android:id="@+id/academicTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBaseline="@id/academicIcon"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_toEndOf="@id/academicIcon"
-                            android:layout_toRightOf="@id/academicIcon"
-                            android:gravity="center"
-                            android:text="@string/main_academic"
-                            android:textSize="30sp" />
-
-                        <TextView
-                            android:id="@+id/academicDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/academicTitle"
-                            android:layout_alignStart="@id/academicTitle"
-                            android:layout_below="@id/academicTitle"
-                            android:gravity="center"
-                            android:text="@string/dummy_date_with_letter"
-                            android:textColor="#666666"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/academicInfo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/academicTitle"
-                            android:layout_alignStart="@id/academicTitle"
-                            android:layout_below="@id/academicDate"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/error_no_schedule"
-                            android:textColor="#444444"
-                            android:textSize="13sp" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/gobustime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/academiccontainer"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:id="@+id/dismissalNotice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/dismissal"
-                            android:textColor="#666666"
-                            android:textSize="30sp" />
-
-                        <TextView
-                            android:id="@+id/busTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/dismissalNotice"
-                            android:layout_below="@id/dismissalNotice"
-                            android:gravity="center"
-                            android:text="@string/dismissal_time"
-                            android:textColor="#777777"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/busComment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignLeft="@id/dismissalNotice"
-                            android:layout_below="@id/busTime"
-                            android:gravity="center"
-                            android:text="@string/dismissal_comment"
-                            android:textColor="#777777"
-                            android:textSize="13sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/busicon" />
-                    </RelativeLayout>
-                </LinearLayout>
+                    android:paddingRight="10dp"></LinearLayout>
             </ScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -451,7 +355,16 @@
     <kr.kdev.dg1s.utils.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:id="@+id/FAB">
+
+        <kr.kdev.dg1s.utils.floatingactionbutton.AddFloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <kr.kdev.dg1s.utils.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </kr.kdev.dg1s.utils.floatingactionbutton.FloatingActionsMenu>
 </merge>

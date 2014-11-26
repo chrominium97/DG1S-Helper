@@ -11,7 +11,7 @@
     <string name="error_network_long">네트워크 오류로 정보를 업데이트할 수 없습니다.</string>
     <string name="error_no_description">설명 없음.</string>
     <string name="error_no_meal">식사가 아직 등록되지 않았습니다.</string>
-    <string name="error_no_schedule">오늘은 일정이 없습니다.</string>
+    <string name="error_no_schudules">오늘은 일정이 없습니다.</string>
 
     <string name="confirm">확인</string>
 
@@ -19,7 +19,7 @@
     <string name="update_description">UI 개선</string>
 
     <!-- 액션바 항목 -->
-    <string name="actionbar_academic">학사일정</string>
+    <string name="actionbar_schedule">학사일정</string>
     <string name="actionbar_meal">급식</string>
     <string name="actionbar_homework">숙제</string>
     <string name="actionbar_homework_add">숙제 추가</string>

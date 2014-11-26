@@ -1,4 +1,4 @@
-package kr.kdev.dg1s.card.provider;
+package kr.kdev.dg1s.cards.provider;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,14 +10,14 @@ public class UpdateCenter {
 
     public final static String PACKAGE_NAME = "kr.kdev.dg1s";
 
-    public final static int TYPE_MEAL = 0;
-    public final static int TYPE_PLAN = 1;
-    public final static int TYPE_WEATHER = 2;
+    public final static int TYPE_MEAL = 0x00;
+    public final static int TYPE_PLAN = 0x01;
+    public final static int TYPE_WEATHER = 0x02;
 
-    private final static int INTERVAL_MONTHLY = 10;
-    private final static int INTERVAL_DAILY = 11;
-    private final static int INTERVAL_3HOURS = 12;
-    private final static int INTERVAL_HOURLY = 13;
+    private final static int INTERVAL_MONTHLY = 0x10;
+    private final static int INTERVAL_DAILY = 0x11;
+    private final static int INTERVAL_3HOURS = 0x12;
+    private final static int INTERVAL_HOURLY = 0x13;
 
     private final static String KEY_MEAL = "update_stat_meal";
     private final static String KEY_PLAN = "update_stat_plan";
@@ -62,7 +62,7 @@ public class UpdateCenter {
         switch (updateType) {
             case INTERVAL_MONTHLY:
                 preferences.edit().putInt(preferencesAccessKey,
-                        Integer.parseInt(new SimpleDateFormat("yyyyMM").format(new Date(System.currentTimeMillis())))).commit();
+                        Integer.parseInt(new SimpleDateFormat("yyyyMM").format(new Date(System.currentTimeMillis())))).apply();
                 break;
         }
     }

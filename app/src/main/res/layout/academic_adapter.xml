@@ -43,7 +43,7 @@
         android:layout_below="@id/academicDate"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/error_no_schedule"
+        android:text="@string/error_no_schudules"
         android:textColor="#444444"
         android:textSize="13sp" />
 

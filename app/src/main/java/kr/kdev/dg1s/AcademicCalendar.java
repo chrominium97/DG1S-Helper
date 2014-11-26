@@ -48,7 +48,7 @@ public class AcademicCalendar extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(R.string.actionbar_academic);
+        getSupportActionBar().setTitle(R.string.actionbar_schedule);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
 
         acweb = (WebView) findViewById(R.id.AcademicWeb);

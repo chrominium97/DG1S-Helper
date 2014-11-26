@@ -1,4 +1,4 @@
-package kr.kdev.dg1s.card;
+package kr.kdev.dg1s.cards;
 
 public interface CardViewStatusNotifier {
 
