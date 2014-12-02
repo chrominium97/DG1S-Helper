@@ -76,8 +76,8 @@ public class MealCard implements MealProvider.MealProviderInterface {
         mealCard.setVisibility(View.VISIBLE);
     }
 
-    public void forceUpdate() {
-        provider.requestMeal(true);
+    public void requestUpdate(boolean isForced) {
+        provider.requestMeal(isForced);
     }
 
     void updateCards(Meal input) {

@@ -65,7 +65,7 @@ public class MealProvider {
     }
 
     public void requestMeal(boolean forceUpdate) {
-        Runnable refreshProcess = new RefreshThread(forceUpdate || center.needsUpdate());
+        Runnable refreshProcess = new RefreshProcess(forceUpdate || center.needsUpdate());
         new Thread(refreshProcess).start();
     }
 
@@ -73,11 +73,11 @@ public class MealProvider {
         void onMealReceived(boolean succeeded, Meal meal);
     }
 
-    class RefreshThread implements Runnable {
+    class RefreshProcess implements Runnable {
 
         boolean shouldRefresh = false;
 
-        RefreshThread(boolean order) {
+        RefreshProcess(boolean order) {
             this.shouldRefresh = order;
         }
 
@@ -88,11 +88,10 @@ public class MealProvider {
             Source source = new Source(new InputStreamReader(new URL(URL).openStream(), "UTF-8"));
 
             MealDatabaseManager databaseManager = new MealDatabaseManager(context);
+            databaseManager.initializeDatabase();
 
             Element table = source.getFirstElementByClass("tbl_type3");
             Log.v(TAG, table.toString());
-
-            databaseManager.initializeDatabase();
 
             List<Element> rows = table.getFirstElement("tbody").getAllElements("tr");
             for (Element row : rows) {
@@ -159,15 +158,15 @@ public class MealProvider {
 
     private class MealDatabaseManager extends SQLiteOpenHelper {
 
-        public static final int DB_VERSION = 1;
+        public static final int DB_VERSION = 2;
         private final String KEY_ID = "date";
         private final String KEY_BREAKFAST = "meal_breakfast";
         private final String KEY_LUNCH = "meal_lunch";
         private final String KEY_DINNER = "meal_dinner";
-        private String TABLE_NAME = "mealTable";
+        private final String TABLE_NAME = "mealTable";
 
         public MealDatabaseManager(Context context) {
-            super(context, "meal.db", null, DB_VERSION);
+            super(context, "meals.db", null, DB_VERSION);
         }
 
         @Override
@@ -183,6 +182,7 @@ public class MealProvider {
             database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 
             onCreate(database);
+            requestMeal(true);
         }
 
         public Meal getMeal() {
@@ -191,7 +191,7 @@ public class MealProvider {
 
         public Meal getMeal(int date) {
             SQLiteDatabase database = this.getReadableDatabase();
-            Log.d(TAG, "Retrived meal at day " + date);
+            Log.d(TAG, "Retrieved meal at day " + date);
             Cursor cursor = database.query(TABLE_NAME, new String[]
                             {KEY_ID, KEY_BREAKFAST, KEY_LUNCH, KEY_DINNER}, KEY_ID + " = ?",
                     new String[]{String.valueOf(date)}, null, null, null, null);
@@ -199,7 +199,7 @@ public class MealProvider {
                 cursor.moveToFirst();
 
             try {
-                return new Meal(Integer.parseInt(cursor.getString(0)),
+                return new Meal(cursor.getInt(0),
                         cursor.getString(1), cursor.getString(2), cursor.getString(3));
             } catch (NullPointerException e) {
                 return new Meal();

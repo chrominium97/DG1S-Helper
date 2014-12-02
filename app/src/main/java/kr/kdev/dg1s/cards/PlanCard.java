@@ -79,8 +79,8 @@ public class PlanCard implements PlanProvider.PlanProviderInterface {
         planCard.setVisibility(View.VISIBLE);
     }
 
-    public void forceUpdate() {
-        provider.requestPlan(true);
+    public void requestUpdate(boolean isForced) {
+        provider.requestPlan(isForced);
     }
 
     void updateCards(Plan plan, ArrayList<Integer> summary) {

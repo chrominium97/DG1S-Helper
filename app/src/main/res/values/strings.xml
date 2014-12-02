@@ -14,12 +14,25 @@
 
     <!-- cards -->
     <string name="meal_icon">Meal icon</string>
-    <string name="set_grade">Please set your grade in the settings menu to view the summary.</string>
 
+    <string name="set_grade">Please set your grade in the settings menu to view the summary.</string>
     <string name="monthly_statistics">This month\'s summary</string>
     <string name="day_total">Total № of days at school : </string>
     <string name="day_events">№ of days with events : </string>
     <string name="day_studying">№ of days without events : </string>
+
+    <!-- weather -->
+    <string name="weather_state_unknown">Unknown</string>
+
+    <string name="cloud_clear">Clear</string>
+    <string name="cloud_partly">Partly\ncloudy</string>
+    <string name="cloud_mostly">Mostly\ncloudy</string>
+    <string name="cloudy_cloudy">Cloudy</string>
+
+    <string name="precipitation_none">Clear</string>
+    <string name="precipitation_rain">Rain</string>
+    <string name="precipitation_rain_w_snow">Sleet</string>
+    <string name="precipitation_snow">Snow</string>
 
     <!-- 상태알림 -->
     <string name="error_network">Network error</string>
@@ -183,7 +196,7 @@
     <string name="dummy_date_with_letter">2014&#8211;01&#8211;01</string>
     <string name="dummy_time_6a">06:00AM</string>
     <string name="dummy_time_9a">09:00AM</string>
-    <string name="dummy_time_12p">12:00PM</string>
+    <string name="dummy_time_12p">12:00 PM</string>
     <string name="dummy_time_3p">03:00PM</string>
     <string name="dummy_time_6p">06:00PM</string>
     <string name="dummy_temp">13ºC</string>

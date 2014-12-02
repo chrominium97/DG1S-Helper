@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -37,6 +36,8 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 import kr.kdev.dg1s.cards.CardViewStatusNotifier;
 import kr.kdev.dg1s.cards.MealCard;
 import kr.kdev.dg1s.cards.PlanCard;
+import kr.kdev.dg1s.cards.provider.UpdateCenter;
+import kr.kdev.dg1s.services.BackgroundUpdateService;
 import kr.kdev.dg1s.utils.Adapters;
 import kr.kdev.dg1s.utils.Parsers;
 import kr.kdev.dg1s.utils.floatingactionbutton.FloatingActionsMenu;
@@ -74,18 +75,15 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
+        context = getApplicationContext();
         prefs = getSharedPreferences("kr.kdev.dg1s", MODE_PRIVATE);
 
-        chkFirstRun();
+        checkFirstRun();
 
-        context = getApplicationContext();
-
-        // TODO 알림 서비스 다시 구축
-        //Intent intent = new Intent(context, NotificationService.class);
-        //context.startService(intent);
+        BackgroundUpdateService service = new BackgroundUpdateService();
+        service.setAlarm(context);
 
         setLayouts();
 
@@ -191,32 +189,10 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
     @Override
     public void onResume() {
         super.onResume();
-        updateAll();
     }
-
-    private void updateAll() {
-        weatherParser = new Parsers.WeatherParser();
-        long now = System.currentTimeMillis();
-
-        if (hasInternetConnection()) {//네트워크가 통신가능한 상태라면
-            Log.i("NetStat", "네트워크 상태 양호.");
-
-            if (now - prefs.getLong("updatehour", 0) >= 10800000 || prefs.getString("updateDate", "").length() <= 0) {//처음 실행했거나 이전 실행시에서 3시간이 경과했다면
-                new WeatherAsync().execute(null, null, null);//날씨 업데이트
-                prefs.edit().putLong("updatehour", now).commit();//실행시간 업데이트
-            }
-        } else {//네트워크가 통신가능하지 않다면
-            Crouton.makeText(MainActivity.this, R.string.error_network_long, Style.ALERT).show();
-            Log.i("NetStat", "네트워크 상태 불량!");
-        }
-        setWeather();
-        setDayInfo();
-        setTwaesa();
-    }
-
 
     private void setTwaesa() {
-        // TODO : 퇴사판별 알고리즘 만들기
+        // TODO 퇴사판별 알고리즘 만들기
 
         /**
          TextView gobustime = (TextView) findViewById(R.id.busTime);
@@ -242,14 +218,14 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
 
     private void startManualUpdate() {
         if (hasInternetConnection()) {
-            new WeatherAsync().execute(null, null, null);//날씨 업데이트
-            mealCard.forceUpdate();
-            planCard.forceUpdate();
+            //new WeatherAsync().execute(null, null, null);//날씨 업데이트
+            mealCard.requestUpdate(true);
+            planCard.requestUpdate(true);
             Log.i("ManualUpdate", "강제 업데이트 성공.");
         } else {
             pullToRefreshLayout.setRefreshing(false);
             Crouton.makeText(MainActivity.this, getString(R.string.error_network_long), Style.ALERT).show();
-            Log.i("ManualUpdate", "강제 업데이트 실패.");
+            Log.i("ManualUpdate", "네크워크 접근 불가");
         }
 
     }
@@ -294,9 +270,10 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
         Log.i("MainActivity_DayInfo", "요일정보 업데이트 완료.");
     }
 
-    private void chkFirstRun() {
-        if (prefs.getBoolean("firstrun", true)) {
-            //앱 최초 설치시에 호출
+    private void checkFirstRun() {
+        UpdateCenter center = new UpdateCenter(UpdateCenter.TYPE_SYSTEM_FIRST_RUN, context);
+
+        if (center.needsUpdate()) {
             AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
             alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -305,31 +282,24 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
             });
             alert.setMessage(getResources().getString(R.string.welcome));
             alert.show();
-            prefs.edit().putBoolean("firstrun", false).commit();
-            try {
-                if (prefs.getInt("updaterun", 0) != getPackageManager().getPackageInfo(getPackageName(), 0).versionCode) {
-                    prefs.edit().putInt("updaterun", getPackageManager().getPackageInfo(getPackageName(), 0).versionCode).commit();
+            center.updateTime();
+            center.setAccessMode(UpdateCenter.TYPE_SYSTEM_UPDATE_STAT);
+            center.updateTime();
+            return;
+        }
+
+        center.setAccessMode(UpdateCenter.TYPE_SYSTEM_UPDATE_STAT);
+        if (center.needsUpdate()) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+            alert.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
                 }
-            } catch (NameNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else
-            try {
-                if (prefs.getInt("updaterun", 0) != getPackageManager().getPackageInfo(getPackageName(), 0).versionCode) {
-                    //업데이트 후 호출
-                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                    alert.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    alert.setMessage(getString(R.string.update_info) + "\n" + getString(R.string.update_description));
-                    alert.show();
-                    prefs.edit().putInt("updaterun", getPackageManager().getPackageInfo(getPackageName(), 0).versionCode).commit();
-                }
-            } catch (NameNotFoundException e) {
-                e.printStackTrace();
-            }
+            });
+            alert.setMessage(getString(R.string.update_info) + "\n" + getString(R.string.update_description));
+            alert.show();
+            center.updateTime();
+        }
     }
 
     private void setWeather() {
@@ -426,9 +396,9 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
         protected void onPostExecute(ArrayList<Adapters.WeatherAdapter> result) {
             for (int i = 0; i < result.size(); i++) {
                 Adapters.WeatherAdapter wa = result.get(i);
-                prefs.edit().putString("weather" + i, wa.weather).commit();
-                prefs.edit().putString("time" + i, wa.time).commit();
-                prefs.edit().putString("temp" + i, wa.temperature).commit();
+                prefs.edit().putString("weather" + i, wa.weather).apply();
+                prefs.edit().putString("time" + i, wa.time).apply();
+                prefs.edit().putString("temp" + i, wa.temperature).apply();
                 setWeather();
             }
         }

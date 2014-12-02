@@ -59,10 +59,6 @@ public class Meal {
                 "DINNER    : " + dinnerBuilder.toString() + "\n";
     }
 
-    public boolean isEmpty() {
-        return BREAKFAST.size() == 0 && LUNCH.size() == 0 && DINNER.size() == 0;
-    }
-
     public int getDate() {
         return this.DATE;
     }
