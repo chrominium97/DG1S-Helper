@@ -39,8 +39,8 @@ public class PlanProvider {
     final static String ARG_6 = "mm=";
     final String VALUE_5;
     final String VALUE_6;
-
-    Handler handler = new Handler() {
+    Context context;
+    final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
             PlanDatabaseManager planDatabaseManager = new PlanDatabaseManager(context);
@@ -48,7 +48,6 @@ public class PlanProvider {
                     planDatabaseManager.getPlans(), planDatabaseManager.getSummary());
         }
     };
-    Context context;
     UpdateCenter center;
     PlanProviderInterface planProviderInterface;
 
@@ -178,8 +177,8 @@ public class PlanProvider {
         private static final String KEY_DAYS_TOTAL = "totalDays";
         private static final String KEY_DAYS_STUDY = "studyingDays";
         private static final String KEY_DAYS_EVENT = "eventDays";
-        private static final String PLAN_TABLE_NAME = "planTable"; // Table의 이름
-        private static final String SUMMARY_TABLE_NAME = "summaryTable"; // Table의 이름
+        private static final String PLAN_TABLE_NAME = "planTable";
+        private static final String SUMMARY_TABLE_NAME = "summaryTable";
 
         public PlanDatabaseManager(Context context) {
             super(context, "plans.db", null, DB_VERSION);
@@ -192,7 +191,9 @@ public class PlanProvider {
             final String CREATE_SUMMARY_TABLE = "CREATE TABLE " + SUMMARY_TABLE_NAME + "(" +
                     KEY_GRADE + " INTEGER PRIMARY KEY," + KEY_DAYS_TOTAL + " INTEGER," +
                     KEY_DAYS_EVENT + " INTEGER," + KEY_DAYS_STUDY + " INTEGER" + ")";
+            Log.d("SQL@PlanProvider", "Querying database w/ command " + CREATE_PLAN_TABLE);
             database.execSQL(CREATE_PLAN_TABLE);
+            Log.d("SQL@PlanProvider", "Querying database w/ command " + CREATE_SUMMARY_TABLE);
             database.execSQL(CREATE_SUMMARY_TABLE);
         }
 
@@ -234,7 +235,7 @@ public class PlanProvider {
             ContentValues values = new ContentValues();
             values.put(KEY_PLANS, plan.getPlans());
 
-            Log.v("SQL", "Recorded plan at day " + plan.getDate() + "\n" + plan);
+            Log.v("SQL@PlanProvider", "Recorded plan at day " + plan.getDate() + "\n" + plan);
 
             return database.update(PLAN_TABLE_NAME, values, KEY_DATE + "="
                     + String.valueOf(plan.getDate()), null);

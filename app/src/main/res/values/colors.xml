@@ -8,7 +8,6 @@
     <color name="dg1s_gold">#f9bd00</color>
     <color name="dg1s_gold_dark">#d38500</color>
 
-    <color name="black">#000000</color>
     <color name="black_text">#df000000</color>
     <color name="black_secondary">#8a000000</color>
     <color name="black_hint">#43000000</color>
@@ -20,6 +19,22 @@
     <color name="dark_gray">#555555</color>
     <color name="meal_planner">#ff8800</color>
     <color name="vending">#32CD32</color>
+
+    <!-- Weather colors from {@link http://www.google.com/design/spec/style/color.html#color-color-palette}-->
+    <color name="blue_A400">#2979FF</color>
+    <!-- daytime-->
+    <color name="blue_A700">#2962FF</color>
+    <!-- daytime rain -->
+    <color name="blue_A200">#448AFF</color>
+    <!-- daytime snow -->
+    <color name="grey_900">#212121</color>
+    <!-- nighttime -->
+    <color name="blue_grey_900">#263238</color>
+    <!-- nighttime rain -->
+    <color name="blue_grey_700">#455A64</color>
+    <!-- nighttime snow -->
+    <color name="grey_500">#9E9E9E</color>
+    <!-- unknown -->
 
     <color name="background_tab_pressed">#6633B5E5</color>
 </resources>

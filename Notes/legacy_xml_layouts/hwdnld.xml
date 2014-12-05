@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent">
     <!--
         <LinearLayout
             android:id="@+id/hwdnldtitlecontain2er"
@@ -75,44 +74,24 @@
             </RelativeLayout>
         </LinearLayout>
     -->
-    <WebView
-        android:id="@+id/tpweb"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
+    <WebView android:id="@+id/tpweb" android:layout_width="0dp" android:layout_height="0dp" />
 
-    <LinearLayout
-        android:id="@+id/no_network"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:background="#eeeeee"
-        android:gravity="center"
-        android:orientation="vertical">
+    <LinearLayout android:id="@+id/no_network" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:layout_alignParentBottom="true"
+        android:background="#eeeeee" android:gravity="center" android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:src="@drawable/no_network" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/error_network"
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_margin="8dp" android:text="@string/error_network"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#666666" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/lvs"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="#eeeeee"
-        android:cacheColorHint="#00000000"
-        android:divider="#00000000"
-        android:dividerHeight="9dp"
-        android:padding="9dp"
-        android:scrollbars="none" />
+    <ListView android:id="@+id/lvs" android:layout_width="match_parent"
+        android:layout_height="fill_parent" android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" android:background="#eeeeee"
+        android:cacheColorHint="#00000000" android:divider="#00000000" android:dividerHeight="9dp"
+        android:padding="9dp" android:scrollbars="none" />
 </RelativeLayout>

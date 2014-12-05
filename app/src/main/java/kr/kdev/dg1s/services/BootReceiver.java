@@ -6,7 +6,7 @@ import android.content.Intent;
 
 public class BootReceiver extends BroadcastReceiver {
 
-    BackgroundUpdateService service = new BackgroundUpdateService();
+    private final BackgroundUpdateService service = new BackgroundUpdateService();
 
     @Override
     public void onReceive(Context context, Intent intent) {

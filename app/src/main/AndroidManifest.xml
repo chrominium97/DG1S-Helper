@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.kdev.dg1s"
 
-    android:versionCode="17"
     android:versionName="Elderberry_0.3.1">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -16,6 +15,7 @@
         android:icon="@drawable/ic"
         android:label="@string/app_name"
         android:theme="@style/Theme.DG1S">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,16 +31,10 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".MealPlanner" />
-        <activity
-            android:name=".PostAdd"
-            android:parentActivityName=".PostView" />
-        <activity android:name=".PostView" />
         <activity
             android:name=".Settings"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
-        <activity android:name="Timetable" />
-        <activity android:name=".AcademicCalendar" />
+
         <activity
             android:name=".Credits"
             android:screenOrientation="portrait" />
@@ -55,21 +49,6 @@
             <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
         </receiver>
 
-        <service
-            android:name=".utils.NotificationService"
-            android:enabled="true">
-            <!--
-            <intent-filter>
-
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <action android:name="android.intent.action.PACKAGE_INSTALL" />
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-
-                <data android:scheme="package" />
-            </intent-filter> -->
-        </service>
     </application>
 
 </manifest>

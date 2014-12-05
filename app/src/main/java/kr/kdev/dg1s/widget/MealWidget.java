@@ -9,29 +9,19 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import java.io.IOException;
-
 import kr.kdev.dg1s.MainActivity;
 import kr.kdev.dg1s.R;
-import kr.kdev.dg1s.utils.Parsers;
 
 public class MealWidget extends AppWidgetProvider {
 
-    Parsers.MealParser MealParser = new Parsers.MealParser();
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        try {
-            MealParser.parseMeal(context);
-            updateSikdan(context, appWidgetManager, appWidgetIds);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        updateSikdan(context, appWidgetManager, appWidgetIds);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
     }
 
-    private void updateSikdan(Context context, AppWidgetManager awm, int[] appids) throws IOException {
+    private void updateSikdan(Context context, AppWidgetManager awm, int[] appids) {
         SharedPreferences prefs;
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.sikdanwidget);
 

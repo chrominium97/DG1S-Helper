@@ -8,11 +8,11 @@ import java.util.Arrays;
  */
 public class Meal {
 
-    ArrayList<String> BREAKFAST = new ArrayList<String>();
-    ArrayList<String> LUNCH = new ArrayList<String>();
-    ArrayList<String> DINNER = new ArrayList<String>();
+    private ArrayList<String> BREAKFAST = new ArrayList<String>();
+    private ArrayList<String> LUNCH = new ArrayList<String>();
+    private ArrayList<String> DINNER = new ArrayList<String>();
 
-    int DATE;
+    private int DATE;
 
     public Meal() {
 

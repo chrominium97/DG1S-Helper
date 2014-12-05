@@ -32,13 +32,10 @@ public class UpdateCenter {
 
     private final static String KEY_SYSTEM_VERSION_CHECK = "installed_version";
     private final static String KEY_SYSTEM_FIRST_RUN = "first_run";
-
+    private final SharedPreferences preferences;
+    private final Context context;
     private String preferencesAccessKey;
-
     private int updateType;
-
-    private SharedPreferences preferences;
-    private Context context;
 
     public UpdateCenter(int type, Context incomingContext) {
         setAccessMode(type);
@@ -86,6 +83,13 @@ public class UpdateCenter {
                 // TODO 매서드 구축
             case INTERVAL_ONCE:
                 return preferences.getBoolean(preferencesAccessKey, true);
+            case INTERVAL_MANUAL:
+                try {
+                    return preferences.getInt(preferencesAccessKey, 0) <
+                            context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
+                } catch (PackageManager.NameNotFoundException e) {
+                    return true;
+                }
             default:
                 return true;
         }
@@ -108,7 +112,7 @@ public class UpdateCenter {
             case INTERVAL_HOURLY:
                 // TODO 매서드 구축
             case INTERVAL_ONCE:
-                preferences.edit().putBoolean(preferencesAccessKey, true).apply();
+                preferences.edit().putBoolean(preferencesAccessKey, false).apply();
                 break;
             case INTERVAL_MANUAL:
                 if (preferencesAccessKey.equals(KEY_SYSTEM_VERSION_CHECK)) {

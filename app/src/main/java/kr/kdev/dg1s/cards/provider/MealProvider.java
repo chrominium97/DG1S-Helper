@@ -3,6 +3,7 @@ package kr.kdev.dg1s.cards.provider;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
@@ -26,27 +27,26 @@ public class MealProvider {
 
     final static String TAG = "MealProvider";
 
-    final static String domain = "http://hes.dge.go.kr/sts_sci_md00_001.do";
-    final static String ARG_1 = "schulCode=";
-    final static String VALUE_1 = "D100001936&";
-    final static String ARG_2 = "insttNm="; // 대구일과학고등학교
-    final static String VALUE_2 = "%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&"; // 대구일과학고등학교
-    final static String ARG_3 = "schulCrseScCode=";
-    final static String VALUE_3 = "4&";
-    final static String ARG_4 = "schulKndScCode=";
-    final static String VALUE_4 = "04&";
-    final static String ARG_5 = "schYm=";
-    final static String ARG_6 = "searchButton=";
-    final static String VALUE_6 = "";
-    final String VALUE_5;
-
-    Handler handler = new Handler() {
+    private final static String domain = "http://hes.dge.go.kr/sts_sci_md00_001.do";
+    private final static String ARG_1 = "schulCode=";
+    private final static String VALUE_1 = "D100001936&";
+    private final static String ARG_2 = "insttNm="; // 대구일과학고등학교
+    private final static String VALUE_2 = "%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&"; // 대구일과학고등학교
+    private final static String ARG_3 = "schulCrseScCode=";
+    private final static String VALUE_3 = "4&";
+    private final static String ARG_4 = "schulKndScCode=";
+    private final static String VALUE_4 = "04&";
+    private final static String ARG_5 = "schYm=";
+    private final static String ARG_6 = "searchButton=";
+    private final static String VALUE_6 = "";
+    final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
             mealTransferInterface.onMealReceived(message.what == 0,
                     new MealDatabaseManager(context).getMeal());
         }
     };
+    private final String VALUE_5;
     Context context;
     UpdateCenter center;
     MealProviderInterface mealTransferInterface;
@@ -77,8 +77,8 @@ public class MealProvider {
 
         boolean shouldRefresh = false;
 
-        RefreshProcess(boolean order) {
-            this.shouldRefresh = order;
+        RefreshProcess(boolean isOrder) {
+            this.shouldRefresh = isOrder;
         }
 
         // Method for parsing meal information
@@ -174,6 +174,7 @@ public class MealProvider {
             String CREATE_MEAL_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                     + KEY_ID + " INTEGER PRIMARY KEY," + KEY_BREAKFAST + " TEXT,"
                     + KEY_LUNCH + " TEXT," + KEY_DINNER + " TEXT" + ")";
+            Log.d("SQL@MealProvider", "Querying database w/ command " + CREATE_MEAL_TABLE);
             database.execSQL(CREATE_MEAL_TABLE);
         }
 
@@ -203,12 +204,15 @@ public class MealProvider {
                         cursor.getString(1), cursor.getString(2), cursor.getString(3));
             } catch (NullPointerException e) {
                 return new Meal();
+            } catch (CursorIndexOutOfBoundsException e) {
+                onUpgrade(database, 0, 0);
+                return new Meal();
             }
         }
 
-        public int updateMeal(Meal meal) {
+        public void updateMeal(Meal meal) {
             if (meal.getDate() == -1)
-                return 0;
+                return;
 
             SQLiteDatabase database = this.getWritableDatabase();
 
@@ -217,10 +221,9 @@ public class MealProvider {
             values.put(KEY_LUNCH, meal.getLunch().toString());
             values.put(KEY_DINNER, meal.getDinner().toString());
 
-            Log.v("SQL", "Recorded meal at day " + meal.getDate() + "\n" + meal);
+            Log.v("SQL@MealProvider", "Recorded meal at day " + meal.getDate() + "\n" + meal);
 
-            return database.update(TABLE_NAME, values, KEY_ID + "=" + String.valueOf(meal.getDate()),
-                    null);
+            database.update(TABLE_NAME, values, KEY_ID + "=" + String.valueOf(meal.getDate()), null);
         }
 
         public void initializeDatabase() {

@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,48 +26,64 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.Calendar;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import kr.kdev.dg1s.cards.CardViewStatusNotifier;
 import kr.kdev.dg1s.cards.MealCard;
 import kr.kdev.dg1s.cards.PlanCard;
+import kr.kdev.dg1s.cards.WeatherCard;
 import kr.kdev.dg1s.cards.provider.UpdateCenter;
 import kr.kdev.dg1s.services.BackgroundUpdateService;
-import kr.kdev.dg1s.utils.Adapters;
-import kr.kdev.dg1s.utils.Parsers;
 import kr.kdev.dg1s.utils.floatingactionbutton.FloatingActionsMenu;
 
 public class MainActivity extends ActionBarActivity implements CardViewStatusNotifier {
 
-    Context context;
-    MealCard mealCard;
-    PlanCard planCard;
-    SharedPreferences prefs;
-    Parsers.WeatherParser weatherParser;
+    private Context context;
+    private MealCard mealCard;
+    private PlanCard planCard;
+    private WeatherCard weatherCard;
+
     private int queue = 0;
     private SwipeRefreshLayout pullToRefreshLayout;
 
-    public void notifyCompletion(int status) {
-        if (queue == 0) {
-            pullToRefreshLayout.setRefreshing(false);
-            if (status == FAILURE) {
-                Crouton.makeText(MainActivity.this, getString(R.string.update_finished_with_errors), Style.ALERT);
-            } else {
-                Crouton.makeText(MainActivity.this, getString(R.string.update_finished_successfully), Style.ALERT);
-            }
-
-        }
-
+    public void notifyCompletion(Object origin, int status) {
         if (queue > 0) {
             queue--;
         }
 
         if (status == FAILURE) {
             Log.e("MainActivity_CardQueue", "Error occurred while updating card(s)");
+            try {
+                MealCard card = (MealCard) origin;
+                Log.e("MainActivity_CardQueue", "Error originated from MealCard");
+            } catch (ClassCastException e) {
+                try {
+                    PlanCard card = (PlanCard) origin;
+                    Log.e("MainActivity_CardQueue", "Error originated from PlanCard");
+                } catch (ClassCastException f) {
+                    try {
+                        WeatherCard card = (WeatherCard) origin;
+                        Log.e("MainActivity_CardQueue", "Error originated from WeatherCard");
+                    } catch (ClassCastException g) {
+                        Log.e("MainActivity_CardQueue", "Error originated from unknown source");
+                    }
+                }
+            }
+        } else {
+            try {
+                MealCard card = (MealCard) origin;
+                //if (card.isDismissalDay()) {
+                // TODO 퇴사
+                //}
+            } catch (ClassCastException e) {
+
+            }
         }
+
+        if (queue == 0) {
+            pullToRefreshLayout.setRefreshing(false);
+        }
+
         Log.i("MainActivity_CardQueue", queue + " left in queue");
     }
 
@@ -78,8 +92,6 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
         super.onCreate(savedInstanceState);
 
         context = getApplicationContext();
-        prefs = getSharedPreferences("kr.kdev.dg1s", MODE_PRIVATE);
-
         checkFirstRun();
 
         BackgroundUpdateService service = new BackgroundUpdateService();
@@ -96,6 +108,7 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
         setContentView(R.layout.main);
 
         pullToRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.infoScrollView);
+        pullToRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
         pullToRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -104,6 +117,8 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
         });
 
         ViewGroup group = (ViewGroup) findViewById(R.id.container);
+        queue = queue + 3;
+        weatherCard = new WeatherCard(context, group, MainActivity.this);
         mealCard = new MealCard(context, group, MainActivity.this);
         planCard = new PlanCard(context, group, MainActivity.this);
 
@@ -138,10 +153,14 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
                 FileChannel source;
                 FileChannel destination;
                 String mealDBPath = "/data/" + "kr.kdev.dg1s" + "/databases/" + "meal.db";
-                String mealBackupDBPath = "meal.db";
+                String mealBackupDBPath = "meals.db";
 
                 String planDBPath = "/data/" + "kr.kdev.dg1s" + "/databases/" + "plans.db";
                 String planBackupDBPath = "plans.db";
+
+                String weatherDBPath = "/data/" + "kr.kdev.dg1s" + "/databases/" + "weather.db";
+                String weatherBackupDBPath = "weather.db";
+
                 File currentDB;
                 File backupDB;
 
@@ -160,6 +179,16 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
                     destination = new FileOutputStream(backupDB).getChannel();
                     destination.transferFrom(source, 0, source.size());
                     source.close();
+                    destination.close();
+
+                    currentDB = new File(internalDirectory, weatherDBPath);
+                    backupDB = new File(externalDirectory, weatherBackupDBPath);
+                    source = new FileInputStream(currentDB).getChannel();
+                    destination = new FileOutputStream(backupDB).getChannel();
+                    destination.transferFrom(source, 0, source.size());
+                    source.close();
+                    destination.close();
+
                     Toast.makeText(this, "DB Exported!", Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -191,40 +220,20 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
         super.onResume();
     }
 
-    private void setTwaesa() {
+    private void setIsDismissed() {
         // TODO 퇴사판별 알고리즘 만들기
 
-        /**
-         TextView gobustime = (TextView) findViewById(R.id.busTime);
-         RelativeLayout container = (RelativeLayout) findViewById(R.id.gobustime);
-         Calendar cal = Calendar.getInstance();
-
-         int day_of_week = cal.get(Calendar.DAY_OF_WEEK);
-
-         if (prefs.getString("academicinfo", "").contains("퇴사")) {
-         container.setVisibility(View.VISIBLE);
-         if (day_of_week == 6) {
-         gobustime.setText("5:40 PM");
-         } else if (day_of_week == 7) {
-         gobustime.setText("1:20 PM");
-         } else {
-         gobustime.setText("5:40 PM");
-         }
-         } else {
-         container.setVisibility(View.GONE);
-         }
-         */
     }
 
     private void startManualUpdate() {
         if (hasInternetConnection()) {
-            //new WeatherAsync().execute(null, null, null);//날씨 업데이트
+            queue = 3;
+            weatherCard.requestUpdate(true);
             mealCard.requestUpdate(true);
             planCard.requestUpdate(true);
             Log.i("ManualUpdate", "강제 업데이트 성공.");
         } else {
             pullToRefreshLayout.setRefreshing(false);
-            Crouton.makeText(MainActivity.this, getString(R.string.error_network_long), Style.ALERT).show();
             Log.i("ManualUpdate", "네크워크 접근 불가");
         }
 
@@ -302,106 +311,13 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
         }
     }
 
-    private void setWeather() {
-        /**
-         ImageView tIcon[] = new ImageView[5];
-         TextView tWeather[] = new TextView[5];
-         TextView tTime[] = new TextView[5];
-         TextView tTemp[] = new TextView[5];
-
-         tIcon[0] = (ImageView) findViewById(R.id.t1_icon);
-         tIcon[1] = (ImageView) findViewById(R.id.t2_icon);
-         tIcon[2] = (ImageView) findViewById(R.id.t3_icon);
-         tIcon[3] = (ImageView) findViewById(R.id.t4_icon);
-         tIcon[4] = (ImageView) findViewById(R.id.t5_icon);
-
-         tWeather[0] = (TextView) findViewById(R.id.t1_weather);
-         tWeather[1] = (TextView) findViewById(R.id.t2_weather);
-         tWeather[2] = (TextView) findViewById(R.id.t3_weather);
-         tWeather[3] = (TextView) findViewById(R.id.t4_weather);
-         tWeather[4] = (TextView) findViewById(R.id.t5_weather);
-
-         tTime[0] = (TextView) findViewById(R.id.t1_time);
-         tTime[1] = (TextView) findViewById(R.id.t2_time);
-         tTime[2] = (TextView) findViewById(R.id.t3_time);
-         tTime[3] = (TextView) findViewById(R.id.t4_time);
-         tTime[4] = (TextView) findViewById(R.id.t5_time);
-
-         tTemp[0] = (TextView) findViewById(R.id.t1_temp);
-         tTemp[1] = (TextView) findViewById(R.id.t2_temp);
-         tTemp[2] = (TextView) findViewById(R.id.t3_temp);
-         tTemp[3] = (TextView) findViewById(R.id.t4_temp);
-         tTemp[4] = (TextView) findViewById(R.id.t5_temp);
-
-         String sunny = getString(R.string.sunny);
-         String cloudy1 = getString(R.string.cloudy1);
-         String cloudy2 = getString(R.string.cloudy2);
-         String cloudy3 = getString(R.string.cloudy3);
-         String rainy = getString(R.string.rainy);
-         String rainsnow = getString(R.string.rainsnow);
-         String snowy = getString(R.string.snowy);
-
-
-         for (int i = 0; i < 5; i++) {
-         if (prefs.getString("weather" + i, "") != null && prefs.getString("weather" + i, "").equals("맑음")) {
-         tIcon[i].setImageResource(R.drawable.weather_sunny);
-         tWeather[i].setText(sunny);
-         } else if (prefs.getString("weather" + i, "") != null && prefs.getString("weather" + i, "").equals("구름 조금")) {
-         tIcon[i].setImageResource(R.drawable.weather_cloudy1);
-         tWeather[i].setText(cloudy1);
-         } else if (prefs.getString("weather" + i, "") != null && prefs.getString("weather" + i, "").equals("구름 많음")) {
-         tIcon[i].setImageResource(R.drawable.weather_cloudy2);
-         tWeather[i].setText(cloudy2);
-         } else if (prefs.getString("weather" + i, "") != null && prefs.getString("weather" + i, "").equals("흐림")) {
-         tIcon[i].setImageResource(R.drawable.weather_cloudy3);
-         tWeather[i].setText(cloudy3);
-         } else if (prefs.getString("weather" + i, "") != null && prefs.getString("weather" + i, "").equals("비")) {
-         tIcon[i].setImageResource(R.drawable.weather_rainy);
-         tWeather[i].setText(rainy);
-         } else if (prefs.getString("weather" + i, "") != null && prefs.getString("weather" + i, "").equals("눈/비")) {
-         tIcon[i].setImageResource(R.drawable.weather_rainsnow);
-         tWeather[i].setText(rainsnow);
-         } else if (prefs.getString("weather" + i, "") != null && prefs.getString("weather" + i, "").equals("눈")) {
-         tIcon[i].setImageResource(R.drawable.weather_snowy);
-         tWeather[i].setText(snowy);
-         }
-         if (prefs.getString("time" + i, "") != null)
-         tTime[i].setText(prefs.getString("time" + i, "") + ":00");
-         if (prefs.getString("temp" + i, "") != null)
-         tTemp[i].setText(prefs.getString("temp" + i, "") + "ºC");
-         }
-
-         Log.d("SetWeather", "날씨 업데이트 완료.");
-         */
-    }
-
     private boolean hasInternetConnection() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo wimax = cm.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
+        NetworkInfo wiMax = cm.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
 
         return ((mobile != null && mobile.isConnected()) || (wifi != null && wifi.isConnected())
-                || (wimax != null && wimax.isConnected()));
-    }
-
-    public class WeatherAsync extends AsyncTask<String, String, ArrayList<Adapters.WeatherAdapter>> {
-
-        @Override
-        protected ArrayList<Adapters.WeatherAdapter> doInBackground(String... params) {
-            return weatherParser.parseWeather();
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Adapters.WeatherAdapter> result) {
-            for (int i = 0; i < result.size(); i++) {
-                Adapters.WeatherAdapter wa = result.get(i);
-                prefs.edit().putString("weather" + i, wa.weather).apply();
-                prefs.edit().putString("time" + i, wa.time).apply();
-                prefs.edit().putString("temp" + i, wa.temperature).apply();
-                setWeather();
-            }
-        }
-
+                || (wiMax != null && wiMax.isConnected()));
     }
 }

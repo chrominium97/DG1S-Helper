@@ -24,13 +24,14 @@ public class WeatherProvider {
 
     final static String URL = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=2714074500";
 
-    Handler handler = new Handler() {
+    final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
             weatherProviderInterface.onWeatherReceived(message.what == 0,
-                    new WeatherDatabaseManager(context).getWeather());
+                    new WeatherDatabaseManager(context).getForecast());
         }
     };
+
     Context context;
     UpdateCenter center;
     WeatherProviderInterface weatherProviderInterface;
@@ -53,31 +54,7 @@ public class WeatherProvider {
     }
 
     public interface WeatherProviderInterface {
-        void onWeatherReceived(boolean succeeded, Weather weather);
-    }
-
-    enum XMLRecordType {
-        DATA("data"), TIME("hour"), TIME_SHIFT("day"), TEMPERATURE("temp"), CLOUD("sky"),
-        PRECIPIATION("pty"), NONE("");
-        String TAG;
-
-        XMLRecordType(String tag) {
-            TAG = tag;
-        }
-
-        @Override
-        public String toString() {
-            return this.TAG;
-        }
-
-        public boolean equalsTag(Object object) {
-            try {
-                String input = (String) object;
-                return this.toString().equals(input);
-            } catch (ClassCastException e) {
-                return super.equals(object);
-            }
-        }
+        void onWeatherReceived(boolean succeeded, Weather[] weathers);
     }
 
     class RefreshProcess implements Runnable {
@@ -94,6 +71,8 @@ public class WeatherProvider {
 
             InputStream inputStream = new java.net.URL(URL).openStream();
 
+            Log.v(TAG, inputStream.toString());
+
             //Parser
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             XmlPullParser parser = factory.newPullParser();
@@ -106,8 +85,7 @@ public class WeatherProvider {
             int parserPosition = parser.getEventType();
             int count = 0;
 
-            XMLRecordType type = XMLRecordType.NONE;
-            String tag;
+            String tag = "";
             Weather weather = new Weather(context);
 
             while (parserPosition != XmlPullParser.END_DOCUMENT && count <= 4) {
@@ -115,39 +93,29 @@ public class WeatherProvider {
                 switch (parserPosition) {
                     case XmlPullParser.START_TAG:
                         tag = parser.getName();
-                        if (tag.equals(XMLRecordType.DATA.toString())) {
+                        if (tag.equals("data")) {
+                            Log.d(TAG, "New weather object created");
                             weather = new Weather(context);
-                        } else if (tag.equals(XMLRecordType.TIME.toString())) {
-                            type = XMLRecordType.TIME;
-                        } else if (tag.equals(XMLRecordType.TIME_SHIFT.toString())) {
-                            type = XMLRecordType.TIME_SHIFT;
-                        } else if (tag.equals(XMLRecordType.TEMPERATURE.toString())) {
-                            type = XMLRecordType.TEMPERATURE;
-                        } else if (tag.equals(XMLRecordType.CLOUD.toString())) {
-                            type = XMLRecordType.CLOUD;
-                        } else if (tag.equals(XMLRecordType.PRECIPIATION.toString())) {
-                            type = XMLRecordType.PRECIPIATION;
                         }
                         break;
                     case XmlPullParser.TEXT:
-                        tag = parser.getText();
-                        if (type.equalsTag(tag)) {
-                            weather.setTime(Integer.parseInt(tag));
-                        } else if (type.equals(XMLRecordType.TIME_SHIFT)) {
-                            weather.setTimeShift(Integer.parseInt(tag));
-                        } else if (type.equals(XMLRecordType.TIME)) {
-                            weather.setTime(Integer.parseInt(tag));
-                        } else if (type.equals(XMLRecordType.TEMPERATURE)) {
-                            weather.setTemperature(Integer.parseInt(tag));
-                        } else if (type.equals(XMLRecordType.CLOUD)) {
-                            weather.setCloudState(Integer.parseInt(tag));
-                        } else if (type.equals(XMLRecordType.PRECIPIATION)) {
-                            weather.setCloudState(Integer.parseInt(tag));
+                        String text = parser.getText();
+                        if (tag.equals("hour")) {
+                            weather.setTime(Integer.parseInt(text));
+                        } else if (tag.equals("day")) {
+                            weather.setTimeShift(Integer.parseInt(text));
+                        } else if (tag.equals("temp")) {
+                            weather.setTemperature(text);
+                        } else if (tag.equals("sky")) {
+                            weather.setCloudState(Integer.parseInt(text));
+                        } else if (tag.equals("pty")) {
+                            weather.setPrecipitationState(Integer.parseInt(text));
                         }
-                        type = XMLRecordType.NONE;
+                        tag = "";
                         break;
                     case XmlPullParser.END_TAG:
-                        if (XMLRecordType.DATA.equalsTag(parser.getName())) {
+                        if (parser.getName().equals("data")) {
+                            Log.v(TAG, "Returned weather\n" + weather.toString());
                             databaseManager.updateWeather(weather);
                             count++;
                         }
@@ -155,6 +123,7 @@ public class WeatherProvider {
                 }
                 parserPosition = parser.next();
             }
+            Log.i(TAG, "Parsing finished");
         }
 
         @Override
@@ -163,7 +132,9 @@ public class WeatherProvider {
             if (shouldRefresh) {
                 try {
                     refreshWeather();
+                    center.updateTime();
                 } catch (Exception e) {
+                    e.printStackTrace();
                     succeeded = -1;
                 }
             }
@@ -173,13 +144,13 @@ public class WeatherProvider {
 
     private class WeatherDatabaseManager extends SQLiteOpenHelper {
 
-        public static final int DB_VERSION = 1;
-        private final String KEY_ID = "order";
+        public static final int DB_VERSION = 4;
+        private final String KEY_ID = "listOrder";
         private final String KEY_TIME = "time";
         private final String KEY_TEMP = "temp";
         private final String KEY_CLOUD = "clouds";
         private final String KEY_PRECIPITATION = "precipitation";
-        private final String KEY_TIMESHIFT = "isToday";
+        private final String KEY_TIME_SHIFT = "timeShift";
         private final String TABLE_NAME = "weatherTable";
 
         public WeatherDatabaseManager(Context context) {
@@ -188,35 +159,41 @@ public class WeatherProvider {
 
         @Override
         public void onCreate(SQLiteDatabase database) {
-            final String CREATE_MEAL_TABLE = "CREATE TABLE" + TABLE_NAME + "("
+            String CREATE_WEATHER_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                     + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME + " INTEGER,"
-                    + KEY_TEMP + " INTEGER," + KEY_CLOUD + " INTEGER,"
-                    + KEY_PRECIPITATION + " INTEGER," + KEY_TIMESHIFT + " INTEGER" + ")";
-            Log.d("SQL", "Querying database w/ command " + CREATE_MEAL_TABLE);
-            database.execSQL(CREATE_MEAL_TABLE);
+                    + KEY_TEMP + " STRING," + KEY_CLOUD + " INTEGER,"
+                    + KEY_PRECIPITATION + " INTEGER," + KEY_TIME_SHIFT + " INTEGER" + ")";
+            Log.d("SQL@WeatherProvider", "Querying database w/ command " + CREATE_WEATHER_TABLE);
+            database.execSQL(CREATE_WEATHER_TABLE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase database, int i, int i2) {
             database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+
             onCreate(database);
+            requestWeather(true);
+        }
+
+        public Weather[] getForecast() {
+            return new Weather[]{getWeather(1), getWeather(2), getWeather(3), getWeather(4), getWeather(5)};
         }
 
         public Weather getWeather() {
-            return getWeather(0);
+            return getWeather(1);
         }
 
         public Weather getWeather(int order) {
             SQLiteDatabase database = this.getReadableDatabase();
-            Log.d(TAG, "Retrieved meal at index " + order);
+            Log.d(TAG, "Retrieved weather at index " + order);
             Cursor cursor = database.query(TABLE_NAME, new String[]
-                            {KEY_ID, KEY_TIME, KEY_TEMP, KEY_CLOUD, KEY_PRECIPITATION, KEY_TIMESHIFT}, KEY_ID + " = ?",
+                            {KEY_ID, KEY_TIME, KEY_TEMP, KEY_CLOUD, KEY_PRECIPITATION, KEY_TIME_SHIFT}, KEY_ID + " = ?",
                     new String[]{String.valueOf(order)}, null, null, null, null);
             if (cursor != null)
                 cursor.moveToFirst();
 
             try {
-                return new Weather(context, cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
+                return new Weather(context, cursor.getInt(0), cursor.getInt(1), cursor.getString(2),
                         cursor.getInt(3), cursor.getInt(4),
                         cursor.getInt(5));
             } catch (NullPointerException e) {
@@ -225,7 +202,7 @@ public class WeatherProvider {
         }
 
         public long updateWeather(Weather weather) {
-            if (weather == null || weather.getTemperature() == Weather.INVALID_TEMP)
+            if (weather == null || weather.getTemperature().equals(Weather.INVALID_TEMP))
                 return 0;
 
             SQLiteDatabase database = this.getWritableDatabase();
@@ -235,7 +212,7 @@ public class WeatherProvider {
             values.put(KEY_TEMP, weather.getTemperature());
             values.put(KEY_CLOUD, weather.getCloudState());
             values.put(KEY_PRECIPITATION, weather.getPrecipitationState());
-            values.put(KEY_TIMESHIFT, weather.getTimeShift());
+            values.put(KEY_TIME_SHIFT, weather.getTimeShift());
 
             Log.v("SQL", "Recorded weather at hour " + weather.getTime() + "\n" + weather);
 
@@ -246,14 +223,6 @@ public class WeatherProvider {
             SQLiteDatabase database = this.getWritableDatabase();
             database.delete(TABLE_NAME, null, null);
 
-            for (int i = 0; i < 4; i++) {
-                ContentValues values = new ContentValues();
-                values.put(KEY_TIME, "");
-                values.put(KEY_TEMP, "");
-                values.put(KEY_CLOUD, "");
-                values.put(KEY_PRECIPITATION, "");
-                database.insert(TABLE_NAME, null, values);
-            }
         }
     }
 }

@@ -5,35 +5,159 @@
     android:id="@+id/card_meal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp">
+    android:layout_margin="5dp"
+    android:background="#EEEEEE"
+    app:cardCornerRadius="0dp">
 
     <RelativeLayout
-        android:id="@+id/card_contents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:padding="16dp">
+        android:layout_gravity="center_horizontal">
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/meal" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/icon"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_toEndOf="@id/icon"
-            android:layout_toRightOf="@id/icon"
-            android:text="@string/actionbar_meal"
-            android:textColor="@color/black_text"
-            android:textSize="34sp" />
+            android:background="#FD8701"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <ImageView
+                android:layout_width="60sp"
+                android:layout_height="60sp"
+                android:src="@drawable/meal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/card_title_meals"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/abc_text_size_display_1_material" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/contents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            android:minHeight="75dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/card_status_refreshing"
+                android:textColor="@color/abc_primary_text_material_light"
+                android:textSize="@dimen/abc_text_size_headline_material" />
+
+            <LinearLayout
+                android:id="@+id/meals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:background="@android:color/white"
+                android:divider="@drawable/divider"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:id="@+id/no_meal_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="9dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_status_no_meal"
+                        android:textColor="@color/abc_primary_text_material_light"
+                        android:textSize="@dimen/abc_text_size_headline_material" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_status_no_meal_desc"
+                        android:textColor="@color/abc_secondary_text_material_light"
+                        android:textSize="@dimen/abc_text_size_subhead_material" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/breakfast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="60dp"
+                    android:orientation="vertical"
+                    android:padding="9dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/breakfast"
+                        android:textColor="@color/abc_primary_text_material_light"
+                        android:textSize="@dimen/abc_text_size_headline_material" />
+
+                    <TextView
+                        android:id="@+id/breakfast_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_meal"
+                        android:textColor="@color/abc_secondary_text_material_light"
+                        android:textSize="@dimen/abc_text_size_subhead_material" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lunch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="9dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lunch"
+                        android:textColor="@color/abc_primary_text_material_light"
+                        android:textSize="@dimen/abc_text_size_headline_material" />
+
+                    <TextView
+                        android:id="@+id/lunch_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_meal"
+                        android:textColor="@color/abc_secondary_text_material_light"
+                        android:textSize="@dimen/abc_text_size_subhead_material" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="9dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dinner"
+                        android:textColor="@color/abc_primary_text_material_light"
+                        android:textSize="@dimen/abc_text_size_headline_material" />
+
+                    <TextView
+                        android:id="@+id/dinner_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_meal"
+                        android:textColor="@color/abc_secondary_text_material_light"
+                        android:textSize="@dimen/abc_text_size_subhead_material" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
 
     </RelativeLayout>
 

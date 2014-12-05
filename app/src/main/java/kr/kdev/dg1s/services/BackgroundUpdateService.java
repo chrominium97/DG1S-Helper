@@ -11,10 +11,10 @@ import android.util.Log;
 
 public class BackgroundUpdateService extends BroadcastReceiver {
 
-    // The app's AlarmManager, which provides access to the system alarm services.
-    AlarmManager alarmMgr;
+    // The application's AlarmManager, which provides access to the system alarm services.
+    private AlarmManager alarmMgr;
     // The pending intent that is triggered when the alarm fires.
-    PendingIntent alarmIntent;
+    private PendingIntent alarmIntent;
 
     @Override
     public void onReceive(Context context, Intent intent) {

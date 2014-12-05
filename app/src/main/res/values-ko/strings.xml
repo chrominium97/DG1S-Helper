@@ -4,12 +4,8 @@
     <string name="welcome">대구일과학고등학교 어플리케이션을 설치해주셔서 감사합니다. 메뉴 버튼을 누르면 나오는 설정 창에서 자신의 학년과 반을 설정해주시기 바랍니다.</string>
     <string name="app_name">일과고 도우미</string>
 
-    <string name="settings_toast">식단 알림을 수신</string>
-
     <!-- 상태알림 -->
-    <string name="error_network">네트워크 에러</string>
     <string name="error_network_long">네트워크 오류로 정보를 업데이트할 수 없습니다.</string>
-    <string name="error_no_description">설명 없음.</string>
     <string name="error_no_meal">식사가 아직 등록되지 않았습니다.</string>
     <string name="error_no_schudules">오늘은 일정이 없습니다.</string>
 
@@ -19,17 +15,12 @@
     <string name="update_description">UI 개선</string>
 
     <!-- 액션바 항목 -->
-    <string name="actionbar_schedule">학사일정</string>
-    <string name="actionbar_meal">급식</string>
-    <string name="actionbar_homework">숙제</string>
-    <string name="actionbar_homework_add">숙제 추가</string>
-    <string name="actionbar_vending_machine">자판기 음료수 목록</string>
+    <string name="card_title_schedules">학사일정</string>
+    <string name="card_title_meals">급식</string>
     <string name="actionbar_credits">개발자 정보</string>
 
     <string name="action_settings">설정</string>
-    <string name="action_academic">날짜 고르기</string>
     <string name="action_refresh">새로고침</string>
-    <string name="action_calendar">날짜 고르기</string>
     <string name="action_credits">개발자 정보</string>
     <string name="action_homework_add">숙제 추가</string>
     <string name="action_homework_add_confirm">숙제 개시</string>
@@ -53,18 +44,10 @@
 
     <string name="main_btn1">식단표</string>
     <string name="main_btn2">숙제</string>
-    <string name="main_btn3">시간표</string>
     <string name="main_btn4">학사일정</string>
 
     <!-- 숙제 기능 -->
-    <string name="hwupldtxt">학년과 반을 고르세요.기본값은 자신의 학년/반입니다.</string>
-    <string name="hwupld_due">숙제는 언제까지 해야 합니까?</string>
-    <string name="subject">과목</string>
-    <string name="description">설명</string>
     <string name="timetable_title">시간표 보기</string>
-
-    <string name="promptClass">반 선택</string>
-    <string name="promptGrade">학년 선택</string>
 
     <string-array name="selectGrade">
         <item>1학년</item>
@@ -85,10 +68,6 @@
     <!-- 과목 종류 -->
     <string name="literature">문학</string>
     <string name="literature_teacher">김영식</string>
-    <string name="subject_others">기타</string>
-
-    <!-- 문장 요소 -->
-    <string name="phrase_until">까지</string>
 
     <!-- 날짜 -->
     <string name="mon">월</string>
@@ -122,15 +101,6 @@
     <string name="friday_t">주말로 가는 마지막 관문입니다.</string>
     <string name="saturday_t">즐거운 주말 되세요.</string>
 
-    <!-- 날씨 -->
-    <string name="sunny">맑음</string>
-    <string name="cloudy1">흐림</string>
-    <string name="cloudy2">흐림</string>
-    <string name="cloudy3">흐림</string>
-    <string name="rainy">비</string>
-    <string name="rainsnow">눈/비</string>
-    <string name="snowy">눈</string>
-
     <!-- Credits 창 -->
     <string name="app_info_title">어플리케이션 정보</string>
     <string name="app_info_text">이 어플리케이션은 대구일과고 학생들로 구성된\nK-Developers™ 에서 제작하였습니다.</string>
@@ -157,15 +127,7 @@
         <item>4</item>
     </string-array>
 
-    <!-- 메뉴 리스트 -->
-    <string name="menu_dropdown_1">설정</string>
-    <string name="menu_dropdown_2">정보</string>
-
-    <!-- 토스트용 메시지 -->
-    <string name="sikdan_updated">식단이 업데이트 되었습니다.</string>
-
     <!-- 더미 데이터 -->
-    <string name="dummy_date">2014&#8211;01&#8211;01까지</string>
     <string name="dummy_date_with_letter">2014년 01월 01일</string>
     <string name="dummy_time_6a">오전06:00</string>
     <string name="dummy_time_9a">오전09:00</string>
@@ -174,6 +136,5 @@
     <string name="dummy_time_6p">오후06:00</string>
     <string name="dummy_temp">13ºC</string>
     <string name="dummy_meal">급식</string>
-    <string name="dummy_assignedTo">1학년 1반</string>
 
 </resources>

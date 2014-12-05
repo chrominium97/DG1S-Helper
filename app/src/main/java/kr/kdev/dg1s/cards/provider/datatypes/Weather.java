@@ -8,51 +8,21 @@ import kr.kdev.dg1s.R;
 
 public class Weather {
 
+    public static final String INVALID_TEMP = "-999";
     final Context context;
-
-    public static final int INVALID_TEMP = -999;
-
     int ORDER_ON_DATABASE;
 
     int HOUR_OF_DAY = -1;
-    int TEMPERATURE;
+    String TEMPERATURE;
     CLOUD CLOUD_STATE = CLOUD.UNKNOWN;
     PRECIPITATION PRECIPITATION_STATE = PRECIPITATION.UNKNOWN;
     int TIME_SHIFT = 0;
-
-    enum CLOUD {
-        CLEAR(0), PARTLY_CLOUDY(1), MOSTLY_CLOUDY(2), CLOUDY(3), UNKNOWN(-1);
-
-        int statusCode;
-
-        CLOUD(int code) {
-            this.statusCode = code;
-        }
-
-        public int getStatusCode() {
-            return statusCode;
-        }
-    }
-
-    enum PRECIPITATION {
-        NONE(0), RAIN(1), SNOW(2), SLEET(3), UNKNOWN(-1);
-
-        int statusCode;
-
-        PRECIPITATION(int code) {
-            this.statusCode = code;
-        }
-
-        public int getStatusCode() {
-            return statusCode;
-        }
-    }
 
     public Weather(Context incomingContext) {
         context = incomingContext;
     }
 
-    public Weather(Context iContext, int order, int time, int temp, int cloudState, int precipitationState, int timeShift) {
+    public Weather(Context iContext, int order, int time, String temp, int cloudState, int precipitationState, int timeShift) {
         this.TIME_SHIFT = timeShift;
         context = iContext;
         this.ORDER_ON_DATABASE = order;
@@ -60,6 +30,31 @@ public class Weather {
         this.TEMPERATURE = temp;
         setCloudState(cloudState);
         setPrecipitationState(precipitationState);
+    }
+
+    public String getReadableWeatherState() {
+        if (this.PRECIPITATION_STATE == PRECIPITATION.NONE) {
+            switch (this.CLOUD_STATE) {
+                case CLEAR:
+                    return context.getString(R.string.cloud_clear);
+                case PARTLY_CLOUDY:
+                    return context.getString(R.string.cloud_partly);
+                case MOSTLY_CLOUDY:
+                    return context.getString(R.string.cloud_mostly);
+                case CLOUDY:
+                    return context.getString(R.string.cloud_cloudy);
+            }
+        } else {
+            switch (this.PRECIPITATION_STATE) {
+                case RAIN:
+                    return context.getString(R.string.precipitation_rain);
+                case SLEET:
+                    return context.getString(R.string.precipitation_sleet);
+                case SNOW:
+                    return context.getString(R.string.precipitation_snow);
+            }
+        }
+        return context.getString(R.string.weather_state_unknown);
     }
 
     public String getReadableCloudState() {
@@ -71,7 +66,7 @@ public class Weather {
             case MOSTLY_CLOUDY:
                 return context.getString(R.string.cloud_mostly);
             case CLOUDY:
-                return context.getString(R.string.cloudy_cloudy);
+                return context.getString(R.string.cloud_cloudy);
             default:
                 return context.getString(R.string.weather_state_unknown);
         }
@@ -84,7 +79,7 @@ public class Weather {
             case RAIN:
                 return context.getString(R.string.precipitation_rain);
             case SLEET:
-                return context.getString(R.string.precipitation_rain_w_snow);
+                return context.getString(R.string.precipitation_sleet);
             case SNOW:
                 return context.getString(R.string.precipitation_snow);
             default:
@@ -95,6 +90,30 @@ public class Weather {
     boolean isDaytime() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         return (hour > 7) && (hour < 21);
+    }
+
+    public int getWeatherColor() {
+        if (this.PRECIPITATION_STATE == PRECIPITATION.UNKNOWN || this.CLOUD_STATE == CLOUD.UNKNOWN) {
+            return context.getResources().getColor(R.color.grey_500);
+        }
+
+        if (isDaytime()) {
+            if (this.PRECIPITATION_STATE == PRECIPITATION.NONE) {
+                return context.getResources().getColor(R.color.blue_A400);
+            } else if (this.PRECIPITATION_STATE == PRECIPITATION.SNOW) {
+                return context.getResources().getColor(R.color.blue_A200);
+            } else {
+                return context.getResources().getColor(R.color.blue_A700);
+            }
+        } else {
+            if (this.PRECIPITATION_STATE == PRECIPITATION.NONE) {
+                return context.getResources().getColor(R.color.grey_900);
+            } else if (this.PRECIPITATION_STATE == PRECIPITATION.SNOW) {
+                return context.getResources().getColor(R.color.blue_grey_700);
+            } else {
+                return context.getResources().getColor(R.color.blue_grey_900);
+            }
+        }
     }
 
     public int getImageId() {
@@ -150,7 +169,7 @@ public class Weather {
                 case PARTLY_CLOUDY:
                     switch (this.PRECIPITATION_STATE) {
                         case NONE:
-                            return R.drawable.weather_nighttime_clear;
+                            return R.drawable.weather_nighttime_partly;
                         case RAIN:
                             return R.drawable.weather_nighttime_rain;
                         case SLEET:
@@ -162,7 +181,7 @@ public class Weather {
                 case MOSTLY_CLOUDY:
                     switch (this.PRECIPITATION_STATE) {
                         case NONE:
-                            return R.drawable.weather_nighttime_clear;
+                            return R.drawable.weather_nighttime_partly;
                         case RAIN:
                             return R.drawable.weather_nighttime_rain;
                         case SLEET:
@@ -187,28 +206,32 @@ public class Weather {
         return R.drawable.weather_unknown;
     }
 
-    public void setTimeShift(int timeShift) {
-        this.TIME_SHIFT = timeShift;
-    }
-
     public int getTimeShift() {
         return TIME_SHIFT;
     }
 
-    public void setTime(int time) {
-        this.HOUR_OF_DAY = time;
+    public void setTimeShift(int timeShift) {
+        this.TIME_SHIFT = timeShift;
     }
 
     public int getTime() {
         return this.HOUR_OF_DAY;
     }
 
-    public void setTemperature(int temp) {
+    public void setTime(int time) {
+        this.HOUR_OF_DAY = time;
+    }
+
+    public String getTemperature() {
+        return this.TEMPERATURE;
+    }
+
+    public void setTemperature(String temp) {
         this.TEMPERATURE = temp;
     }
 
-    public int getTemperature() {
-        return this.TEMPERATURE;
+    public int getCloudState() {
+        return this.CLOUD_STATE.getStatusCode();
     }
 
     public void setCloudState(int cloudState) {
@@ -231,8 +254,8 @@ public class Weather {
         }
     }
 
-    public int getCloudState() {
-        return this.CLOUD_STATE.getStatusCode();
+    public int getPrecipitationState() {
+        return this.PRECIPITATION_STATE.getStatusCode();
     }
 
     public void setPrecipitationState(int precipitationState) {
@@ -255,16 +278,40 @@ public class Weather {
         }
     }
 
-    public int getPrecipitationState() {
-        return this.PRECIPITATION_STATE.getStatusCode();
-    }
-
     @Override
     public String toString() {
         return "INDEX          : " + this.ORDER_ON_DATABASE +
-                "TIME          : " + this.getTime() +
-                "TEMPERATURE   : " + this.getTemperature() +
-                "CLOUD         : " + this.getReadableCloudState() +
-                "PRECIPITATION : " + this.getReadablePrecipitationState();
+                "\nTIME          : " + this.getTime() +
+                "\nTEMPERATURE   : " + this.getTemperature() +
+                "\nCLOUD         : " + this.getReadableCloudState().replace("\n", " ") +
+                "\nPRECIPITATION : " + this.getReadablePrecipitationState();
+    }
+
+    enum CLOUD {
+        CLEAR(0), PARTLY_CLOUDY(1), MOSTLY_CLOUDY(2), CLOUDY(3), UNKNOWN(-1);
+
+        final int statusCode;
+
+        CLOUD(int code) {
+            this.statusCode = code;
+        }
+
+        public int getStatusCode() {
+            return statusCode;
+        }
+    }
+
+    enum PRECIPITATION {
+        NONE(0), RAIN(1), SNOW(2), SLEET(3), UNKNOWN(-1);
+
+        final int statusCode;
+
+        PRECIPITATION(int code) {
+            this.statusCode = code;
+        }
+
+        public int getStatusCode() {
+            return statusCode;
+        }
     }
 }

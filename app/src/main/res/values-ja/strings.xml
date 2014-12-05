@@ -4,12 +4,8 @@
     <string name="welcome">一科学てだすけをインストールしていただき、ありがとうございます。メニューボタンを押すと出る設定ウィンドウで自分の学年とクラスを設定してください。</string>
     <string name="app_name">一科学てだすけ</string>
 
-    <string name="settings_toast">給食メニュー通知を受け取る</string>
-
     <!-- 상태알림 -->
-    <string name="error_network">ネットワーク</string>
     <string name="error_network_long">ネットワークエラーで情報のアップデートはできません。</string>
-    <string name="error_no_description">説明なし。</string>
     <string name="error_no_meal">食事がまだ登録されていません。</string>
     <string name="error_no_schudules">今日はスケジュールがありません。</string>
 
@@ -19,17 +15,12 @@
     <string name="update_description">UI 改善</string>
 
     <!-- 액션바 항목 -->
-    <string name="actionbar_schedule">学事日程</string>
-    <string name="actionbar_meal">給食</string>
-    <string name="actionbar_homework">宿題</string>
-    <string name="actionbar_homework_add">宿題を追加する</string>
-    <string name="actionbar_vending_machine">自販機飲料水リスト</string>
+    <string name="card_title_schedules">学事日程</string>
+    <string name="card_title_meals">給食</string>
     <string name="actionbar_credits">開発者情報</string>
 
     <string name="action_settings">設定</string>
-    <string name="action_academic">日付選択</string>
     <string name="action_refresh">更新</string>
-    <string name="action_calendar">日付選択1</string>
     <string name="action_credits">クレジット</string>
     <string name="action_homework_add">宿題を追加する</string>
     <string name="action_homework_add_confirm">宿題を開示する</string>
@@ -53,18 +44,10 @@
 
     <string name="main_btn1">献立表</string>
     <string name="main_btn2">宿題</string>
-    <string name="main_btn3">時間割り</string>
     <string name="main_btn4">学事日程</string>
 
     <!-- 숙제 기능 -->
-    <string name="hwupldtxt">学年と組を選んでください。デフォルトは自分の学年/組です。</string>
-    <string name="hwupld_due">宿題はいつまでですか？</string>
-    <string name="subject">科目</string>
-    <string name="description">説明</string>
     <string name="timetable_title">時間割りを見る</string>
-
-    <string name="promptClass">組を選択</string>
-    <string name="promptGrade">学年を選択</string>
 
     <string-array name="selectGrade">
         <item>1年生</item>
@@ -85,10 +68,6 @@
     <!-- 과목 종류 -->
     <string name="literature">文学</string>
     <string name="literature_teacher">김영식</string>
-    <string name="subject_others">その他</string>
-
-    <!-- 문장 요소 -->
-    <string name="phrase_until">まで</string>
 
     <!-- 날짜 -->
     <string name="mon">月</string>
@@ -122,15 +101,6 @@
     <string name="friday_t">週末に向かう最後の関門です。</string>
     <string name="saturday_t">週末を楽しんでください。</string>
 
-    <!-- 날씨 -->
-    <string name="sunny">晴れ</string>
-    <string name="cloudy1">曇り</string>
-    <string name="cloudy2">曇り</string>
-    <string name="cloudy3">曇り</string>
-    <string name="rainy">雨</string>
-    <string name="rainsnow">雪/雨</string>
-    <string name="snowy">雪</string>
-
     <!-- Credits 창 -->
     <string name="app_info_title">アプリケーションの情報</string>
     <string name="app_info_text">このアプリケーションは\n大邱一科学高校の学生たちのチームである\nK-Developers™ で作りました。</string>
@@ -157,15 +127,7 @@
         <item>4</item>
     </string-array>
 
-    <!-- 메뉴 리스트 -->
-    <string name="menu_dropdown_1">設定</string>
-    <string name="menu_dropdown_2">情報</string>
-
-    <!-- 토스트용 메시지 -->
-    <string name="sikdan_updated">献立をアップデートしました。</string>
-
     <!-- 더미 데이터 -->
-    <string name="dummy_date">2014&#8211;01&#8211;01まで</string>
     <string name="dummy_date_with_letter">2014年01月01日</string>
     <string name="dummy_time_6a">午前06:00</string>
     <string name="dummy_time_9a">午前09:00</string>
@@ -174,6 +136,5 @@
     <string name="dummy_time_6p">午後06:00</string>
     <string name="dummy_temp">13ºC</string>
     <string name="dummy_meal">給食</string>
-    <string name="dummy_assignedTo">１学年１組</string>
 
 </resources>

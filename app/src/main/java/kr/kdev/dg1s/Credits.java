@@ -32,11 +32,11 @@ public class Credits extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(R.string.actionbar_credits);
+        getSupportActionBar().setTitle(R.string.app_info_title);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
 
-        ImageView Kdev = (ImageView) findViewById(R.id.kdev);
-        Kdev.setOnTouchListener(new Button.OnTouchListener() {
+        ImageView kdevLogo = (ImageView) findViewById(R.id.kdev);
+        kdevLogo.setOnTouchListener(new Button.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (v.getId()) {
                     case R.id.kdev:
@@ -65,8 +65,8 @@ public class Credits extends ActionBarActivity {
             }
         });
 
-        LinearLayout Mailto = (LinearLayout) findViewById(R.id.mailto_container);
-        Mailto.setOnClickListener(new Button.OnClickListener() {
+        LinearLayout mailTo = (LinearLayout) findViewById(R.id.mailto_container);
+        mailTo.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "chrominium97@gmail.com"));
                 startActivity(i);

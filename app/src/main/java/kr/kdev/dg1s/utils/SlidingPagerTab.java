@@ -541,9 +541,9 @@ public class SlidingPagerTab extends HorizontalScrollView {
         }
 
         @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeInt(currentPosition);
+        public void writeToParcel(Parcel parcel, int flags) {
+            super.writeToParcel(parcel, flags);
+            parcel.writeInt(currentPosition);
         }
     }
 

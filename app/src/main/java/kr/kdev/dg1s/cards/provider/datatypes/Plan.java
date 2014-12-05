@@ -1,8 +1,5 @@
 package kr.kdev.dg1s.cards.provider.datatypes;
 
-/**
- * Created by 꽃게 on 2014/11/26.
- */
 public class Plan {
 
     int DATE;
