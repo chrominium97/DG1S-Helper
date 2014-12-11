@@ -18,7 +18,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -26,7 +25,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.util.Calendar;
 
 import kr.kdev.dg1s.cards.CardViewStatusNotifier;
 import kr.kdev.dg1s.cards.MealCard;
@@ -38,6 +36,8 @@ import kr.kdev.dg1s.utils.floatingactionbutton.FloatingActionsMenu;
 
 public class MainActivity extends ActionBarActivity implements CardViewStatusNotifier {
 
+    private static final String TAG = "MainActivity";
+
     private Context context;
     private MealCard mealCard;
     private PlanCard planCard;
@@ -47,25 +47,27 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
     private SwipeRefreshLayout pullToRefreshLayout;
 
     public void notifyCompletion(Object origin, int status) {
+        final String localTAG = TAG + "_CardQueue";
+
         if (queue > 0) {
             queue--;
         }
 
         if (status == FAILURE) {
-            Log.e("MainActivity_CardQueue", "Error occurred while updating card(s)");
+            Log.e(localTAG, "Error occurred while updating card(s)");
             try {
                 MealCard card = (MealCard) origin;
-                Log.e("MainActivity_CardQueue", "Error originated from MealCard");
+                Log.e(localTAG, "Error originated from MealCard");
             } catch (ClassCastException e) {
                 try {
                     PlanCard card = (PlanCard) origin;
-                    Log.e("MainActivity_CardQueue", "Error originated from PlanCard");
+                    Log.e(localTAG, "Error originated from PlanCard");
                 } catch (ClassCastException f) {
                     try {
                         WeatherCard card = (WeatherCard) origin;
-                        Log.e("MainActivity_CardQueue", "Error originated from WeatherCard");
+                        Log.e(localTAG, "Error originated from WeatherCard");
                     } catch (ClassCastException g) {
-                        Log.e("MainActivity_CardQueue", "Error originated from unknown source");
+                        Log.e(localTAG, "Error originated from an unknown source");
                     }
                 }
             }
@@ -75,7 +77,7 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
                 //if (card.isDismissalDay()) {
                 // TODO 퇴사
                 //}
-            } catch (ClassCastException e) {
+            } catch (ClassCastException ignored) {
 
             }
         }
@@ -84,7 +86,7 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
             pullToRefreshLayout.setRefreshing(false);
         }
 
-        Log.i("MainActivity_CardQueue", queue + " left in queue");
+        Log.i(localTAG, queue + " left in queue");
     }
 
     @Override
@@ -118,6 +120,7 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
 
         ViewGroup group = (ViewGroup) findViewById(R.id.container);
         queue = queue + 3;
+
         weatherCard = new WeatherCard(context, group, MainActivity.this);
         mealCard = new MealCard(context, group, MainActivity.this);
         planCard = new PlanCard(context, group, MainActivity.this);
@@ -143,11 +146,11 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
                 overridePendingTransition(R.anim.appear_decelerate_btt, R.anim.still);
                 break;
             case R.id.action_credits:
-                /**
-                 Intent i2 = new Intent(MainActivity.this, Credits.class);
-                 startActivity(i2);
-                 overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-                 */
+
+                Intent i2 = new Intent(MainActivity.this, Credits.class);
+                startActivity(i2);
+                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
+
                 File externalDirectory = Environment.getExternalStorageDirectory();
                 File internalDirectory = Environment.getDataDirectory();
                 FileChannel source;
@@ -231,52 +234,10 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
             weatherCard.requestUpdate(true);
             mealCard.requestUpdate(true);
             planCard.requestUpdate(true);
-            Log.i("ManualUpdate", "강제 업데이트 성공.");
         } else {
             pullToRefreshLayout.setRefreshing(false);
-            Log.i("ManualUpdate", "네크워크 접근 불가");
         }
 
-    }
-
-    private void setDayInfo() {
-        TextView dayinfo = (TextView) findViewById(R.id.dayinfo);
-        TextView dayinfo_text = null;
-        boolean vertical = true;
-
-        if (findViewById(R.id.dayinfotext) == null) {
-            vertical = false;
-        } else {
-            dayinfo_text = (TextView) findViewById(R.id.dayinfotext);
-        }
-        Calendar cal = Calendar.getInstance();
-
-        int day_of_week = cal.get(Calendar.DAY_OF_WEEK);
-        if (day_of_week == 1) {
-            dayinfo.setText(getString(R.string.sunday));
-            if (vertical) dayinfo_text.setText(getString(R.string.sunday_t));
-        } else if (day_of_week == 2) {
-            dayinfo.setText(getString(R.string.monday));
-            if (vertical) dayinfo_text.setText(getString(R.string.monday_t));
-        } else if (day_of_week == 3) {
-            dayinfo.setText(getString(R.string.tuesday));
-            if (vertical) dayinfo_text.setText(getString(R.string.tuesday_t));
-        } else if (day_of_week == 4) {
-            dayinfo.setText(getString(R.string.wednesday));
-            if (vertical) dayinfo_text.setText(getString(R.string.wednesday_t));
-        } else if (day_of_week == 5) {
-            dayinfo.setText(getString(R.string.thursday));
-            if (vertical) dayinfo_text.setText(getString(R.string.thursday_t));
-        } else if (day_of_week == 6) {
-            dayinfo.setText(getString(R.string.friday));
-            if (vertical) dayinfo_text.setText(getString(R.string.friday_t));
-
-        } else if (day_of_week == 7) {
-            dayinfo.setText(getString(R.string.saturday));
-            if (vertical) dayinfo_text.setText(getString(R.string.saturday_t));
-        }
-
-        Log.i("MainActivity_DayInfo", "요일정보 업데이트 완료.");
     }
 
     private void checkFirstRun() {

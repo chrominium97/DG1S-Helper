@@ -20,6 +20,8 @@ import kr.kdev.dg1s.cards.provider.datatypes.Plan;
 
 public class PlanCard implements PlanProvider.PlanProviderInterface {
 
+    private final static String TAG = "PlanCard";
+
     private final int targetDelay = 1000;
     PlanProvider provider;
     Context context;
@@ -81,7 +83,7 @@ public class PlanCard implements PlanProvider.PlanProviderInterface {
     }
 
     long delay() {
-        Log.d("WeatherCardAnimationDelay",
+        Log.d(TAG + "_AnimationDelay",
                 String.valueOf((timeAtLastViewChange + targetDelay) - System.currentTimeMillis()) + " " +
                         "milliseconds delayed");
         return (timeAtLastViewChange + targetDelay) - System.currentTimeMillis();
@@ -93,7 +95,7 @@ public class PlanCard implements PlanProvider.PlanProviderInterface {
         if (delay < 0) {
             delay = 0;
         }
-        handler.postDelayed(new hideSchdulesAction(), delay);
+        handler.postDelayed(new hideSchedulesAction(), delay);
     }
 
     void showSchedules(Plan plan, ArrayList<Integer> summaryArray) {
@@ -111,7 +113,7 @@ public class PlanCard implements PlanProvider.PlanProviderInterface {
         }
     }
 
-    class hideSchdulesAction implements Runnable {
+    class hideSchedulesAction implements Runnable {
         @Override
         public void run() {
             schedule.removeAllViews();
@@ -131,18 +133,17 @@ public class PlanCard implements PlanProvider.PlanProviderInterface {
         @Override
         public void run() {
             if ("".equals(plan.getPlans())) {
-                planText.setText(context.getString(R.string.error_no_schudules));
+                planText.setText(context.getString(R.string.plan_card_no_schedules));
             } else {
                 planText.setText(plan.getPlans());
             }
 
             if (summaryArray.get(0) == -1) {
-                Log.e("GRADE", "GRADE NOT SET OR LOADED W/ ERRORS");
-                summaryText.setText(context.getString(R.string.set_grade));
+                summaryText.setText(context.getString(R.string.plan_card_summary_set_grade));
             } else {
-                summaryText.setText(context.getString(R.string.day_total) + summaryArray.get(0) + "\n" +
-                        context.getString(R.string.day_events) + summaryArray.get(1) + "\n" +
-                        context.getString(R.string.day_studying) + summaryArray.get(2));
+                summaryText.setText(context.getString(R.string.plan_card_summary_day_total) + summaryArray.get(0) + "\n" +
+                        context.getString(R.string.plan_card_summary_day_events) + summaryArray.get(1) + "\n" +
+                        context.getString(R.string.plan_card_summary_day_studying) + summaryArray.get(2));
             }
 
             addView(planText, schedule);

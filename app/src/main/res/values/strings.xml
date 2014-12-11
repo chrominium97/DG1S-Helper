@@ -4,22 +4,10 @@
     <string name="welcome">Thank you for installing DG1S Helper. Press the menu button to access the settings window, and set your grade and class.</string>
     <string name="app_name">DG1S Helper</string>
 
-    <string name="card_status_no_meal">No meals for today</string>
-    <string name="card_status_no_meal_desc">There aren\'t any meals registered.</string>
-    <string name="card_status_refreshing">Refreshing&#8230;</string>
-
-    <string name="set_grade">Please set your grade in the settings menu to view the summary.</string>
-    <string name="monthly_statistics">This month\'s summary</string>
-    <string name="day_total">Total № of days at school : </string>
-    <string name="day_events">№ of days with events : </string>
-    <string name="day_studying">№ of days without events : </string>
-
-    <!-- weather -->
-    <string name="weather_state_unknown">Unknown</string>
-
-    <string name="card_title_schedules">Schedule</string>
-    <string name="card_title_meals">Meals</string>
-    <string name="card_title_weather">Weather</string>
+    <!-- Common vocabularies -->
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
 
     <string name="cloud_clear">Clear</string>
     <string name="cloud_partly">Partly\ncloudy</string>
@@ -31,47 +19,33 @@
     <string name="precipitation_sleet">Sleet</string>
     <string name="precipitation_snow">Snow</string>
 
-    <!-- 상태알림 -->
-    <string name="error_network_long">Unable to update information due to network error.</string>
-    <string name="error_no_meal">The meal is not yet registered.</string>
-    <string name="error_no_schudules">There are no plans for today.</string>
+    <string name="unknown">Unknown</string>
+
+    <!-- CARD -->
+    <string name="card_title_schedules">Schedule</string>
+    <string name="card_title_meals">Meals</string>
+    <string name="card_title_weather">Weather</string>
+
+    <string name="card_refreshing">Refreshing&#8230;</string>
+
+    <string name="meal_card_no_meal">No meals for today</string>
+    <string name="meal_card_no_meal_desc">There aren\'t any meals registered.</string>
+
+    <string name="plan_card_no_schedules">There are no plans for today.</string>
+    <string name="plan_card_summary_set_grade">Please set your grade in the settings menu to view the summary.</string>
+    <string name="plan_card_monthly_statistics">This month\'s summary</string>
+
+    <string name="plan_card_summary_day_total">Total № of days at school : </string>
+    <string name="plan_card_summary_day_events">№ of days with events : </string>
+    <string name="plan_card_summary_day_studying">№ of days without events : </string>
 
     <string name="confirm">Confirm</string>
 
     <string name="update_info">Update information :</string>
     <string name="update_description">UI refinements</string>
 
-    <string name="actionbar_credits">Developer Information</string>
-
     <string name="action_settings">Settings</string>
-    <string name="action_refresh">Refresh</string>
     <string name="action_credits">Credits</string>
-    <string name="action_homework_add">Add homework</string>
-    <string name="action_homework_add_confirm">Post homework</string>
-
-    <!-- 메인 화면 -->
-    <string name="main_schoolname">Daegu Il Science High School</string>
-    <string name="main_academic">Today\'s Schedule</string>
-    <string name="main_dayinfo">School weather: (Updated every 3 hours)</string>
-
-    <string name="breakfast">Breakfast</string>
-    <string name="lunch">Lunch</string>
-    <string name="dinner">Dinner</string>
-
-    <string name="time_breakfast">6:50 AM - 7:40 AM</string>
-    <string name="time_lunch">12:30 PM - 1:20 PM</string>
-    <string name="time_dinner">6:10 PM - 7:00 PM</string>
-
-    <string name="dismissal">Dismissal</string>
-    <string name="dismissal_time">5:40 PM</string>
-    <string name="dismissal_comment">Be careful not to be late for bus.</string>
-
-    <string name="main_btn1">Meal Planner</string>
-    <string name="main_btn2">Homework</string>
-    <string name="main_btn4">Academic Calendar</string>
-
-    <!-- 숙제 기능 -->
-    <string name="timetable_title">Timetable</string>
 
     <string-array name="selectGrade">
         <item>Grade 1</item>
@@ -87,42 +61,6 @@
     </string-array>
 
     <string name="no_meal">No meal</string>
-
-    <!-- 과목 종류 -->
-    <string name="literature">Literature</string>
-    <string name="literature_teacher">김영식</string>
-
-    <!-- 날짜 -->
-    <string name="mon">MON</string>
-    <string name="tue">TUE</string>
-    <string name="wed">WED</string>
-    <string name="thu">THU</string>
-    <string name="fri">FRI</string>
-
-    <string name="sunday">Sunday</string>
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-
-    <string name="sunday_sentence">Today is Sunday,</string>
-    <string name="monday_sentence">Today is Monday,</string>
-    <string name="tuesday_sentence">Today is Tuesday,</string>
-    <string name="wednesday_sentence">Today is Wednesday.</string>
-    <string name="thursday_sentence">Today is Thursday.</string>
-    <string name="friday_sentence">Today is Friday,</string>
-    <string name="saturday_sentence">Today is Saturday.</string>
-
-    <!-- 요일 코멘트 -->
-    <string name="sunday_t">the last moments of this weekend.</string>
-    <string name="monday_t">the beginning of another exciting week.</string>
-    <string name="tuesday_t">and this week\'s school life has come in earnest.</string>
-    <string name="wednesday_t">Although studying is hard, cheer up!</string>
-    <string name="thursday_t">How about a nap when you\'re tired?</string>
-    <string name="friday_t">the last gateway to weekend.</string>
-    <string name="saturday_t">Have a nice weekend.</string>
 
     <!-- Credits 창 -->
     <string name="app_info_title">Application Information</string>

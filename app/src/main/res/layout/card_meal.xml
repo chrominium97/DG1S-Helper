@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="#EEEEEE"
     app:cardCornerRadius="0dp">
 
     <RelativeLayout
@@ -50,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/card_status_refreshing"
+                android:text="@string/card_refreshing"
                 android:textColor="@color/abc_primary_text_material_light"
                 android:textSize="@dimen/abc_text_size_headline_material" />
 
@@ -60,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 android:background="@android:color/white"
-                android:divider="@drawable/divider"
+                android:divider="@drawable/divider_horizontal"
                 android:orientation="vertical"
                 android:showDividers="middle">
 
@@ -75,14 +74,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/card_status_no_meal"
+                        android:text="@string/meal_card_no_meal"
                         android:textColor="@color/abc_primary_text_material_light"
                         android:textSize="@dimen/abc_text_size_headline_material" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/card_status_no_meal_desc"
+                        android:text="@string/meal_card_no_meal_desc"
                         android:textColor="@color/abc_secondary_text_material_light"
                         android:textSize="@dimen/abc_text_size_subhead_material" />
                 </LinearLayout>

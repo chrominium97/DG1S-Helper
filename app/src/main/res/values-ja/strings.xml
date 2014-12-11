@@ -4,11 +4,6 @@
     <string name="welcome">一科学てだすけをインストールしていただき、ありがとうございます。メニューボタンを押すと出る設定ウィンドウで自分の学年とクラスを設定してください。</string>
     <string name="app_name">一科学てだすけ</string>
 
-    <!-- 상태알림 -->
-    <string name="error_network_long">ネットワークエラーで情報のアップデートはできません。</string>
-    <string name="error_no_meal">食事がまだ登録されていません。</string>
-    <string name="error_no_schudules">今日はスケジュールがありません。</string>
-
     <string name="confirm">確認</string>
 
     <string name="update_info">アップデート内訳：</string>
@@ -17,37 +12,9 @@
     <!-- 액션바 항목 -->
     <string name="card_title_schedules">学事日程</string>
     <string name="card_title_meals">給食</string>
-    <string name="actionbar_credits">開発者情報</string>
 
     <string name="action_settings">設定</string>
-    <string name="action_refresh">更新</string>
     <string name="action_credits">クレジット</string>
-    <string name="action_homework_add">宿題を追加する</string>
-    <string name="action_homework_add_confirm">宿題を開示する</string>
-
-    <!-- 메인 화면 -->
-    <string name="main_schoolname">大邱一科学高等学校</string>
-    <string name="main_academic">今日のスケジュール</string>
-    <string name="main_dayinfo">学校の天気をお知らせします。(3時間ごとに更新)</string>
-
-    <string name="breakfast">朝ご飯</string>
-    <string name="lunch">昼ご飯</string>
-    <string name="dinner">夕ご飯</string>
-
-    <string name="time_breakfast">午前6:50 - 午前7:40</string>
-    <string name="time_lunch">午後12:30 - 午後1:20</string>
-    <string name="time_dinner">午後6:10 - 午後7:00</string>
-
-    <string name="dismissal">退舎</string>
-    <string name="dismissal_time">午後5:40</string>
-    <string name="dismissal_comment">バス時間に遅くならないように気をつけてください。</string>
-
-    <string name="main_btn1">献立表</string>
-    <string name="main_btn2">宿題</string>
-    <string name="main_btn4">学事日程</string>
-
-    <!-- 숙제 기능 -->
-    <string name="timetable_title">時間割りを見る</string>
 
     <string-array name="selectGrade">
         <item>1年生</item>
@@ -64,43 +31,6 @@
 
     <!-- 위젯 -->
     <string name="no_meal">給食なし</string>
-
-    <!-- 과목 종류 -->
-    <string name="literature">文学</string>
-    <string name="literature_teacher">김영식</string>
-
-    <!-- 날짜 -->
-    <string name="mon">月</string>
-    <string name="tue">火</string>
-    <string name="wed">水</string>
-    <string name="thu">木</string>
-    <string name="fri">金</string>
-
-    <string name="sunday">日曜日</string>
-    <string name="monday">月曜日</string>
-    <string name="tuesday">火曜日</string>
-    <string name="wednesday">水曜日</string>
-    <string name="thursday">木曜日</string>
-    <string name="friday">金曜日</string>
-    <string name="saturday">土曜日</string>
-
-    <string name="sunday_sentence">今日は日曜日、</string>
-    <string name="monday_sentence">今日は月曜日、</string>
-    <string name="tuesday_sentence">今日は火曜日、</string>
-    <string name="wednesday_sentence">今日は水曜日です。</string>
-    <string name="thursday_sentence">今日は木曜日です。</string>
-    <string name="friday_sentence">今日は金曜日、</string>
-    <string name="saturday_sentence">今日は土曜日です。</string>
-
-    <!-- 요일 코멘트 -->
-    <string name="sunday_t">今週末の最後の瞬間です。</string>
-    <string name="monday_t">胸がドキドキする新しい週の始まりです。</string>
-    <string name="tuesday_t">学校で過ごす本当の日の始まりです。</string>
-    <string name="wednesday_t">勉強に疲れたら頑張ってください！</string>
-    <string name="thursday_t">疲れたときはちょっと寝てもいいですよ。</string>
-    <string name="friday_t">週末に向かう最後の関門です。</string>
-    <string name="saturday_t">週末を楽しんでください。</string>
-
     <!-- Credits 창 -->
     <string name="app_info_title">アプリケーションの情報</string>
     <string name="app_info_text">このアプリケーションは\n大邱一科学高校の学生たちのチームである\nK-Developers™ で作りました。</string>
@@ -126,15 +56,5 @@
         <item>3</item>
         <item>4</item>
     </string-array>
-
-    <!-- 더미 데이터 -->
-    <string name="dummy_date_with_letter">2014年01月01日</string>
-    <string name="dummy_time_6a">午前06:00</string>
-    <string name="dummy_time_9a">午前09:00</string>
-    <string name="dummy_time_12p">午後12:00</string>
-    <string name="dummy_time_3p">午後03:00</string>
-    <string name="dummy_time_6p">午後06:00</string>
-    <string name="dummy_temp">13ºC</string>
-    <string name="dummy_meal">給食</string>
 
 </resources>

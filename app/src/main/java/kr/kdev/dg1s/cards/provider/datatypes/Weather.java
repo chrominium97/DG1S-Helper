@@ -54,7 +54,7 @@ public class Weather {
                     return context.getString(R.string.precipitation_snow);
             }
         }
-        return context.getString(R.string.weather_state_unknown);
+        return context.getString(R.string.unknown);
     }
 
     public String getReadableCloudState() {
@@ -68,7 +68,7 @@ public class Weather {
             case CLOUDY:
                 return context.getString(R.string.cloud_cloudy);
             default:
-                return context.getString(R.string.weather_state_unknown);
+                return context.getString(R.string.unknown);
         }
     }
 
@@ -83,7 +83,7 @@ public class Weather {
             case SNOW:
                 return context.getString(R.string.precipitation_snow);
             default:
-                return context.getString(R.string.weather_state_unknown);
+                return context.getString(R.string.unknown);
         }
     }
 
@@ -94,7 +94,7 @@ public class Weather {
 
     public int getWeatherColor() {
         if (this.PRECIPITATION_STATE == PRECIPITATION.UNKNOWN || this.CLOUD_STATE == CLOUD.UNKNOWN) {
-            return context.getResources().getColor(R.color.grey_500);
+            return context.getResources().getColor(R.color.grey_600);
         }
 
         if (isDaytime()) {
@@ -107,11 +107,35 @@ public class Weather {
             }
         } else {
             if (this.PRECIPITATION_STATE == PRECIPITATION.NONE) {
-                return context.getResources().getColor(R.color.grey_900);
+                return context.getResources().getColor(R.color.grey_800);
             } else if (this.PRECIPITATION_STATE == PRECIPITATION.SNOW) {
                 return context.getResources().getColor(R.color.blue_grey_700);
             } else {
-                return context.getResources().getColor(R.color.blue_grey_900);
+                return context.getResources().getColor(R.color.blue_grey_800);
+            }
+        }
+    }
+
+    public int getSubWeatherColor() {
+        if (this.PRECIPITATION_STATE == PRECIPITATION.UNKNOWN || this.CLOUD_STATE == CLOUD.UNKNOWN) {
+            return context.getResources().getColor(R.color.grey_400);
+        }
+
+        if (isDaytime()) {
+            if (this.PRECIPITATION_STATE == PRECIPITATION.NONE) {
+                return context.getResources().getColor(R.color.blue_400);
+            } else if (this.PRECIPITATION_STATE == PRECIPITATION.SNOW) {
+                return context.getResources().getColor(R.color.blue_300);
+            } else {
+                return context.getResources().getColor(R.color.blue_A200);
+            }
+        } else {
+            if (this.PRECIPITATION_STATE == PRECIPITATION.NONE) {
+                return context.getResources().getColor(R.color.grey_600);
+            } else if (this.PRECIPITATION_STATE == PRECIPITATION.SNOW) {
+                return context.getResources().getColor(R.color.blue_grey_500);
+            } else {
+                return context.getResources().getColor(R.color.blue_grey_600);
             }
         }
     }
@@ -126,7 +150,7 @@ public class Weather {
                 case PARTLY_CLOUDY:
                     switch (this.PRECIPITATION_STATE) {
                         case NONE:
-                            return R.drawable.weather_cloudy_clear;
+                            return R.drawable.weather_daytime_partly;
                         case RAIN:
                             return R.drawable.weather_daytime_rain;
                         case SLEET:
@@ -138,7 +162,7 @@ public class Weather {
                 case MOSTLY_CLOUDY:
                     switch (this.PRECIPITATION_STATE) {
                         case NONE:
-                            return R.drawable.weather_daytime_clear;
+                            return R.drawable.weather_daytime_partly;
                         case RAIN:
                             return R.drawable.weather_daytime_rain;
                         case SLEET:
@@ -288,7 +312,7 @@ public class Weather {
     }
 
     enum CLOUD {
-        CLEAR(0), PARTLY_CLOUDY(1), MOSTLY_CLOUDY(2), CLOUDY(3), UNKNOWN(-1);
+        CLEAR(1), PARTLY_CLOUDY(2), MOSTLY_CLOUDY(3), CLOUDY(4), UNKNOWN(-1);
 
         final int statusCode;
 

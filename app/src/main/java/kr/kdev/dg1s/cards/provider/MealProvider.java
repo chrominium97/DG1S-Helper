@@ -91,7 +91,6 @@ public class MealProvider {
             databaseManager.initializeDatabase();
 
             Element table = source.getFirstElementByClass("tbl_type3");
-            Log.v(TAG, table.toString());
 
             List<Element> rows = table.getFirstElement("tbody").getAllElements("tr");
             for (Element row : rows) {
@@ -159,6 +158,7 @@ public class MealProvider {
     private class MealDatabaseManager extends SQLiteOpenHelper {
 
         public static final int DB_VERSION = 2;
+        final String TAG = "MealDatabaseManager";
         private final String KEY_ID = "date";
         private final String KEY_BREAKFAST = "meal_breakfast";
         private final String KEY_LUNCH = "meal_lunch";
@@ -174,7 +174,7 @@ public class MealProvider {
             String CREATE_MEAL_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                     + KEY_ID + " INTEGER PRIMARY KEY," + KEY_BREAKFAST + " TEXT,"
                     + KEY_LUNCH + " TEXT," + KEY_DINNER + " TEXT" + ")";
-            Log.d("SQL@MealProvider", "Querying database w/ command " + CREATE_MEAL_TABLE);
+            Log.d(TAG + "@SQL", "Querying database w/ command " + CREATE_MEAL_TABLE);
             database.execSQL(CREATE_MEAL_TABLE);
         }
 
@@ -196,18 +196,20 @@ public class MealProvider {
             Cursor cursor = database.query(TABLE_NAME, new String[]
                             {KEY_ID, KEY_BREAKFAST, KEY_LUNCH, KEY_DINNER}, KEY_ID + " = ?",
                     new String[]{String.valueOf(date)}, null, null, null, null);
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.moveToFirst();
 
-            try {
-                return new Meal(cursor.getInt(0),
-                        cursor.getString(1), cursor.getString(2), cursor.getString(3));
-            } catch (NullPointerException e) {
-                return new Meal();
-            } catch (CursorIndexOutOfBoundsException e) {
-                onUpgrade(database, 0, 0);
-                return new Meal();
+                try {
+                    return new Meal(cursor.getInt(0),
+                            cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                } catch (NullPointerException e) {
+                    return new Meal();
+                } catch (CursorIndexOutOfBoundsException e) {
+                    onUpgrade(database, 0, 0);
+                    return new Meal();
+                }
             }
+            return new Meal();
         }
 
         public void updateMeal(Meal meal) {
@@ -221,7 +223,7 @@ public class MealProvider {
             values.put(KEY_LUNCH, meal.getLunch().toString());
             values.put(KEY_DINNER, meal.getDinner().toString());
 
-            Log.v("SQL@MealProvider", "Recorded meal at day " + meal.getDate() + "\n" + meal);
+            Log.v(TAG + "@SQL", "Recorded meal at day " + meal.getDate());
 
             database.update(TABLE_NAME, values, KEY_ID + "=" + String.valueOf(meal.getDate()), null);
         }

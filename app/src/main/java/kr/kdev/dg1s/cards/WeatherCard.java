@@ -19,6 +19,8 @@ import kr.kdev.dg1s.cards.provider.datatypes.Weather;
 
 public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
 
+    private final static String TAG = "WeatherCard";
+
     private final int targetDelay = 1000;
     private WeatherProvider provider;
     private LinearLayout header;
@@ -51,6 +53,7 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
         }
 
         CardView weatherCard = (CardView) LayoutInflater.from(context).inflate(R.layout.card_weather, viewParent, false);
+
         header = (LinearLayout) weatherCard.findViewById(R.id.header);
         contents = (FrameLayout) weatherCard.findViewById(R.id.contents);
 
@@ -100,18 +103,21 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
     }
 
     String twentyFourToTwelve(int hour) {
-        String output = ":00 AM";
+        String output = String.valueOf(hour % 12) + " ";
         if (hour >= 12) {
-            output = ":00 PM";
-            if (hour > 12) {
-                hour = hour % 12;
+            if (hour == 24) {
+                output = output + "AM";
+            } else {
+                output = output + "PM";
             }
+        } else {
+            output = output + "AM";
         }
-        return hour + output;
+        return output;
     }
 
     long delay() {
-        Log.d("WeatherCardAnimationDelay",
+        Log.d(TAG + "_AnimationDelay",
                 String.valueOf((timeAtLastViewChange + targetDelay) - System.currentTimeMillis()) + " " +
                         "milliseconds delayed");
         return (timeAtLastViewChange + targetDelay) - System.currentTimeMillis();
@@ -174,6 +180,7 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
         public void run() {
 
             header.setBackgroundColor(weathers[0].getWeatherColor());
+            subWeathers.setBackgroundColor(weathers[0].getSubWeatherColor());
 
             weatherIcon.setImageResource(weathers[0].getImageId());
             weatherText.setText(weathers[0].getReadableWeatherState().replace("\n", " ") +

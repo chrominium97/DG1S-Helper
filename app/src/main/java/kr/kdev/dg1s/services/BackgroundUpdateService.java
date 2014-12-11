@@ -11,6 +11,8 @@ import android.util.Log;
 
 public class BackgroundUpdateService extends BroadcastReceiver {
 
+    private final static String TAG = "BackgroundUpdateService";
+
     // The application's AlarmManager, which provides access to the system alarm services.
     private AlarmManager alarmMgr;
     // The pending intent that is triggered when the alarm fires.
@@ -21,7 +23,7 @@ public class BackgroundUpdateService extends BroadcastReceiver {
 
         alarmMgr.cancel(alarmIntent);
 
-        Log.d("Alarm", "Intent received");
+        Log.d(TAG, "Intent received");
 
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();

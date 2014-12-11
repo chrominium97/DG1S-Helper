@@ -3,9 +3,6 @@ package kr.kdev.dg1s.cards.provider.datatypes;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * Created by 꽃게 on 2014/11/25.
- */
 public class Meal {
 
     private ArrayList<String> BREAKFAST = new ArrayList<String>();

@@ -14,58 +14,10 @@
             android:background="#cccccc"
             android:orientation="horizontal" />
 
-        <RelativeLayout
-            android:id="@+id/dayinfocontainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#e1f0ee">
-
-            <ImageView
-                android:id="@+id/dayinfoimage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/dayinfoback" />
-
-            <TextView
-                android:id="@+id/dayinfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/monday_sentence"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/black_text" />
-
-            <TextView
-                android:id="@+id/dayinfotext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/dayinfo"
-                android:layout_alignStart="@id/dayinfo"
-                android:layout_below="@id/dayinfo"
-                android:text="@string/monday_t"
-                android:textColor="@color/black_secondary" />
-
-
-            <TextView
-                android:id="@+id/weatherinfotext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/dayinfo"
-                android:layout_alignStart="@id/dayinfo"
-                android:layout_below="@id/dayinfoimage"
-                android:text="@string/main_dayinfo"
-                android:textColor="#666666" />
-        </RelativeLayout>
-
         <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/infoScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/dayinfocontainer">
+            android:layout_height="match_parent">
 
             <ScrollView
                 android:id="@+id/scrollView"

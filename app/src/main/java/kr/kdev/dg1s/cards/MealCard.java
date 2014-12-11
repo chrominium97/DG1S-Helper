@@ -18,6 +18,8 @@ import kr.kdev.dg1s.cards.provider.datatypes.Meal;
 
 public class MealCard implements MealProvider.MealProviderInterface {
 
+    private static final String TAG = "MealCard";
+
     private final int targetDelay = 1000;
     private MealProvider provider;
     private LinearLayout menuList;
@@ -78,7 +80,7 @@ public class MealCard implements MealProvider.MealProviderInterface {
     }
 
     long delay() {
-        Log.d("WeatherCardAnimationDelay",
+        Log.d(TAG + "_AnimationDelay",
                 String.valueOf((timeAtLastViewChange + targetDelay) - System.currentTimeMillis()) + " " +
                         "milliseconds delayed");
         return (timeAtLastViewChange + targetDelay) - System.currentTimeMillis();

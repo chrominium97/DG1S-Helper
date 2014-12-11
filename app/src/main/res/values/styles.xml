@@ -2,8 +2,6 @@
     <!-- Material theme support -->
     <style name="Theme.DG1S" parent="Theme.AppCompat.Light">
 
-        <item name="windowActionBarOverlay">true</item>
-
         <!-- App branding color -->
         <item name="colorPrimary">@color/dg1s_blue</item>
         <!-- App branding color (darker) -->

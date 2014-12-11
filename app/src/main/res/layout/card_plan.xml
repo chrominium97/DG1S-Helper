@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/card_status_refreshing"
+                android:text="@string/card_refreshing"
                 android:textColor="@color/abc_primary_text_material_light"
                 android:textSize="@dimen/abc_text_size_headline_material" />
 
@@ -59,14 +59,16 @@
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 android:background="@android:color/white"
-                android:orientation="vertical">
+                android:divider="@drawable/divider_horizontal"
+                android:orientation="vertical"
+                android:showDividers="middle">
 
                 <TextView
                     android:id="@+id/plans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="9dp"
-                    android:text="@string/error_no_schudules"
+                    android:text="@string/plan_card_no_schedules"
                     android:textColor="@color/abc_primary_text_material_light"
                     android:textSize="@dimen/abc_text_size_headline_material" />
 
@@ -80,7 +82,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/monthly_statistics"
+                        android:text="@string/plan_card_monthly_statistics"
                         android:textAllCaps="true"
                         android:textColor="@color/abc_secondary_text_material_light"
                         android:textSize="@dimen/abc_text_size_body_1_material" />

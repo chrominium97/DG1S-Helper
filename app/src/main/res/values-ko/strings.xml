@@ -4,11 +4,6 @@
     <string name="welcome">대구일과학고등학교 어플리케이션을 설치해주셔서 감사합니다. 메뉴 버튼을 누르면 나오는 설정 창에서 자신의 학년과 반을 설정해주시기 바랍니다.</string>
     <string name="app_name">일과고 도우미</string>
 
-    <!-- 상태알림 -->
-    <string name="error_network_long">네트워크 오류로 정보를 업데이트할 수 없습니다.</string>
-    <string name="error_no_meal">식사가 아직 등록되지 않았습니다.</string>
-    <string name="error_no_schudules">오늘은 일정이 없습니다.</string>
-
     <string name="confirm">확인</string>
 
     <string name="update_info">업데이트 내역 :</string>
@@ -17,37 +12,9 @@
     <!-- 액션바 항목 -->
     <string name="card_title_schedules">학사일정</string>
     <string name="card_title_meals">급식</string>
-    <string name="actionbar_credits">개발자 정보</string>
 
     <string name="action_settings">설정</string>
-    <string name="action_refresh">새로고침</string>
     <string name="action_credits">개발자 정보</string>
-    <string name="action_homework_add">숙제 추가</string>
-    <string name="action_homework_add_confirm">숙제 개시</string>
-
-    <!-- 메인 화면 -->
-    <string name="main_schoolname">대구일과학고등학교</string>
-    <string name="main_academic">오늘의 일정</string>
-    <string name="main_dayinfo">학교 날씨를 알려드립니다.(3시간마다 갱신)</string>
-
-    <string name="breakfast">아침식사</string>
-    <string name="lunch">점심식사</string>
-    <string name="dinner">저녁식사</string>
-
-    <string name="time_breakfast">오전6:50 - 오전7:40</string>
-    <string name="time_lunch">오후12:30 - 오후1:20</string>
-    <string name="time_dinner">오후6:10 - 오후7:00</string>
-
-    <string name="dismissal">퇴사</string>
-    <string name="dismissal_time">오후5:40</string>
-    <string name="dismissal_comment">버스 시간에 늦지 않게 조심하세요.</string>
-
-    <string name="main_btn1">식단표</string>
-    <string name="main_btn2">숙제</string>
-    <string name="main_btn4">학사일정</string>
-
-    <!-- 숙제 기능 -->
-    <string name="timetable_title">시간표 보기</string>
 
     <string-array name="selectGrade">
         <item>1학년</item>
@@ -64,42 +31,6 @@
 
     <!-- 위젯 -->
     <string name="no_meal">식단 없음</string>
-
-    <!-- 과목 종류 -->
-    <string name="literature">문학</string>
-    <string name="literature_teacher">김영식</string>
-
-    <!-- 날짜 -->
-    <string name="mon">월</string>
-    <string name="tue">화</string>
-    <string name="wed">수</string>
-    <string name="thu">목</string>
-    <string name="fri">금</string>
-
-    <string name="sunday">일요일</string>
-    <string name="monday">월요일</string>
-    <string name="tuesday">화요일</string>
-    <string name="wednesday">수요일</string>
-    <string name="thursday">목요일</string>
-    <string name="friday">금요일</string>
-    <string name="saturday">토요일</string>
-
-    <string name="sunday_sentence">오늘은 일요일,</string>
-    <string name="monday_sentence">오늘은 월요일,</string>
-    <string name="tuesday_sentence">오늘은 화요일,</string>
-    <string name="wednesday_sentence">오늘은 수요일입니다.</string>
-    <string name="thursday_sentence">오늘은 목요일입니다.</string>
-    <string name="friday_sentence">오늘은 금요일,</string>
-    <string name="saturday_sentence">오늘은 토요일입니다.</string>
-
-    <!-- 요일 코멘트 -->
-    <string name="sunday_t">이번 주말의 마지막 순간입니다.</string>
-    <string name="monday_t">가슴 벅찬 새로운 주의 시작입니다.</string>
-    <string name="tuesday_t">학교에서 보내는 본격적인 하루입니다.</string>
-    <string name="wednesday_t">공부가 힘들어도 힘내세요!</string>
-    <string name="thursday_t">피곤할 땐 잠깐 눈을 붙여 보세요.</string>
-    <string name="friday_t">주말로 가는 마지막 관문입니다.</string>
-    <string name="saturday_t">즐거운 주말 되세요.</string>
 
     <!-- Credits 창 -->
     <string name="app_info_title">어플리케이션 정보</string>
@@ -126,15 +57,5 @@
         <item>3</item>
         <item>4</item>
     </string-array>
-
-    <!-- 더미 데이터 -->
-    <string name="dummy_date_with_letter">2014년 01월 01일</string>
-    <string name="dummy_time_6a">오전06:00</string>
-    <string name="dummy_time_9a">오전09:00</string>
-    <string name="dummy_time_12p">오후12:00</string>
-    <string name="dummy_time_3p">오후03:00</string>
-    <string name="dummy_time_6p">오후06:00</string>
-    <string name="dummy_temp">13ºC</string>
-    <string name="dummy_meal">급식</string>
 
 </resources>

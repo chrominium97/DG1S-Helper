@@ -24,8 +24,6 @@ import kr.kdev.dg1s.cards.provider.datatypes.Plan;
 
 public class PlanProvider {
 
-    final static String TAG = "PlanProvider";
-
     final static String domain = "http://hes.dge.go.kr/sts_sci_sf01_001.do";
     final static String ARG_1 = "schulCode=";
     final static String VALUE_1 = "D100001936&";
@@ -37,6 +35,7 @@ public class PlanProvider {
     final static String VALUE_4 = "04&";
     final static String ARG_5 = "ay=";
     final static String ARG_6 = "mm=";
+    private final static String TAG = "PlanProvider";
     final String VALUE_5;
     final String VALUE_6;
     Context context;
@@ -92,7 +91,6 @@ public class PlanProvider {
             PlanDatabaseManager databaseManager = new PlanDatabaseManager(context);
 
             List<Element> table = source.getAllElementsByClass("tbl_type3");
-            Log.v(TAG, table.toString());
 
             Element planTable = table.get(0);
             Element planSummaryTable = table.get(1);
@@ -171,6 +169,7 @@ public class PlanProvider {
     private class PlanDatabaseManager extends SQLiteOpenHelper {
 
         public static final int DB_VERSION = 1;
+        private static final String TAG = "PlanDatabaseManager";
         private static final String KEY_DATE = "date";
         private static final String KEY_PLANS = "plans";
         private static final String KEY_GRADE = "grade";
@@ -191,9 +190,9 @@ public class PlanProvider {
             final String CREATE_SUMMARY_TABLE = "CREATE TABLE " + SUMMARY_TABLE_NAME + "(" +
                     KEY_GRADE + " INTEGER PRIMARY KEY," + KEY_DAYS_TOTAL + " INTEGER," +
                     KEY_DAYS_EVENT + " INTEGER," + KEY_DAYS_STUDY + " INTEGER" + ")";
-            Log.d("SQL@PlanProvider", "Querying database w/ command " + CREATE_PLAN_TABLE);
+            Log.d(TAG, "Querying database w/ command " + CREATE_PLAN_TABLE);
             database.execSQL(CREATE_PLAN_TABLE);
-            Log.d("SQL@PlanProvider", "Querying database w/ command " + CREATE_SUMMARY_TABLE);
+            Log.d(TAG, "Querying database w/ command " + CREATE_SUMMARY_TABLE);
             database.execSQL(CREATE_SUMMARY_TABLE);
         }
 
@@ -215,15 +214,16 @@ public class PlanProvider {
             Cursor cursor = database.query(PLAN_TABLE_NAME, new String[]
                             {KEY_DATE, KEY_PLANS}, KEY_DATE + " = ?",
                     new String[]{String.valueOf(date)}, null, null, null, null);
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.moveToFirst();
-
-            try {
-                return new Plan(Integer.parseInt(cursor.getString(0)),
-                        cursor.getString(1));
-            } catch (NullPointerException e) {
-                return new Plan();
+                try {
+                    return new Plan(Integer.parseInt(cursor.getString(0)),
+                            cursor.getString(1));
+                } catch (NullPointerException e) {
+                    return new Plan();
+                }
             }
+            return new Plan();
         }
 
         public int updatePlans(Plan plan) {
@@ -235,14 +235,14 @@ public class PlanProvider {
             ContentValues values = new ContentValues();
             values.put(KEY_PLANS, plan.getPlans());
 
-            Log.v("SQL@PlanProvider", "Recorded plan at day " + plan.getDate() + "\n" + plan);
+            Log.v(TAG, "Recorded plan at day " + plan.getDate());
 
             return database.update(PLAN_TABLE_NAME, values, KEY_DATE + "="
                     + String.valueOf(plan.getDate()), null);
         }
 
         public ArrayList<Integer> getSummary() {
-            return getSummary(3);
+            return getSummary(-1);
         }
 
         public ArrayList<Integer> getSummary(int grade) {
@@ -259,22 +259,27 @@ public class PlanProvider {
             Cursor cursor = database.query(SUMMARY_TABLE_NAME, new String[]
                             {KEY_DAYS_TOTAL, KEY_DAYS_EVENT, KEY_DAYS_STUDY}, KEY_GRADE + " = ?",
                     new String[]{String.valueOf(grade)}, null, null, null, null);
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.moveToFirst();
-
-            try {
-                ArrayList<Integer> summary = new ArrayList<Integer>();
-                summary.add(cursor.getInt(0));
-                summary.add(cursor.getInt(1));
-                summary.add(cursor.getInt(2));
-                return summary;
-            } catch (NullPointerException e) {
-                ArrayList<Integer> summary = new ArrayList<Integer>();
-                for (int i = 0; i < 3; i++) {
-                    summary.add(-1);
+                try {
+                    ArrayList<Integer> summary = new ArrayList<Integer>();
+                    summary.add(cursor.getInt(0));
+                    summary.add(cursor.getInt(1));
+                    summary.add(cursor.getInt(2));
+                    return summary;
+                } catch (NullPointerException e) {
+                    ArrayList<Integer> summary = new ArrayList<Integer>();
+                    for (int i = 0; i < 3; i++) {
+                        summary.add(-1);
+                    }
+                    return summary;
                 }
-                return summary;
             }
+            ArrayList<Integer> summary = new ArrayList<Integer>();
+            for (int i = 0; i < 3; i++) {
+                summary.add(-1);
+            }
+            return summary;
         }
 
         public int updateSummary(int grade, int total, int event, int study) {
@@ -288,7 +293,7 @@ public class PlanProvider {
             values.put(KEY_DAYS_EVENT, event);
             values.put(KEY_DAYS_STUDY, study);
 
-            Log.d("SQL", "Recorded summary");
+            Log.d(TAG, "Recorded summary");
 
             return database.update(SUMMARY_TABLE_NAME, values, KEY_GRADE + "="
                     + String.valueOf(grade), null);

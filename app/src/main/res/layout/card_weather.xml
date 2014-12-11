@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/card_status_refreshing"
+                android:text="@string/card_refreshing"
                 android:textColor="@color/abc_primary_text_material_light"
                 android:textSize="@dimen/abc_text_size_headline_material" />
 
@@ -78,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
+                    android:maxWidth="75dp"
                     android:orientation="vertical"
                     android:padding="5dp">
 
@@ -102,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
+                    android:maxWidth="75dp"
                     android:orientation="vertical"
                     android:padding="5dp">
 
@@ -126,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
+                    android:maxWidth="75dp"
                     android:orientation="vertical"
                     android:padding="5dp">
 
@@ -150,6 +153,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
+                    android:maxWidth="75dp"
                     android:orientation="vertical"
                     android:padding="5dp">
 
