@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.kdev.dg1s"
-
     android:versionName="Elderberry_0.3.1">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,36 +20,40 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Settings"
+            android:label="@string/app_info_title"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Credits"
+            android:label="@string/app_info_title"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".services.BootReceiver"
             android:enabled="false">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name=".Settings"
-            android:theme="@android:style/Theme.Light.NoTitleBar" />
-
-        <activity
-            android:name=".Credits"
-            android:screenOrientation="portrait" />
 
         <receiver android:name=".widget.MealWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/sikdanwidget_provider" />
+
             <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
         </receiver>
-
     </application>
 
 </manifest>

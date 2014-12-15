@@ -8,13 +8,12 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
+import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class Credits extends ActionBarActivity {
@@ -27,13 +26,9 @@ public class Credits extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.credit);
 
-        getSupportActionBar().setIcon(R.drawable.backbtn);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_gray)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(R.string.app_info_title);
-        getSupportActionBar().setDisplayUseLogoEnabled(false);
 
         ImageView kdevLogo = (ImageView) findViewById(R.id.kdev);
         kdevLogo.setOnTouchListener(new Button.OnTouchListener() {
@@ -65,7 +60,7 @@ public class Credits extends ActionBarActivity {
             }
         });
 
-        LinearLayout mailTo = (LinearLayout) findViewById(R.id.mailto_container);
+        CardView mailTo = (CardView) findViewById(R.id.mailto_container);
         mailTo.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "chrominium97@gmail.com"));
@@ -75,24 +70,18 @@ public class Credits extends ActionBarActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.appear_decelerate_ltr, R.anim.disappear_decelerate_ltr);
-                return true;
-        }
-        return false;
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.still, R.anim.abc_slide_out_bottom);
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                finish();
-                overridePendingTransition(R.anim.appear_decelerate_ltr, R.anim.disappear_decelerate_ltr);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onKeyDown(keyCode, event);
     }
-
 }

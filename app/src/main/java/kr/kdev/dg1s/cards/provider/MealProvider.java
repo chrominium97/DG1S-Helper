@@ -55,8 +55,7 @@ public class MealProvider {
         try {
             mealTransferInterface = (MealProviderInterface) origin;
         } catch (ClassCastException e) {
-            // TODO 설명 추가하기
-            throw new ClassCastException();
+            Log.e(TAG, "MealProviderInterface not cast");
         }
 
         context = arg0;

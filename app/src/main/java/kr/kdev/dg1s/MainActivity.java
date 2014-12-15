@@ -7,24 +7,15 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 
 import kr.kdev.dg1s.cards.CardViewStatusNotifier;
 import kr.kdev.dg1s.cards.MealCard;
@@ -101,8 +92,7 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
 
         setLayouts();
 
-        //ColorDrawable colorDrawable = new ColorDrawable(getResources().getColor(R.color.dark_gray));
-        //getSupportActionBar().setBackgroundDrawable(colorDrawable);
+        Log.d(TAG, "Initialized");
 
     }
 
@@ -141,86 +131,21 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent i1 = new Intent(MainActivity.this, Settings.class);
-                startActivity(i1);
-                overridePendingTransition(R.anim.appear_decelerate_btt, R.anim.still);
+                startActivity(new Intent(MainActivity.this, Settings.class));
+                overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.still);
                 break;
             case R.id.action_credits:
-
-                Intent i2 = new Intent(MainActivity.this, Credits.class);
-                startActivity(i2);
-                overridePendingTransition(R.anim.appear_decelerate_rtl, R.anim.disappear_decelerate_rtl);
-
-                File externalDirectory = Environment.getExternalStorageDirectory();
-                File internalDirectory = Environment.getDataDirectory();
-                FileChannel source;
-                FileChannel destination;
-                String mealDBPath = "/data/" + "kr.kdev.dg1s" + "/databases/" + "meal.db";
-                String mealBackupDBPath = "meals.db";
-
-                String planDBPath = "/data/" + "kr.kdev.dg1s" + "/databases/" + "plans.db";
-                String planBackupDBPath = "plans.db";
-
-                String weatherDBPath = "/data/" + "kr.kdev.dg1s" + "/databases/" + "weather.db";
-                String weatherBackupDBPath = "weather.db";
-
-                File currentDB;
-                File backupDB;
-
-                try {
-                    currentDB = new File(internalDirectory, mealDBPath);
-                    backupDB = new File(externalDirectory, mealBackupDBPath);
-                    source = new FileInputStream(currentDB).getChannel();
-                    destination = new FileOutputStream(backupDB).getChannel();
-                    destination.transferFrom(source, 0, source.size());
-                    source.close();
-                    destination.close();
-
-                    currentDB = new File(internalDirectory, planDBPath);
-                    backupDB = new File(externalDirectory, planBackupDBPath);
-                    source = new FileInputStream(currentDB).getChannel();
-                    destination = new FileOutputStream(backupDB).getChannel();
-                    destination.transferFrom(source, 0, source.size());
-                    source.close();
-                    destination.close();
-
-                    currentDB = new File(internalDirectory, weatherDBPath);
-                    backupDB = new File(externalDirectory, weatherBackupDBPath);
-                    source = new FileInputStream(currentDB).getChannel();
-                    destination = new FileOutputStream(backupDB).getChannel();
-                    destination.transferFrom(source, 0, source.size());
-                    source.close();
-                    destination.close();
-
-                    Toast.makeText(this, "DB Exported!", Toast.LENGTH_LONG).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                startActivity(new Intent(MainActivity.this, Credits.class));
+                overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.still);
                 break;
         }
-        return true;
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                finish();
-            case KeyEvent.KEYCODE_MENU:
-                openOptionsMenu();
-        }
-        return super.onKeyDown(keyCode, event);
+        return false;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void setIsDismissed() {

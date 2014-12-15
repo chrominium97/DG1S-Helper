@@ -40,16 +40,10 @@
     <!-- 설정 변수 -->
     <string name="personal_information">개인정보</string>
 
-    <string name="gradechk_title">학년 설정</string>
-    <string name="gradechk_sum">당신의 학년을 설정합니다.</string>
-    <string name="classchk_title">반 설정</string>
-    <string name="classchk_sum">당신의 소속 반을 설정합니다.</string>
-
-    <string-array name="gradeList">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
+    <string name="grade_settings">학년 설정</string>
+    <string name="grade_settings_summary">당신의 학년을 설정합니다.</string>
+    <string name="class_settings">반 설정</string>
+    <string name="class_settings_summary">당신의 소속 반을 설정합니다.</string>
 
     <string-array name="classList">
         <item>1</item>
@@ -57,5 +51,27 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+    <string name="breakfast">아침</string>
+    <string name="card_refreshing">갱신중&#8230;</string>
+    <string name="card_title_weather">날씨</string>
+    <string name="cloud_clear">맑음</string>
+    <string name="cloud_cloudy">흐림</string>
+    <string name="cloud_mostly">구름 많음</string>
+    <string name="cloud_partly">구름 조금</string>
+    <string name="dinner">저녁</string>
+    <string name="lunch">점심</string>
+    <string name="meal_card_no_meal">오늘은 식단이 없습니다</string>
+    <string name="meal_card_no_meal_desc">등록된 </string>
+    <string name="plan_card_monthly_statistics">이번달 개요</string>
+    <string name="plan_card_no_schedules">오늘은 일정이 없습니다</string>
+    <string name="plan_card_summary_day_events">행사가 있는 일수 : </string>
+    <string name="plan_card_summary_day_studying">행사가 없는 일수 : </string>
+    <string name="plan_card_summary_day_total">학교에 있는 일수 : </string>
+    <string name="plan_card_summary_set_grade">개요를 보려면 설정 메뉴에서 학년을 선택해 주세요</string>
+    <string name="precipitation_none">없음</string>
+    <string name="precipitation_rain">비</string>
+    <string name="precipitation_sleet">진눈깨비</string>
+    <string name="precipitation_snow">눈</string>
+    <string name="unknown">불명</string>
 
 </resources>

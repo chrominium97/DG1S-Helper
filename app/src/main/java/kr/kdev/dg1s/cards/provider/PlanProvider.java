@@ -2,11 +2,13 @@ package kr.kdev.dg1s.cards.provider;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import net.htmlparser.jericho.Element;
@@ -44,7 +46,8 @@ public class PlanProvider {
         public void handleMessage(Message message) {
             PlanDatabaseManager planDatabaseManager = new PlanDatabaseManager(context);
             planProviderInterface.onPlanReceived(message.what == 0,
-                    planDatabaseManager.getPlans(), planDatabaseManager.getSummary());
+                    planDatabaseManager.getPlans(), planDatabaseManager.getSummary(
+                            Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("grade", "-1"))));
         }
     };
     UpdateCenter center;
@@ -54,8 +57,7 @@ public class PlanProvider {
         try {
             planProviderInterface = (PlanProviderInterface) origin;
         } catch (ClassCastException e) {
-            // TODO 설명 추가하기
-            throw new ClassCastException();
+            Log.e(TAG, "PlanProviderInterface not cast");
         }
 
         context = arg0;
@@ -63,6 +65,14 @@ public class PlanProvider {
         VALUE_5 = new SimpleDateFormat("yyyy").format(new Date(System.currentTimeMillis())) + "&";
         VALUE_6 = new SimpleDateFormat("MM").format(new Date(System.currentTimeMillis()));
 
+        PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(
+                new SharedPreferences.OnSharedPreferenceChangeListener() {
+                    @Override
+                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                        requestPlan(false);
+                    }
+                }
+        );
     }
 
     public void requestPlan(boolean forceUpdate) {

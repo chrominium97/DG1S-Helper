@@ -9,20 +9,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import kr.kdev.dg1s.cards.provider.MealProvider;
+import kr.kdev.dg1s.cards.provider.PlanProvider;
+import kr.kdev.dg1s.cards.provider.WeatherProvider;
+
 public class BackgroundUpdateService extends BroadcastReceiver {
 
     private final static String TAG = "BackgroundUpdateService";
 
     // The application's AlarmManager, which provides access to the system alarm services.
     private AlarmManager alarmMgr;
-    // The pending intent that is triggered when the alarm fires.
-    private PendingIntent alarmIntent;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        alarmMgr.cancel(alarmIntent);
-
         Log.d(TAG, "Intent received");
 
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
@@ -32,7 +31,9 @@ public class BackgroundUpdateService extends BroadcastReceiver {
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
 
-        // TODO 알람 구축
+        new MealProvider(context, this).requestMeal(false);
+        new PlanProvider(context, this).requestPlan(false);
+        new WeatherProvider(context, this).requestWeather(false);
     }
 
     public void setAlarm(Context context) {
@@ -40,7 +41,7 @@ public class BackgroundUpdateService extends BroadcastReceiver {
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context.getApplicationContext(), BackgroundUpdateService.class);
-        alarmIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         try {
             alarmMgr.cancel(alarmIntent);

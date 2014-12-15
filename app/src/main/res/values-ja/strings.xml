@@ -39,16 +39,10 @@
     <!-- 설정 변수 -->
     <string name="personal_information">個人情報</string>
 
-    <string name="gradechk_title">学年を設定</string>
-    <string name="gradechk_sum">あなたの学年を設定します。</string>
-    <string name="classchk_title">組を設定</string>
-    <string name="classchk_sum">あなたの組を設定します。</string>
-
-    <integer-array name="gradeList">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </integer-array>
+    <string name="grade_settings">学年を設定</string>
+    <string name="grade_settings_summary">あなたの学年を設定します。</string>
+    <string name="class_settings">組を設定</string>
+    <string name="class_settings_summary">あなたの組を設定します。</string>
 
     <string-array name="classList">
         <item>1</item>
@@ -56,5 +50,27 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+    <string name="breakfast">朝ご飯</string>
+    <string name="card_refreshing">更新中&#8230;</string>
+    <string name="card_title_weather">天気</string>
+    <string name="cloud_clear">晴れ</string>
+    <string name="cloud_cloudy">曇り</string>
+    <string name="cloud_mostly">ほとんど\n曇り</string>
+    <string name="cloud_partly">晴れ\n時々曇り</string>
+    <string name="dinner">夕ご飯</string>
+    <string name="lunch">昼ご飯</string>
+    <string name="meal_card_no_meal">今日は食談がありません</string>
+    <string name="meal_card_no_meal_desc">登録された食談がありません</string>
+    <string name="plan_card_monthly_statistics">今月の概要</string>
+    <string name="plan_card_no_schedules">今日の日程はありません</string>
+    <string name="plan_card_summary_day_events">イベントが有る日数：</string>
+    <string name="plan_card_summary_day_studying">イベントがいない日数：</string>
+    <string name="plan_card_summary_day_total">学校にいない日数：</string>
+    <string name="plan_card_summary_set_grade">概要を見るため設定メニューで学年をセットしてください</string>
+    <string name="precipitation_none">なし</string>
+    <string name="precipitation_rain">雨</string>
+    <string name="precipitation_sleet">みぞれ</string>
+    <string name="precipitation_snow">雪</string>
+    <string name="unknown">不明</string>
 
 </resources>
