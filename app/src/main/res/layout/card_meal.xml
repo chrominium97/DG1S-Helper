@@ -92,9 +92,9 @@
                     android:layout_height="wrap_content"
                     android:minHeight="60dp"
                     android:orientation="vertical"
-                    android:padding="9dp">
+                    android:padding="12dp">
 
-                    <TextView
+                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/breakfast"
@@ -115,9 +115,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="9dp">
+                    android:padding="12dp">
 
-                    <TextView
+                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lunch"
@@ -138,9 +138,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="9dp">
+                    android:padding="12dp">
 
-                    <TextView
+                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dinner"

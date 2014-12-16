@@ -12,10 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 import kr.kdev.dg1s.cards.CardViewStatusNotifier;
 import kr.kdev.dg1s.cards.MealCard;
@@ -23,7 +20,6 @@ import kr.kdev.dg1s.cards.PlanCard;
 import kr.kdev.dg1s.cards.WeatherCard;
 import kr.kdev.dg1s.cards.provider.UpdateCenter;
 import kr.kdev.dg1s.services.BackgroundUpdateService;
-import kr.kdev.dg1s.utils.floatingactionbutton.FloatingActionsMenu;
 
 public class MainActivity extends ActionBarActivity implements CardViewStatusNotifier {
 
@@ -114,16 +110,6 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
         weatherCard = new WeatherCard(context, group, MainActivity.this);
         mealCard = new MealCard(context, group, MainActivity.this);
         planCard = new PlanCard(context, group, MainActivity.this);
-
-        final FloatingActionsMenu fab = (FloatingActionsMenu) findViewById(R.id.FAB);
-        ScrollView scrollView = (ScrollView) pullToRefreshLayout.findViewById(R.id.scrollView);
-        scrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                fab.collapse();
-                return false;
-            }
-        });
 
     }
 

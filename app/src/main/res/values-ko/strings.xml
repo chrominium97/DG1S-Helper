@@ -6,7 +6,7 @@
 
     <string name="confirm">확인</string>
 
-    <string name="update_info">업데이트 내역 :</string>
+    <string name="update_info">업데이트 내역：</string>
     <string name="update_description">UI 개선</string>
 
     <!-- 액션바 항목 -->
@@ -64,9 +64,9 @@
     <string name="meal_card_no_meal_desc">등록된 </string>
     <string name="plan_card_monthly_statistics">이번달 개요</string>
     <string name="plan_card_no_schedules">오늘은 일정이 없습니다</string>
-    <string name="plan_card_summary_day_events">행사가 있는 일수 : </string>
-    <string name="plan_card_summary_day_studying">행사가 없는 일수 : </string>
-    <string name="plan_card_summary_day_total">학교에 있는 일수 : </string>
+    <string name="plan_card_summary_day_events">행사가 있는 일수：</string>
+    <string name="plan_card_summary_day_studying">행사가 없는 일수：</string>
+    <string name="plan_card_summary_day_total">학교에 있는 일수：</string>
     <string name="plan_card_summary_set_grade">개요를 보려면 설정 메뉴에서 학년을 선택해 주세요</string>
     <string name="precipitation_none">없음</string>
     <string name="precipitation_rain">비</string>

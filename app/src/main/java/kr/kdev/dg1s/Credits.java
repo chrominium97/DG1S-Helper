@@ -26,7 +26,7 @@ public class Credits extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.credit);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_gray)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.grey_800)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
 

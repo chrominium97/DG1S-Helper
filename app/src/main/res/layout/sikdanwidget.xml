@@ -41,7 +41,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:clickable="true"
-                android:src="@drawable/ic_autorenew_black_24dp"
+                android:src="@drawable/ic_refresh"
                 android:tint="@android:color/white" />
 
         </RelativeLayout>

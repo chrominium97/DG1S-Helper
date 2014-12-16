@@ -35,13 +35,13 @@
     <string name="plan_card_summary_set_grade">Please set your grade in the settings menu to view the summary</string>
     <string name="plan_card_monthly_statistics">This month\'s summary</string>
 
-    <string name="plan_card_summary_day_total">Total № of days at school : </string>
-    <string name="plan_card_summary_day_events">№ of days with events : </string>
-    <string name="plan_card_summary_day_studying">№ of days without events : </string>
+    <string name="plan_card_summary_day_total">Total № of days at school：</string>
+    <string name="plan_card_summary_day_events">№ of days with events：</string>
+    <string name="plan_card_summary_day_studying">№ of days without events：</string>
 
     <string name="confirm">Confirm</string>
 
-    <string name="update_info">Update information : </string>
+    <string name="update_info">Update information：</string>
     <string name="update_description">UI refinements</string>
 
     <string name="action_settings">Settings</string>
@@ -76,13 +76,13 @@
     <string name="class_settings_summary">Set up your class.</string>
 
     <string-array name="gradeList" translatable="false">
-    <item>1</item>
+        <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
 
     <string-array name="classList" translatable="false">
-    <item>1</item>
+        <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
