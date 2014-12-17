@@ -4,9 +4,9 @@ android {
     buildToolsVersion '21.1.2'
 
     defaultConfig {
-        versionCode 128
+        versionCode 129
 
-        minSdkVersion 9
+        minSdkVersion 8
         targetSdkVersion 21
 
         resConfigs "en", "ko", "ja"

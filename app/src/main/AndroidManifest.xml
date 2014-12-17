@@ -3,15 +3,13 @@
     package="kr.kdev.dg1s"
     android:versionName="Elderberry_0.3.1">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/Theme.DG1S">
 
@@ -38,11 +36,12 @@
         <receiver
             android:name=".services.BootReceiver"
             android:enabled="false">
-        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
+        <!--
         <receiver android:name=".widget.MealWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -54,6 +53,7 @@
 
             <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
         </receiver>
+        -->
     </application>
 
 </manifest>

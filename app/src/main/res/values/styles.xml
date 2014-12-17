@@ -3,12 +3,12 @@
     <style name="Theme.DG1S" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <!-- App branding color -->
-        <item name="colorPrimary">@color/grey_800</item>
+        <item name="colorPrimary">@color/grey_700</item>
         <!-- App branding color (darker) -->
         <item name="colorPrimaryDark">@color/dg1s_blue_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/dg1s_blue</item>
 
-        <!-- The rest of your attributes -->
+        <!-- The rest of the attributes -->
     </style>
 </resources>

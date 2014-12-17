@@ -43,7 +43,9 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
     private CardViewStatusNotifier statusNotifier;
     private long timeAtLastViewChange;
 
-    public WeatherCard(Context context, ViewGroup viewParent, Activity activity) {
+    private Context context;
+
+    public WeatherCard(Context origin, ViewGroup viewParent, Activity activity) {
 
         try {
             statusNotifier = (CardViewStatusNotifier) activity;
@@ -52,7 +54,9 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
                     "needs to implement CardViewStatusNotifier");
         }
 
-        CardView weatherCard = (CardView) LayoutInflater.from(context).inflate(R.layout.card_weather, viewParent, false);
+        context = origin;
+
+        CardView weatherCard = (CardView) LayoutInflater.from(origin).inflate(R.layout.card_weather, viewParent, false);
 
         header = (LinearLayout) weatherCard.findViewById(R.id.header);
         contents = (FrameLayout) weatherCard.findViewById(R.id.contents);
@@ -74,7 +78,7 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
         subWeatherText3 = (TextView) subWeather3.findViewById(R.id.weather_sub_3_text);
         subWeatherText4 = (TextView) subWeather4.findViewById(R.id.weather_sub_4_text);
 
-        provider = new WeatherProvider(context, this);
+        provider = new WeatherProvider(origin, this);
         provider.requestWeather(false);
 
         hideWeathers();
@@ -102,7 +106,8 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
         provider.requestWeather(isForced);
     }
 
-    String twentyFourToTwelve(int hour) {
+    String formatTime(Weather weather) {
+        int hour = weather.getTime();
         String output = String.valueOf(hour % 12) + " ";
         if (hour >= 12) {
             if (hour == 24) {
@@ -186,19 +191,19 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
             weatherText.setText(weathers[0].getReadableWeatherState().replace("\n", " ") +
                     " (" + weathers[0].getTemperature() + "℃)");
             subWeatherIcon1.setImageResource(weathers[1].getImageId());
-            subWeatherText1.setText(twentyFourToTwelve(weathers[1].getTime()) + "\n" +
+            subWeatherText1.setText(formatTime(weathers[1]) + "\n" +
                     weathers[1].getReadableWeatherState() + "\n(" +
                     weathers[1].getTemperature() + "℃)");
             subWeatherIcon2.setImageResource(weathers[2].getImageId());
-            subWeatherText2.setText(twentyFourToTwelve(weathers[2].getTime()) + "\n" +
+            subWeatherText2.setText(formatTime(weathers[2]) + "\n" +
                     weathers[2].getReadableWeatherState() + "\n(" +
                     weathers[2].getTemperature() + "℃)");
             subWeatherIcon3.setImageResource(weathers[3].getImageId());
-            subWeatherText3.setText(twentyFourToTwelve(weathers[3].getTime()) + "\n" +
+            subWeatherText3.setText(formatTime(weathers[3]) + "\n" +
                     weathers[3].getReadableWeatherState() + "\n(" +
                     weathers[3].getTemperature() + "℃)");
             subWeatherIcon4.setImageResource(weathers[4].getImageId());
-            subWeatherText4.setText(twentyFourToTwelve(weathers[4].getTime()) + "\n" +
+            subWeatherText4.setText(formatTime(weathers[4]) + "\n" +
                     weathers[4].getReadableWeatherState() + "\n(" +
                     weathers[4].getTemperature() + "℃)");
 

@@ -2,7 +2,6 @@ package kr.kdev.dg1s;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
@@ -26,7 +25,6 @@ public class Credits extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.credit);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.grey_800)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
 
