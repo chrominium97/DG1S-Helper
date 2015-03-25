@@ -42,18 +42,19 @@ public class MealProvider {
     final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
-            mealTransferInterface.onMealReceived(message.what == 0,
+            mealProviderInterface.onMealReceived(message.what == 0,
                     new MealDatabaseManager(context).getMeal());
         }
     };
     private final String VALUE_5;
     Context context;
     UpdateCenter center;
-    MealProviderInterface mealTransferInterface;
+    MealProviderInterface mealProviderInterface;
 
     public MealProvider(Context arg0, Object origin) {
+
         try {
-            mealTransferInterface = (MealProviderInterface) origin;
+            mealProviderInterface = (MealProviderInterface) origin;
         } catch (ClassCastException e) {
             Log.e(TAG, "MealProviderInterface not cast");
         }
@@ -63,7 +64,7 @@ public class MealProvider {
         VALUE_5 = new SimpleDateFormat("yyyy.MM").format(new Date(System.currentTimeMillis())) + "&";
     }
 
-    public void requestMeal(boolean forceUpdate) {
+    public void query(boolean forceUpdate) {
         Runnable refreshProcess = new RefreshProcess(forceUpdate || center.needsUpdate());
         new Thread(refreshProcess).start();
     }
@@ -182,7 +183,7 @@ public class MealProvider {
             database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 
             onCreate(database);
-            requestMeal(true);
+            query(true);
         }
 
         public Meal getMeal() {

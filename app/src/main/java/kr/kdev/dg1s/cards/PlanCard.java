@@ -60,7 +60,7 @@ public class PlanCard implements PlanProvider.PlanProviderInterface {
         summaryText = (TextView) summary.findViewById(R.id.summary);
 
         provider = new PlanProvider(context, this);
-        provider.requestPlan(false);
+        provider.query(false);
 
         hidePlans();
         timeAtLastViewChange = System.currentTimeMillis() - targetDelay;
@@ -79,7 +79,7 @@ public class PlanCard implements PlanProvider.PlanProviderInterface {
 
     public void requestUpdate(boolean isForced) {
         hidePlans();
-        provider.requestPlan(isForced);
+        provider.query(isForced);
     }
 
     long delay() {

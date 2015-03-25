@@ -79,7 +79,7 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
         subWeatherText4 = (TextView) subWeather4.findViewById(R.id.weather_sub_4_text);
 
         provider = new WeatherProvider(origin, this);
-        provider.requestWeather(false);
+        provider.query(false);
 
         hideWeathers();
         timeAtLastViewChange = System.currentTimeMillis() - targetDelay;
@@ -103,7 +103,7 @@ public class WeatherCard implements WeatherProvider.WeatherProviderInterface {
 
     public void requestUpdate(boolean isForced) {
         hideWeathers();
-        provider.requestWeather(isForced);
+        provider.query(isForced);
     }
 
     String formatTime(Weather weather) {

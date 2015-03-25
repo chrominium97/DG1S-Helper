@@ -20,7 +20,7 @@ public class MealWidget extends AppWidgetProvider implements MealProvider.MealPr
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         initializeLayout(context, appWidgetManager, appWidgetIds);
 
-        //mealProvider.requestMeal(false);
+        //mealProvider.query(false);
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }

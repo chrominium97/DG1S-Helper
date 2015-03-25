@@ -57,7 +57,7 @@ public class MealCard implements MealProvider.MealProviderInterface {
         dinnerText = (TextView) dinnerMenu.findViewById(R.id.dinner_menu);
 
         provider = new MealProvider(context, this);
-        provider.requestMeal(false);
+        provider.query(false);
 
         hideMeals();
         timeAtLastViewChange = System.currentTimeMillis() - targetDelay;
@@ -76,7 +76,7 @@ public class MealCard implements MealProvider.MealProviderInterface {
 
     public void requestUpdate(boolean isForced) {
         hideMeals();
-        provider.requestMeal(isForced);
+        provider.query(isForced);
     }
 
     long delay() {

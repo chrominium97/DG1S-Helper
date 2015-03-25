@@ -37,13 +37,13 @@ public class UpdateCenter {
     private String preferencesAccessKey;
     private int updateType;
 
-    public UpdateCenter(int type, Context incomingContext) {
-        setAccessMode(type);
-        preferences = incomingContext.getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
-        context = incomingContext;
+    public UpdateCenter(int type, Context context) {
+        changeAccessType(type);
+        preferences = context.getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
+        this.context = context;
     }
 
-    public void setAccessMode(int type) {
+    public void changeAccessType(int type) {
         switch (type) {
             case TYPE_SYSTEM_UPDATE_STAT:
                 preferencesAccessKey = KEY_SYSTEM_VERSION_CHECK;

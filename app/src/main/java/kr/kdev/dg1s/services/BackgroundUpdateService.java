@@ -31,9 +31,9 @@ public class BackgroundUpdateService extends BroadcastReceiver {
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
 
-        new MealProvider(context, this).requestMeal(false);
-        new PlanProvider(context, this).requestPlan(false);
-        new WeatherProvider(context, this).requestWeather(false);
+        new MealProvider(context, this).query(false);
+        new PlanProvider(context, this).query(false);
+        new WeatherProvider(context, this).query(false);
     }
 
     public void setAlarm(Context context) {

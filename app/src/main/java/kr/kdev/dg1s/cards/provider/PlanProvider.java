@@ -69,13 +69,13 @@ public class PlanProvider {
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     @Override
                     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                        requestPlan(false);
+                        query(false);
                     }
                 }
         );
     }
 
-    public void requestPlan(boolean forceUpdate) {
+    public void query(boolean forceUpdate) {
         Runnable refreshProcess = new RefreshThread(forceUpdate || center.needsUpdate());
         new Thread(refreshProcess).start();
     }

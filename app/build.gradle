@@ -6,7 +6,7 @@ android {
     defaultConfig {
         versionCode 129
 
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 21
 
         resConfigs "en", "ko", "ja"

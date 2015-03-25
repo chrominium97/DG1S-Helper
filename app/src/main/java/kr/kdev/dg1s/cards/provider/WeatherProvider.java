@@ -45,7 +45,7 @@ public class WeatherProvider {
         center = new UpdateCenter(UpdateCenter.TYPE_WEATHER, context);
     }
 
-    public void requestWeather(boolean forceUpdate) {
+    public void query(boolean forceUpdate) {
         Runnable refreshProcess = new RefreshProcess(forceUpdate || center.needsUpdate());
         new Thread(refreshProcess).start();
     }
@@ -170,7 +170,7 @@ public class WeatherProvider {
             database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 
             onCreate(database);
-            requestWeather(true);
+            query(true);
         }
 
         public Weather[] getForecast() {

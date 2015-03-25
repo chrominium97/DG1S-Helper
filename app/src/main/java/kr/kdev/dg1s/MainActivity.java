@@ -34,39 +34,14 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
     private SwipeRefreshLayout pullToRefreshLayout;
 
     public void notifyCompletion(Object origin, int status) {
-        final String localTAG = TAG + "_CardQueue";
+        final String localTAG = TAG + ".CardQueue";
 
-        if (queue > 0) {
-            queue--;
-        }
+        if (queue > 0) { queue--;}
 
         if (status == FAILURE) {
+            final String cardName = origin.getClass().getName();
             Log.e(localTAG, "Error occurred while updating card(s)");
-            try {
-                MealCard card = (MealCard) origin;
-                Log.e(localTAG, "Error originated from MealCard");
-            } catch (ClassCastException e) {
-                try {
-                    PlanCard card = (PlanCard) origin;
-                    Log.e(localTAG, "Error originated from PlanCard");
-                } catch (ClassCastException f) {
-                    try {
-                        WeatherCard card = (WeatherCard) origin;
-                        Log.e(localTAG, "Error originated from WeatherCard");
-                    } catch (ClassCastException g) {
-                        Log.e(localTAG, "Error originated from an unknown source");
-                    }
-                }
-            }
-        } else {
-            try {
-                MealCard card = (MealCard) origin;
-                //if (card.isDismissalDay()) {
-                // TODO 퇴사
-                //}
-            } catch (ClassCastException ignored) {
-
-            }
+            Log.e(localTAG, "ORIGIN : " + cardName);
         }
 
         if (queue == 0) {
@@ -79,8 +54,8 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         context = getApplicationContext();
+
         checkFirstRun();
 
         BackgroundUpdateService service = new BackgroundUpdateService();
@@ -135,7 +110,6 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
     }
 
     private void setIsDismissed() {
-        // TODO 퇴사판별 알고리즘 만들기
 
     }
 
@@ -164,12 +138,12 @@ public class MainActivity extends ActionBarActivity implements CardViewStatusNot
             alert.setMessage(getResources().getString(R.string.welcome));
             alert.show();
             center.updateTime();
-            center.setAccessMode(UpdateCenter.TYPE_SYSTEM_UPDATE_STAT);
+            center.changeAccessType(UpdateCenter.TYPE_SYSTEM_UPDATE_STAT);
             center.updateTime();
             return;
         }
 
-        center.setAccessMode(UpdateCenter.TYPE_SYSTEM_UPDATE_STAT);
+        center.changeAccessType(UpdateCenter.TYPE_SYSTEM_UPDATE_STAT);
         if (center.needsUpdate()) {
             AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
             alert.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
